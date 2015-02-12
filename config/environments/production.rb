@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  onfig.action_mailer.default_url_options = {:host => "http://limitless-lowlands-6859.herokuapp.com"}
+  config.action_mailer.default_url_options = {:host => "http://limitless-lowlands-6859.herokuapp.com"}
   Rails.application.routes.default_url_options[:host] = 'limitless-lowlands-6859.herokuapp.com'
   config.serve_static_files = true
 
