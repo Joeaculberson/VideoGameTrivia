@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  Rails.application.routes.default_url_options[:host] = '???'
+  Rails.application.routes.default_url_options[:host] = 'https://limitless-lowlands-6859.herokuapp.com'
   config.serve_static_files = true
 
   # Code is not reloaded between requests.
