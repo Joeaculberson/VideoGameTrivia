@@ -1,22 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="dataSourceStorageLocal">
-    <data-source name="PostgreSQL - @localhost" uuid="cc344a40-254e-4a47-8c53-807df85bd498">
-      <secret-storage>master_key</secret-storage>
-      <first-sync>true</first-sync>
-    </data-source>
-    <data-source name="Rails VideoGameTrivia: development" uuid="022d7536-519a-43de-a78b-e9e36d9ef961">
-      <schema-pattern>VideoGameTrivia_development.*</schema-pattern>
-      <default-schemas>VideoGameTrivia_development.*</default-schemas>
-    </data-source>
-    <data-source name="Rails VideoGameTrivia: test" uuid="f225538e-1432-4e67-b93b-a97bb2a3177d">
-      <schema-pattern>VideoGameTrivia_test.*</schema-pattern>
-      <default-schemas>VideoGameTrivia_test.*</default-schemas>
-    </data-source>
-    <data-source name="Rails VideoGameTrivia: production" uuid="6e9b2e8d-7af8-4b6d-8991-ff7f907a7437">
-      <first-sync>true</first-sync>
-      <user-name>VideoGameTrivia</user-name>
-      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffcdfe3dfeedfefdfe5dfeddfebdfe7dfefdffedff8dfe3dffcdfe3dfebdff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
-    </data-source>
-  </component>
-</project>
+<project version="4" />
