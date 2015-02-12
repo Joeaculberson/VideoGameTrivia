@@ -2388,7 +2388,11 @@
       <column name="last_sign_in_ip" sqlType="inet" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="confirmation_token" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="confirmed_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
+      <column name="confirmation_sent_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <primary-key name="users_pkey" columns="id"/>
+      <index name="index_users_on_confirmation_token" unique="true" columns="confirmation_token"/>
       <index name="index_users_on_email" unique="true" columns="email"/>
       <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
     </table>
