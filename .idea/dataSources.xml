@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="234809051">
+    <data-source source="LOCAL" name="PostgreSQL - @localhost" uuid="cc344a40-254e-4a47-8c53-807df85bd498">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails VideoGameTrivia: development" uuid="022d7536-519a-43de-a78b-e9e36d9ef961">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:VideoGameTrivia_development</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails VideoGameTrivia: test" uuid="f225538e-1432-4e67-b93b-a97bb2a3177d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:VideoGameTrivia_test</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails VideoGameTrivia: production" uuid="6e9b2e8d-7af8-4b6d-8991-ff7f907a7437">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:VideoGameTrivia_production</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>
