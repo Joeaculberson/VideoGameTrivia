@@ -1,0 +1,13 @@
+<%= simple_form_for(@game) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :opponent %>
+    <%= f.input :your_pieces %>
+    <%= f.input :opponent_pieces %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

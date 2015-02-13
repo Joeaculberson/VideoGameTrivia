@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  opponent: MyString
+  your_pieces: MyString
+  opponent_pieces: MyString
+
+two:
+  opponent: MyString
+  your_pieces: MyString
+  opponent_pieces: MyString
