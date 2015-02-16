@@ -81,5 +81,6 @@ test:
 production:
   <<: *default
   database: VideoGameTrivia_production
+  encoding: unicode
   username: VideoGameTrivia
   password: <%= ENV['VIDEOGAMETRIVIA_DATABASE_PASSWORD'] %>
