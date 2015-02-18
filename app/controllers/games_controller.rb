@@ -1,6 +1,8 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
 
+  before_filter :require_login
+
   # GET /games
   # GET /games.json
   def index
@@ -70,5 +72,11 @@ class GamesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
       params.require(:game).permit(:opponent, :your_pieces, :opponent_pieces)
+    end
+
+    def require_login
+      unless current_user
+        redirect_to '/users/sign_in'
+      end
     end
 end
