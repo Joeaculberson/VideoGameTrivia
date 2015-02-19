@@ -1,18 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Opponent:</strong>
-  <%= @game.opponent %>
+  <strong>User email:</strong>
+  <%= @game.user_email %>
 </p>
 
 <p>
-  <strong>Your pieces:</strong>
-  <%= @game.your_pieces %>
+  <strong>Opponent user email:</strong>
+  <%= @game.opponent_user_email %>
+</p>
+
+<p>
+  <strong>User pieces:</strong>
+  <%= @game.user_pieces %>
 </p>
 
 <p>
   <strong>Opponent pieces:</strong>
   <%= @game.opponent_pieces %>
+</p>
+
+<p>
+  <strong>Round:</strong>
+  <%= @game.round %>
+</p>
+
+<p>
+  <strong>User turn email:</strong>
+  <%= @game.user_turn_email %>
 </p>
 
 <%= link_to 'Edit', edit_game_path(@game) %> |
