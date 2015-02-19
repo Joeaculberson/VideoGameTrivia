@@ -27,11 +27,15 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
+    @game.user_email = current_user.email
+    @game.user_pieces = ''
+    @game.opponent_pieces = ''
+    @game.round = 0
+    @game.user_turn_email = current_user.email
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
-        format.json { render :show, status: :created, location: @game }
+        format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + @game.opponent_user_email }
       else
         format.html { render :new }
         format.json { render json: @game.errors, status: :unprocessable_entity }
