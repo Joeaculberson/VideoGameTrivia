@@ -2,7 +2,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {:host => 'http://video-game-trivia.herokuapp.com' }
   Rails.application.routes.default_url_options[:host] = 'http://video-game-trivia.herokuapp.com/'
   config.serve_static_files = true
-  config.serve_static_assets = true
 
   config.action_mailer.smtp_settings = {
       address:              'smtp.gmail.com',
