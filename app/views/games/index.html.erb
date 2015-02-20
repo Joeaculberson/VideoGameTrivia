@@ -1,37 +1,48 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Games</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>User email</th>
-      <th>Opponent user email</th>
-      <th>User pieces</th>
-      <th>Opponent pieces</th>
-      <th>Round</th>
-      <th>User turn email</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @games.each do |game| %>
-      <tr>
-        <td><%= game.user_email %></td>
-        <td><%= game.opponent_user_email %></td>
-        <td><%= game.user_pieces %></td>
-        <td><%= game.opponent_pieces %></td>
-        <td><%= game.round %></td>
-        <td><%= game.user_turn_email %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
 <%= link_to 'New Game', new_game_path %>
+
+</br></br>
+
+<% if @opponent_turn_games.size > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <th>
+        Thier turn
+      </th>
+      </thead>
+
+      <tbody>
+      <% @opponent_turn_games.each do |game| %>
+          <tr>
+            <td><%= game.opponent_user_email %></td>
+            <td><%= game.user_pieces %></td>
+            <td><%= game.opponent_pieces %></td>
+            <td><%= game.round %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </br>
+<% end %>
+
+<% if @user_turn_games.size > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <th>
+        Your turn
+      </th>
+      </thead>
+
+      <tbody>
+      <% @user_turn_games.each do |game| %>
+          <tr>
+            <td><%= game.opponent_user_email %></td>
+            <td><%= game.user_pieces %></td>
+            <td><%= game.opponent_pieces %></td>
+            <td><%= @opponent_turn_games.size %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

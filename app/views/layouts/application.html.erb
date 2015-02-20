@@ -78,12 +78,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">VideoGameTrivia</a>
+        <a class="navbar-brand" href="#">Video Game Trivia</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li><%= link_to "Home", root_path %></li>
               <%= render 'devise/menu/registration_items' %>
               <%= render 'devise/menu/login_items' %>
+              <% if current_user %>
+                <%= current_user.email %>
+              <% end %>
           </ul>
         </div>
       </div>

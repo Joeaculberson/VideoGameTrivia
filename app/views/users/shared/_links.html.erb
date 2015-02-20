@@ -1,9 +1,10 @@
 <%- if devise_mapping.omniauthable? %>
     <%= button_to(omniauth_authorize_path(resource_name, :facebook), :class=>"btn btn-block btn-social btn-facebook") do %>
         <i class="fa fa-facebook"></i> Connect with Facebook
-        <%= button_to(omniauth_authorize_path(resource_name, :google_oauth2), :class=>"btn btn-block btn-social btn-google-plus") do %>
-            <i class="fa fa-google"></i> Connect with Google+
-        <% end %>
+    <% end %>
+
+    <%= button_to(omniauth_authorize_path(resource_name, :google_oauth2), :class=>"btn btn-block btn-social btn-google-plus") do %>
+        <i class="fa fa-google"></i> Connect with Google+
     <% end %>
 <% end -%>
 
