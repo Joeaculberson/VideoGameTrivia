@@ -6,9 +6,12 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
+    #Also needs to be checking if the game is over, currently is not.
     @opponent_turn_games = Game.where(:user_email => current_user.email).where.not(:user_turn_email => current_user.email)
+    #Also needs to be checking if the game is over, currently is not.
     @user_turn_games = Game.where(:user_email => current_user.email).where(:user_turn_email => current_user.email)
-    #@past_games = Game.where(:user_email => current_user.email).where(:opponent_pieces.split(' ').size => 6).or(:user_pieces.split(' ').size => 6)
+    #This query isn't working for some reason.
+    @past_games = Game.where(:user_email => current_user.email).where(:opponent_pieces.to_s.split == 6, :user_pieces.to_s.split == 6)
   end
 
   # GET /games/1
