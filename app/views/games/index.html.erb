@@ -23,7 +23,6 @@
       <% end %>
       </tbody>
     </table>
-    </br>
 <% end %>
 
 <% if @user_turn_games.size > 0 %>
@@ -40,7 +39,7 @@
             <td><%= game.opponent_user_email %></td>
             <td><%= game.user_pieces %></td>
             <td><%= game.opponent_pieces %></td>
-            <td><%= @opponent_turn_games.size %></td>
+            <td><%= game.round %></td>
           </tr>
       <% end %>
       </tbody>
