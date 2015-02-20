@@ -38,6 +38,35 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
+    <style>
+        /* User sign in and sign forms. */
+        .border-form-div {
+            max-width: 45%;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        .border-form-div .form-signin-heading,
+        .border-form-div .checkbox {
+            margin-bottom: 10px;
+        }
+        .border-form-div input[type="text"],
+        .border-form-div input[type="email"],
+        .border-form-div input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
+    </style>
   </head>
   <body>
     <div class="navbar navbar-default navbar-static-top">
@@ -51,8 +80,8 @@
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
             <li><%= link_to "Home", root_path %></li>
-            <%= render 'devise/menu/registration_items' %>
-            <%= render 'devise/menu/login_items' %>
+              <%= render 'devise/menu/registration_items' %>
+              <%= render 'devise/menu/login_items' %>
           </ul>
         </div>
       </div>
@@ -60,17 +89,15 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-lg-9">
-          <%= bootstrap_flash %>
-          <%= yield %>
-        </div>
+        <%= bootstrap_flash %>
+        <%= yield %>
         <div class="col-lg-3">
 
         </div><!--/span-->
       </div><!--/row-->
 
       <footer>
-        <p>&copy; Video Game Trivia</p>
+
       </footer>
 
     </div> <!-- /container -->
