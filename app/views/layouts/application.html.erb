@@ -84,9 +84,6 @@
             <li><%= link_to "Home", root_path %></li>
               <%= render 'devise/menu/registration_items' %>
               <%= render 'devise/menu/login_items' %>
-              <% if current_user %>
-                <%= current_user.email %>
-              <% end %>
           </ul>
         </div>
       </div>
