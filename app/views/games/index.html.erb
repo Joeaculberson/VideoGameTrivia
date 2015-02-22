@@ -2,7 +2,7 @@
     <%= button_to 'New Game', new_game_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 </div>
 
-</br></br>
+<br>
 
 <% if @user_turn_games.size > 0 %>
     <table class="table table-striped">
@@ -23,7 +23,7 @@
 
       <tbody>
       <% @user_turn_games.each do |game| %>
-          <tr class="success">
+          <tr class="success" onclick="location.href='<%= new_game_path %>'">
             <td><%= game.opponent_user_email %></td>
             <td><%= game.user_pieces.split.length %></td>
             <td><%= game.opponent_pieces.split.length %></td>
@@ -38,7 +38,7 @@
     <table class="table table-striped">
       <thead>
           <th>
-            Thier turn
+            Their turn
           </th>
           <th>
             Your pieces
