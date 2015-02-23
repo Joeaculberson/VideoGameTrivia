@@ -5,7 +5,8 @@
 <br>
 
 <% if @user_turn_games.size > 0 %>
-    <table class="table table-striped">
+    <div class="panel panel-default">
+    <table class="table table-striped table-hover">
       <thead>
       <th>
         Your turn
@@ -32,9 +33,11 @@
       <% end %>
       </tbody>
     </table>
+    </div>
 <% end %>
 
 <% if @opponent_turn_games.size > 0 %>
+    <div class="panel panel-default">
     <table class="table table-striped">
       <thead>
           <th>
@@ -62,34 +65,37 @@
       <% end %>
       </tbody>
     </table>
+        </div>
 <% end %>
 
 <% if @past_games.size > 0 %>
-    <table class="table table-striped">
-      <thead>
-          <th>
-            Past games
-          </th>
-          <th>
-            Your pieces
-          </th>
-          <th>
-            Their pieces
-          </th>
-          <th>
-            Round
-          </th>
-      </thead>
+    <div class="panel panel-default">
+        <table class="table table-striped">
+          <thead>
+              <th>
+                Past games
+              </th>
+              <th>
+                Your pieces
+              </th>
+              <th>
+                Their pieces
+              </th>
+              <th>
+                Round
+              </th>
+          </thead>
 
-      <tbody>
-      <% @past_games.each do |game| %>
-          <tr class="danger">
-            <td><%= game.opponent_user_email %></td>
-            <td><%= game.user_pieces.split.length %></td>
-            <td><%= game.opponent_pieces.split.length %></td>
-            <td><%= game.round %></td>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
+          <tbody>
+          <% @past_games.each do |game| %>
+              <tr class="danger">
+                <td><%= game.opponent_user_email %></td>
+                <td><%= game.user_pieces.split.length %></td>
+                <td><%= game.opponent_pieces.split.length %></td>
+                <td><%= game.round %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+    </div>
 <% end %>
