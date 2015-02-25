@@ -5,6 +5,9 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     @questions = Question.all
+    @random_question = @questions.sample
+
+    redirect_to @random_question
   end
 
   # GET /questions/1
