@@ -1,13 +1,22 @@
 <p id="notice"><%= notice %></p>
 
+<div class="text-center">
+  <p>
+    <strong>Round:</strong>
+    <%= @game.round %>
+  </p>
+</div>
+
 <div class="container round-edges">
     <div class="row">
         <div class="col-xs-1">
+          <div id="face-wrapper">
             <% if current_user.image %>
-              <img src='<%= current_user.image %>' class="img-circle">
+                <img src='<%= current_user.image %>' class="img-circle face">
             <% else %>
-              <img src='<%= image_url('default_profile.png')%>' class="img-circle">
+                <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
             <% end %>
+          </div>
         </div>
         <div class="col-xs-5">
             <%= @game.user_email %> </br></br>
@@ -21,38 +30,29 @@
         </div>
         <div class="col-xs-1">
             <div class="pull-right">
-              <% if @current_opponent.image %>
-                  <img src='<%= @current_opponent.image %>' class="img-circle">
-              <% else %>
-                  <img src='<%= image_url('default_profile.png')%>' class="img-circle">
-              <% end %>
+              <div id="face-wrapper">
+                  <% if @current_opponent.image %>
+                      <img src='<%= @current_opponent.image %>' class="img-circle face">
+                  <% else %>
+                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                  <% end %>
+              </div>
             </div>
         </div>
     </div>
 </div>
 
+</br>
 
-<a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg')%>' class="img-circle"></a>
+<div class="row text-center">
+    <a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg')%>' class="img-circle"></a>
+</div>
 
-<p>
-  <strong>User pieces:</strong>
-  <%= @game.user_pieces %>
-</p>
 
-<p>
-  <strong>Opponent pieces:</strong>
-  <%= @game.opponent_pieces %>
-</p>
+</br>
+</br>
 
-<p>
-  <strong>Round:</strong>
-  <%= @game.round %>
-</p>
-
-<p>
-  <strong>User turn email:</strong>
-  <%= @game.user_turn_email %>
-</p>
-
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<div class="row text-center">
+    <%= link_to 'Edit', edit_game_path(@game) %> |
+    <%= link_to 'Back', games_path %>
+</div>
