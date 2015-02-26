@@ -32,21 +32,28 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
-    @game.user_email = current_user.email
-    @game.user_pieces = ''
-    @game.opponent_pieces = ''
-    @game.round = 0
-    @game.user_turn_email = current_user.email
 
-    respond_to do |format|
-      if @game.save
-        format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + @game.opponent_user_email }
-      else
-        format.html { render :new }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+    if User.find_by(email: params[:game][:opponent_user_email]).blank?
+      flash[:alert] = 'Could not find user ' + params[:game][:opponent_user_email]
+      redirect_to games_url
+    else
+      @game = Game.new(game_params)
+      @game.user_email = current_user.email
+      @game.user_pieces = ''
+      @game.opponent_pieces = ''
+      @game.round = 0
+      @game.user_turn_email = current_user.email
+
+      respond_to do |format|
+        if @game.save
+          format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + @game.opponent_user_email }
+        else
+          format.html { render :new }
+          format.json { render json: @game.errors, status: :unprocessable_entity }
+        end
       end
     end
+
   end
 
   # PATCH/PUT /games/1
