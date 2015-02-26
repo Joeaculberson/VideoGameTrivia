@@ -4,22 +4,28 @@
     <div class="row">
         <div class="col-xs-1">
             <% if current_user.image %>
-              <img src='<%= current_user.image %>' class="img-circle">
+              <img src='<%= current_user.image.nil? %>' class="img-circle">
             <% else %>
               <img src='<%= image_url('default_profile.png')%>' class="img-circle">
             <% end %>
         </div>
         <div class="col-xs-5">
-            <%= @game.user_email %>
+            <%= @game.user_email %> </br></br>
+          Trophy Silhouettes go here
         </div>
         <div class="col-xs-5" style="border-left-style: dotted">
             <div class="pull-right">
-                <%= @game.opponent_user_email %>
+                <%= @game.opponent_user_email %> </br></br>
+              Trophy Silhouettes go here
             </div>
         </div>
         <div class="col-xs-1">
             <div class="pull-right">
-                <img src=<%= @current_opponent.image %> class="img-circle">
+              <% if @current_opponent.image %>
+                  <img src='<%= @current_opponent.image %>' class="img-circle">
+              <% else %>
+                  <img src='<%= image_url('default_profile.png')%>' class="img-circle">
+              <% end %>
             </div>
         </div>
     </div>
