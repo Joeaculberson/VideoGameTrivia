@@ -17,6 +17,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @current_opponent = User.first
   end
 
   # GET /games/new

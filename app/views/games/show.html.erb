@@ -1,14 +1,30 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User email:</strong>
-  <%= @game.user_email %>
-</p>
+<div class="container round-edges">
+    <div class="row">
+        <div class="col-xs-1">
+            <% if current_user.image %>
+              <img src=<%= current_user.image %> class="img-circle">
+            <% else %>
+              <img src=<%= image_url('default_profile.png')%> class="img-circle">
+            <% end %>
+        </div>
+        <div class="col-xs-5">
+            <%= @game.user_email %>
+        </div>
+        <div class="col-xs-5" style="border-left-style: dotted">
+            <div class="pull-right">
+                <%= @game.opponent_user_email %>
+            </div>
+        </div>
+        <div class="col-xs-1">
+            <div class="pull-right">
+                <img src=<%= @current_opponent.image %> class="img-circle">
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>
-  <strong>Opponent user email:</strong>
-  <%= @game.opponent_user_email %>
-</p>
 
 <p>
   <strong>User pieces:</strong>

@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
       user.provider = auth.provider
       user.uid      = auth.uid
       user.email     = auth.info.email
+      user.image = auth.info.image
       user.skip_confirmation!
       user.save(:validate => false)
     end
