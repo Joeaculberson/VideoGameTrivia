@@ -18,7 +18,6 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     @current_opponent = User.find_by email: @game.opponent_user_email
-    flash[:notice] = @current_opponent
   end
 
   # GET /games/new
