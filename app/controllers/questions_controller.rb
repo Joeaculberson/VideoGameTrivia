@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
     @questions = Question.all
     @random_question = @questions.sample
 
-    redirect_to @random_question
+    redirect_to Question.order("RANDOM()").first
   end
 
   # GET /questions/1
