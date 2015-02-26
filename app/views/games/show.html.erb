@@ -6,7 +6,7 @@
             <% if current_user.image.nil? %>
               <img src=<%= current_user.image %> class="img-circle">
             <% else %>
-              <img src=<%= image_url('default_profile.png')%> class="img-circle">
+              <img src='<%= image_url('default_profile.png')%>' class="img-circle">
             <% end %>
         </div>
         <div class="col-xs-5">
