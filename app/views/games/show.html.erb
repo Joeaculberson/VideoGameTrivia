@@ -1,10 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
+
 <div class="container round-edges">
     <div class="row">
         <div class="col-xs-1">
             <% if current_user.image %>
-              <img src='<%= current_user.image.nil? %>' class="img-circle">
+              <img src='<%= current_user.image %>' class="img-circle">
             <% else %>
               <img src='<%= image_url('default_profile.png')%>' class="img-circle">
             <% end %>
