@@ -3,7 +3,7 @@
 <div class="container round-edges">
     <div class="row">
         <div class="col-xs-1">
-            <% if current_user.image %>
+            <% if current_user.image.nil? %>
               <img src=<%= current_user.image %> class="img-circle">
             <% else %>
               <img src=<%= image_url('default_profile.png')%> class="img-circle">
