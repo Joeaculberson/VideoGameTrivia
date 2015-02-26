@@ -57,7 +57,7 @@
       <tbody>
       <% @opponent_turn_games.each do |game| %>
           <tr class="info" onclick="location.href='<%= game_path(game) %>'">
-            <td><%= game.opponent_user_email %></td>
+            <td><%= game.user_email %></td>
             <td><%= game.user_pieces.split.length %></td>
             <td><%= game.opponent_pieces.split.length %></td>
             <td><%= game.round %></td>

@@ -7,9 +7,9 @@ class GamesController < ApplicationController
   # GET /games.json
   def index
     #Also needs to be checking if the game is over, currently is not.
-    @opponent_turn_games = Game.where(:user_email => current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
+    @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     #Also needs to be checking if the game is over, currently is not.
-    @user_turn_games = Game.where(:user_email => current_user.email).where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
+    @user_turn_games = Game.where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     #This query isn't working for some reason.
     @past_games = Game.where(:user_email => current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
   end
