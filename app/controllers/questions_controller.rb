@@ -32,8 +32,12 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         if current_user.role == 'Admin' || current_user.role == 'Reviewer'
+          @question.is_authorized = 'true'
+          @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted.' }
         elsif curren_user.role == 'Player'
+          @question.is_authorized = 'false'
+          @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted for review.' }
         end
         format.json { render :show, status: :created, location: @question }

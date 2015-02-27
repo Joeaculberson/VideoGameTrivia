@@ -3,6 +3,10 @@ class GamesController < ApplicationController
 
   before_filter :require_login
 
+  def promote
+
+  end
+
   # GET /games
   # GET /games.json
   def index

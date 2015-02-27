@@ -1,0 +1,16 @@
+<%= simple_form_for(:user) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :email %>
+    </div>
+
+    <div class="form-group">
+      <b>Category</b>
+      <%= f.select(:role, options_for_select([['Player','Player'],['Reviewer','Reviewer'],['Admin','Admin']]), {}, {class: "form-control"}) %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+<% end %>
