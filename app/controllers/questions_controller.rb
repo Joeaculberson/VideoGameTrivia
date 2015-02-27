@@ -13,6 +13,14 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
+
+  end
+
+  def accept_review
+    flash[:notice] = 'Question was successfully accepted.'
+    @question.is_authorized = true
+    @question.save
+    redirect_to show_review_path
   end
 
   # GET /questions/new
@@ -31,6 +39,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
+        @question.submitter = current_user.email
         if current_user.role == 'Admin' || current_user.role == 'Reviewer'
           @question.is_authorized = 'true'
           @question.save
@@ -46,6 +55,10 @@ class QuestionsController < ApplicationController
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def show_review
+    @questions = Question.where(:is_authorized => false)
   end
 
   # PATCH/PUT /questions/1

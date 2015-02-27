@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       user = User.find_by(email: params[:user][:email])
       user.role = params[:user][:role]
       user.save
-      flash[:notice] = user.email + ' was successfully promoted to ' + params[:user][:role] + '.'
+      flash[:notice] = user.email + ' was successfully changed to ' + params[:user][:role] + '.'
     end
 
     redirect_to root_url

@@ -2401,6 +2401,7 @@
       <column name="category" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="is_authorized" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="questions_pkey" columns="id"/>
     </table>
     <table name="questions_id_seq" schema="public" catalog="VideoGameTrivia_development" type="SEQUENCE">
