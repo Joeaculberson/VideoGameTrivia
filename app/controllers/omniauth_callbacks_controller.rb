@@ -2,6 +2,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
     user = User.from_omniauth(request.env["omniauth.auth"])
     if user.persisted?
+      if user.role.nil? || user.role.blank?
+        user.role = 'Player'
+        user.save
+      end
       sign_in_and_redirect user, notice: "Signed in!"
     else
       session["devise.user_attributes"] = user.attributes
@@ -10,4 +14,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
   alias_method :facebook, :all
   alias_method :google_oauth2, :all
+
 end

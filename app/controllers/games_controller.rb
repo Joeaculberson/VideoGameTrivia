@@ -6,6 +6,10 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
+    if current_user.role.nil? || current_user.role.blank?
+      current_user.role = 'Player'
+      current_user.save
+    end
     @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     @user_turn_games = Game.where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     @past_games = Game.where(:user_email => current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")

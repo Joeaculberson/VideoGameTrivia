@@ -99,3 +99,9 @@
         </table>
     </div>
 <% end %>
+
+<% if current_user.role == 'Admin' || current_user.role == 'Reviewer' %>
+    <div class="text-center">
+      <%= button_to 'Submit a question', new_question_path, :class => 'btn btn-primary btn-lg btn-block', :method => :get %>
+    </div>
+<% end %>
