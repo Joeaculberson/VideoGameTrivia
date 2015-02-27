@@ -39,9 +39,9 @@
 
 <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
     <div class="text-center">
-      <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', :method => :get %>
+      <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: true }, :method => :get %>
     </div>
     <div class="text-center">
-      <%= button_to 'Decline question', root_path, :class => 'btn btn-primary btn-lg btn-block', :method => :get %>
+      <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: false }, :method => :get %>
     </div>
 <% end %>

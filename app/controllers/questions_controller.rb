@@ -1,12 +1,11 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :accept_review]
 
   # GET /questions
   # GET /questions.json
   def index
     @questions = Question.all
     @random_question = @questions.sample
-
     redirect_to Question.order("RANDOM()").first
   end
 
@@ -17,8 +16,14 @@ class QuestionsController < ApplicationController
   end
 
   def accept_review
-    flash[:notice] = 'Question was successfully accepted.'
-    @question.is_authorized = true
+    @question.is_authorized = params[:is_accepted]
+    if @question.is_authorized
+      flash[:notice] = 'Question was successfully accepted.'
+    else
+      @question.destroy
+      flash[:notice] = 'Question was successfully rejected.'
+    end
+
     @question.save
     redirect_to show_review_path
   end
