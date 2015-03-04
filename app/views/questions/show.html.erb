@@ -15,7 +15,6 @@
             disableAllButtons();
         });
     });
-
 </script>
 
 <div class="container round-edges">
@@ -29,7 +28,12 @@
 <div class="text-center">
   <div class="center-block">
     <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0;">
-      <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+      <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
+          <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+      <% else %>
+          <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+      <% end %>
+
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_1 %></button>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_2 %></button>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_3 %></button>
