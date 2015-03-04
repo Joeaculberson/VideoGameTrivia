@@ -29,7 +29,7 @@
   <div class="center-block">
     <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0;">
       <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
-          <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+          <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
       <% else %>
           <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
       <% end %>

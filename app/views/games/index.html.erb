@@ -25,7 +25,16 @@
       <tbody>
       <% @user_turn_games.each do |game| %>
           <tr class="success" onclick="location.href='<%= game_path(game) %>'">
-            <td><%= game.opponent_user_email %></td>
+            <td>
+              <div id="face-wrapper">
+                <% if current_user.image %>
+                    <img src='<%= current_user.image %>' class="img-circle face">
+                <% else %>
+                    <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                <% end %>
+                <%= game.opponent_user_email %>
+              </div>
+            </td>
             <td><%= game.user_pieces.split.length %></td>
             <td><%= game.opponent_pieces.split.length %></td>
             <td><%= game.round %></td>
@@ -57,7 +66,15 @@
       <tbody>
       <% @opponent_turn_games.each do |game| %>
           <tr class="info" onclick="location.href='<%= game_path(game) %>'">
-            <td><%= game.user_email %></td>
+            <td><div id="face-wrapper">
+              <% if current_user.image %>
+                  <img src='<%= current_user.image %>' class="img-circle face">
+              <% else %>
+                  <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+              <% end %>
+              <%= game.opponent_user_email %>
+            </div>
+            </td>
             <td><%= game.user_pieces.split.length %></td>
             <td><%= game.opponent_pieces.split.length %></td>
             <td><%= game.round %></td>
@@ -89,7 +106,14 @@
           <tbody>
           <% @past_games.each do |game| %>
               <tr class="danger" onclick="location.href='<%= game_path(game) %>'">
-                <td><%= game.opponent_user_email %></td>
+                <td><div id="face-wrapper">
+                  <% if current_user.image %>
+                      <img src='<%= current_user.image %>' class="img-circle face">
+                  <% else %>
+                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                  <% end %>
+                  <%= game.opponent_user_email %>
+                </div></td>
                 <td><%= game.user_pieces.split.length %></td>
                 <td><%= game.opponent_pieces.split.length %></td>
                 <td><%= game.round %></td>
