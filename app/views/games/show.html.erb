@@ -20,23 +20,23 @@
         </div>
         <div class="col-xs-5">
             <%= @game.user_email %> </br>
-              <img src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
-              <img src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
-              <img src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
-              <img src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
-              <img src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
-              <img src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
+              <img id="userActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
+              <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
+              <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
+              <img id="userFpsImage" src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
+              <img id="userRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
+              <img id="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
         </div>
         <div class="col-xs-5" style="border-left-style: dotted">
             <div class="pull-right">
                 <%= @game.opponent_user_email %></div> </br>
           <div class="pull-right">
-            <img src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
-            <img src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
-            <img src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
-            <img src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
-            <img src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
-            <img src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
+            <img id="opponentRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
+            <img id="opponentRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
+            <img id="opponentFpsImage" src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
+            <img id="opponentArcadeImage" src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
+            <img id="opponentAdventureImage" src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
+            <img id="opponentActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
           </div>
         </div>
         <div class="col-xs-1">
@@ -67,3 +67,75 @@
     <%= link_to 'Edit', edit_game_path(@game) %> |
     <%= link_to 'Back', games_path %>
 </div>
+
+<% if @game.user_pieces.split.include? '1' %>
+    <script>
+        document.getElementById("userActionImage").src = '<%= image_url('icons/action.png')%>';
+    </script>
+<% end %>
+
+<% if @game.user_pieces.split.include? '2' %>
+    <script>
+        document.getElementById("userAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
+    </script>
+<% end %>
+
+<% if @game.user_pieces.split.include? '3' %>
+    <script>
+        document.getElementById("userArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
+    </script>
+<% end %>
+
+<% if @game.user_pieces.split.include? '4' %>
+    <script>
+        document.getElementById("userFpsImage").src = '<%= image_url('icons/fps.png')%>';
+    </script>
+<% end %>
+
+<% if @game.user_pieces.split.include? '5' %>
+    <script>
+        document.getElementById("userRacingImage").src = '<%= image_url('icons/racing.png')%>';
+    </script>
+<% end %>
+
+<% if @game.user_pieces.split.include? '6' %>
+    <script>
+        document.getElementById("userRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '1' %>
+    <script>
+        document.getElementById("opponentActionImage").src = '<%= image_url('icons/action.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '2' %>
+    <script>
+        document.getElementById("opponentAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '3' %>
+    <script>
+        document.getElementById("opponentArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '4' %>
+    <script>
+        document.getElementById("opponentFpsImage").src = '<%= image_url('icons/fps.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '5' %>
+    <script>
+        document.getElementById("opponentRacingImage").src = '<%= image_url('icons/racing.png')%>';
+    </script>
+<% end %>
+
+<% if @game.opponent_pieces.split.include? '6' %>
+    <script>
+        document.getElementById("opponentRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
+    </script>
+<% end %>
