@@ -28,15 +28,32 @@
 <div class="text-center">
   <div class="center-block">
     <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0;">
+
+      <% randNumber = 1 + rand(4); %>
+
+      <% def displayCorrectAnswer %>
       <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
-          <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
-      <% else %>
-          <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+              <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
+          <% else %>
+              <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
+          <% end %>
       <% end %>
 
+      <% if(randNumber == 1) %>
+        <% displayCorrectAnswer %>
+      <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_1 %></button>
+      <% if(randNumber == 2) %>
+          <% displayCorrectAnswer %>
+      <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_2 %></button>
+      <% if(randNumber == 3) %>
+          <% displayCorrectAnswer %>
+      <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_3 %></button>
+      <% if(randNumber == 4) %>
+          <% displayCorrectAnswer %>
+      <% end %>
     </div>
   </div>
 </div>
