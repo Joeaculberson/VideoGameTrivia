@@ -7,12 +7,16 @@
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
             disableAllButtons();
+            <% params[:answered_correctly] = false %>
+            window.location.href="/games/<%= params[:id] %>"
         });
     });
     $(document).ready(function() {
         $("#correct").click(function() {
             $(this).toggleClass("btn-success");
             disableAllButtons();
+            <% params[:answered_correctly] = true %>
+            window.location.href="/games/<%= params[:id] %>"
         });
     });
 </script>
@@ -32,26 +36,26 @@
       <% randNumber = 1 + rand(4); %>
 
       <% def displayCorrectAnswer %>
-      <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
+          <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
               <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
           <% else %>
               <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
           <% end %>
       <% end %>
 
-      <% if(randNumber == 1) %>
+      <% if randNumber == 1  %>
         <% displayCorrectAnswer %>
       <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_1 %></button>
-      <% if(randNumber == 2) %>
+      <% if randNumber == 2 %>
           <% displayCorrectAnswer %>
       <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_2 %></button>
-      <% if(randNumber == 3) %>
+      <% if randNumber == 3 %>
           <% displayCorrectAnswer %>
       <% end %>
       <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_3 %></button>
-      <% if(randNumber == 4) %>
+      <% if randNumber == 4 %>
           <% displayCorrectAnswer %>
       <% end %>
     </div>
