@@ -64,6 +64,10 @@
 </br>
 
 <div class="row text-center">
+  <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png')%>' width="10%">
+</div>
+
+<div class="row text-center">
     <%= link_to 'Edit', edit_game_path(@game) %> |
     <%= link_to 'Back', games_path %>
 </div>

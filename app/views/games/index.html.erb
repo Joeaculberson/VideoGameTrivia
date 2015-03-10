@@ -27,8 +27,9 @@
           <tr class="success" onclick="location.href='<%= game_path(game) %>'">
             <td>
               <div id="face-wrapper">
-                <% if current_user.image %>
-                    <img src='<%= current_user.image %>' class="img-circle face">
+                <% current_opponent = User.find_by email: game.opponent_user_email %>
+                <% if current_opponent.image %>
+                    <img src='<%= current_opponent.image %>' class="img-circle face">
                 <% else %>
                     <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
                 <% end %>
@@ -67,8 +68,9 @@
       <% @opponent_turn_games.each do |game| %>
           <tr class="info" onclick="location.href='<%= game_path(game) %>'">
             <td><div id="face-wrapper">
-              <% if current_user.image %>
-                  <img src='<%= current_user.image %>' class="img-circle face">
+              <% current_opponent = User.find_by email: game.opponent_user_email %>
+              <% if current_opponent.image %>
+                  <img src='<%= current_opponent.image %>' class="img-circle face">
               <% else %>
                   <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
               <% end %>
@@ -107,8 +109,9 @@
           <% @past_games.each do |game| %>
               <tr class="danger" onclick="location.href='<%= game_path(game) %>'">
                 <td><div id="face-wrapper">
-                  <% if current_user.image %>
-                      <img src='<%= current_user.image %>' class="img-circle face">
+                  <% current_opponent = User.find_by email: game.opponent_user_email %>
+                  <% if current_opponent.image %>
+                      <img src='<%= current_opponent.image %>' class="img-circle face">
                   <% else %>
                       <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
                   <% end %>
