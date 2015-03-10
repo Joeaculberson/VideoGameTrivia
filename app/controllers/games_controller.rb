@@ -48,6 +48,8 @@ class GamesController < ApplicationController
       @game.opponent_pieces = ''
       @game.round = 0
       @game.user_turn_email = current_user.email
+      @game.user_meter = 0
+      @game.opponent_meter = 0
 
       respond_to do |format|
         if @game.save
