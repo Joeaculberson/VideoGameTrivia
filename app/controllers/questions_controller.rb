@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
           @question.is_authorized = 'true'
           @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted.' }
-        elsif curren_user.role == 'Player'
+        elsif current_user.role == 'Player'
           @question.is_authorized = 'false'
           @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted for review.' }
