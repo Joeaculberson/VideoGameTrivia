@@ -19,6 +19,11 @@ class GamesController < ApplicationController
     @past_games = Game.where(:user_email => current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
   end
 
+  def chosen_category
+    session[:chosen_category] = params[:chosen_category]
+    redirect_to index_questions_url
+  end
+
   # GET /games/1
   # GET /games/1.json
   def show
