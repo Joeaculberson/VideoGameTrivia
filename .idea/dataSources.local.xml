@@ -12,7 +12,7 @@
     <data-source name="Rails VideoGameTrivia: production" uuid="0363bad1-abb1-4ace-8a74-c489925aa8a9">
       <secret-storage>memory</secret-storage>
       <first-sync>true</first-sync>
-      <user-name>dgjcoraqmwwwls</user-name>
+      <user-name>VideoGameTrivia</user-name>
     </data-source>
   </component>
 </project>

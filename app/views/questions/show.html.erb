@@ -3,26 +3,29 @@
       $("#correct").toggleClass("disabled");
       $("[id=incorrect]").toggleClass("disabled");
   }
+
+  function revealBackButton() {
+      $("#backButton").show();
+  }
+
     $(document).ready(function() {
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
             disableAllButtons();
-            document.getElementById('incorrect_answer').click();
+            revealBackButton();
         });
     });
     $(document).ready(function() {
         $("#correct").click(function() {
             $(this).toggleClass("btn-success");
             disableAllButtons();
-            document.getElementById('correct_answer').click();
+            revealBackButton();
         });
     });
+    $(document).ready(function() {
+        $("#backButton").hide();
+    });
 </script>
-
-<div class="hidden_links" style="visibility: hidden">
-  <%= link_to 'correct_answer',  show_game_path(session[:current_game]), :id => 'correct_answer', session: { answered_correctly: true } %>
-  <%= link_to 'incorrect_answer',  show_game_path(session[:current_game]), :id => 'incorrect_answer', session: { answered_correctly: false } %>
-</div>
 
 <div class="container round-edges">
   <div class="row">
@@ -73,3 +76,7 @@
       <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: false }, :method => :get %>
     </div>
 <% end %>
+
+<div id="backButton">
+  <%= button_to 'Back to game', :back, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+</div>
