@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   get 'show_review' => 'questions#show_review'
   get 'accept_review' => 'questions#accept_review'
+  get 'show_game' => 'games#show'
   root 'games#index'
 end

@@ -7,19 +7,22 @@
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
             disableAllButtons();
-            <% params[:answered_correctly] = false %>
-            window.location.href="/games/<%= params[:id] %>"
+            document.getElementById('incorrect_answer').click();
         });
     });
     $(document).ready(function() {
         $("#correct").click(function() {
             $(this).toggleClass("btn-success");
             disableAllButtons();
-            <% params[:answered_correctly] = true %>
-            window.location.href="/games/<%= params[:id] %>"
+            document.getElementById('correct_answer').click();
         });
     });
 </script>
+
+<div class="hidden_links" style="visibility: hidden">
+  <%= link_to 'correct_answer',  show_game_path(session[:current_game]), :id => 'correct_answer', session: { answered_correctly: true } %>
+  <%= link_to 'incorrect_answer',  show_game_path(session[:current_game]), :id => 'incorrect_answer', session: { answered_correctly: false } %>
+</div>
 
 <div class="container round-edges">
   <div class="row">

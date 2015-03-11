@@ -46,11 +46,11 @@ class QuestionsController < ApplicationController
       if @question.save
         @question.submitter = current_user.email
         if current_user.role == 'Admin' || current_user.role == 'Reviewer'
-          @question.is_authorized = 'true'
+          @question.is_authorized = true
           @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted.' }
         elsif current_user.role == 'Player'
-          @question.is_authorized = 'false'
+          @question.is_authorized = false
           @question.save
           format.html { redirect_to games_url, notice: 'Question was successfully submitted for review.' }
         end

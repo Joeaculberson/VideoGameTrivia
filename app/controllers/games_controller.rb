@@ -23,6 +23,17 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     @current_opponent = User.find_by email: @game.opponent_user_email
+    #if params.has_key? 'answered_correctly'
+      if session[:answered_correctly]
+        if current_user.meter_pieces < 2
+          current_user.meter_pieces = current_user.meter_pieces + 1
+          current_user.save!
+        else
+          #offer chance to get a piece
+        end
+      end
+    #end
+    session[:current_game] = @game
   end
 
   # GET /games/new
