@@ -25,14 +25,14 @@ class GamesController < ApplicationController
     @current_opponent = User.find_by email: @game.opponent_user_email
     #if params.has_key? 'answered_correctly'
       if session[:answered_correctly] == "true"
+        @game.user_meter = @game.user_meter + 1
         if @game.user_meter < 2
-          @game.user_meter = @game.user_meter + 1
           @game.save!
           session[:answered_correctly] = false
         else
           #offer chance to get a piece
           #placeholder code for testing
-          @game.user_meter = 0
+
           @game.save!
           session[:answered_correctly] = false
         end

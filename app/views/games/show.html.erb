@@ -143,3 +143,38 @@
         document.getElementById("opponentRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
     </script>
 <% end %>
+
+<% if @game.user_meter == 3 %>
+    <div class="modal fade" id="challengeModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+           <h4 class="modal-title">Challenge! Select a piece.</h4>
+          </div>
+          <div class="modal-body row">
+            <div class="container col-md-12 text-center">
+              <div class="row">
+                <div class="col-md-3"><img id="userActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50"></br>Action</div>
+                <div class="col-md-3"><img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50"></br>Adventure</div>
+                <div class="col-md-3"><img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50"></br>Arcade</div>
+              </div>
+              <div class="row">
+                <div class="col-md-3"><img id="userFpsImage" src='<%= image_url('greyscale/fps.png')%>' width="50" height="50"></br>Fps</div>
+                <div class="col-md-3"><img id="userRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50"></br>Racing</div>
+                <div class="col-md-3"><img id="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50"></br>Role-playing</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script>
+        $('#challengeModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        $(window).load( function () {
+            $('#challengeModal').modal('show')
+        })
+    </script>
+<% end %>
