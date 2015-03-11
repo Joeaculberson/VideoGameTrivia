@@ -13,6 +13,7 @@
             $(this).toggleClass("btn-danger");
             disableAllButtons();
             revealBackButton();
+            <%= session[:answered_correctly] = false %>
         });
     });
     $(document).ready(function() {
@@ -20,6 +21,7 @@
             $(this).toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
+            <%= session[:answered_correctly] = true %>
         });
     });
     $(document).ready(function() {
