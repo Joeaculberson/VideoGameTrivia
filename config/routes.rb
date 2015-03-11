@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'show_review' => 'questions#show_review'
   get 'accept_review' => 'questions#accept_review'
   get 'show_game' => 'games#show'
+  get 'challenge' => 'questions#challenge'
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'

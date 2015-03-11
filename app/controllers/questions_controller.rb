@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
     redirect_to Question.order("RANDOM()").first
   end
 
+  def challenge
+    redirect_to Question.where(:category => session[:chosen_category]).order("RANDOM()").first
+  end
+
   # GET /questions/1
   # GET /questions/1.json
   def show

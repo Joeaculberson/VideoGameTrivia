@@ -22,7 +22,7 @@ class GamesController < ApplicationController
 
   def chosen_category
     session[:chosen_category] = params[:chosen_category]
-    render js: "window.location = '#{questions_url}'"
+    render js: "window.location = '#{challenge_url}'"
   end
 
   # GET /games/1
