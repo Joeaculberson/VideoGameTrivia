@@ -39,7 +39,7 @@
 
 <div class="text-center">
   <div class="center-block">
-    <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0;">
+    <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0; width: 80%">
 
       <% randNumber = 1 + rand(4); %>
 
@@ -72,13 +72,13 @@
 
 <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
     <div class="text-center">
-      <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: true }, :method => :get %>
+      <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: true }, :method => :get, :style => 'width: 80%' %>
     </div>
     <div class="text-center">
-      <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: false }, :method => :get %>
+      <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg btn-block', params: { id: params[:id], is_accepted: false }, :method => :get, :style => 'width: 80%' %>
     </div>
 <% end %>
 
 <div id="backButton">
-  <%= button_to 'Back to game', :back, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+  <%= button_to 'Back to game', :back, :class => 'btn btn-info btn-lg btn-block', :method => :get, :style => 'width: 80%' %>
 </div>
