@@ -24,7 +24,7 @@ class GamesController < ApplicationController
   def show
     @current_opponent = User.find_by email: @game.opponent_user_email
     #if params.has_key? 'answered_correctly'
-      if session[:answered_correctly]
+      if session[:answered_correctly] == "true"
         if @game.user_meter < 2
           @game.user_meter = @game.user_meter + 1
           @game.save!
@@ -34,6 +34,7 @@ class GamesController < ApplicationController
           #placeholder code for testing
           @game.user_meter = 0
           @game.save!
+          session[:answered_correctly] = false
         end
       end
     #end

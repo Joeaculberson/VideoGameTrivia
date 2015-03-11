@@ -72,8 +72,6 @@
     <%= link_to 'Back', games_path %>
 </div>
 
-<%= session[:answered_correctly] %>
-
 <% if @game.user_pieces.split.include? '1' %>
     <script>
         document.getElementById("userActionImage").src = '<%= image_url('icons/action.png')%>';

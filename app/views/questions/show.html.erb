@@ -13,7 +13,7 @@
             $(this).toggleClass("btn-danger");
             disableAllButtons();
             revealBackButton();
-            <%= session[:answered_correctly] = false %>
+            $.post('/result',{result:false});
         });
     });
     $(document).ready(function() {
@@ -21,7 +21,7 @@
             $(this).toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
-            <%= session[:answered_correctly] = true %>
+            $.post('/result',{result:true});
         });
     });
     $(document).ready(function() {

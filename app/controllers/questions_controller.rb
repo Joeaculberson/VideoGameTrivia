@@ -90,6 +90,10 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def result
+    session[:answered_correctly] = params[:result]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
