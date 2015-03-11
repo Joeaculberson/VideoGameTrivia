@@ -6,11 +6,7 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.all
     @random_question = @questions.sample
-    if session[:selected_category]
-
-    else
-      redirect_to Question.order("RANDOM()").first
-    end
+    redirect_to Question.order("RANDOM()").first
   end
 
   # GET /questions/1

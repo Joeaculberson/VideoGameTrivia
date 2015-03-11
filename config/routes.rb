@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'show_game' => 'games#show'
 
   post '/result' => 'questions#result'
+  post '/chosen_category' => 'games#chosen_category'
 
   root 'games#index'
 end

@@ -10,6 +10,7 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
+
     if current_user.role.nil? || current_user.role.blank?
       current_user.role = 'Player'
       current_user.save
@@ -21,7 +22,7 @@ class GamesController < ApplicationController
 
   def chosen_category
     session[:chosen_category] = params[:chosen_category]
-    redirect_to index_questions_url
+    render js: "window.location = '#{questions_url}'"
   end
 
   # GET /games/1
