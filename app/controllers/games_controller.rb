@@ -62,6 +62,7 @@ class GamesController < ApplicationController
       @game.save!
       redirect_to '/games/' + session[:current_game]['id'].to_s
     else
+      @game.round = @game.round + 1
       if @game.user_email.eql? current_user.email
         @game.user_turn_email = @game.opponent_user_email
         @game.user_email,@game.opponent_user_email = @game.opponent_user_email,@game.user_email
