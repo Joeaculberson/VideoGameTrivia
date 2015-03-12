@@ -111,3 +111,133 @@ Question.create([
                     :is_authorized      => true,
                     :submitter          => 'Fausett'
                 ])
+
+Question.create([
+                    :question_text      => 'How many rows of aliens are there usually at the start of a ‘Space Invaders’ game?',
+                    :correct_answer     => '5',
+                    :incorrect_answer_1 => '12',
+                    :incorrect_answer_2 => '3',
+                    :incorrect_answer_3 => '8',
+                    :category           => 'arcade',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'How many copies of the famously awful E.T. game for the Atari 2600 were sold?',
+                    :correct_answer     => '1.5 Million',
+                    :incorrect_answer_1 => '1 Million',
+                    :incorrect_answer_2 => '2.5 Million',
+                    :incorrect_answer_3 => '2 Million',
+                    :category           => 'arcade',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'In Fallout 3, what vault does the player start out in?',
+                    :correct_answer     => '101',
+                    :incorrect_answer_1 => '77',
+                    :incorrect_answer_2 => '132',
+                    :incorrect_answer_3 => '89',
+                    :category           => 'fps',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'How many Stars is it possible to collect in the game Super Mario 64?',
+                    :correct_answer     => '120',
+                    :incorrect_answer_1 => '140',
+                    :incorrect_answer_2 => '100',
+                    :incorrect_answer_3 => '280',
+                    :category           => 'adventure',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'Who is the first boss in Diddy Kong Racing?',
+                    :correct_answer     => 'Tricky the Triceratops',
+                    :incorrect_answer_1 => 'Bubbler the Octopus',
+                    :incorrect_answer_2 => 'Smokey the Dragon',
+                    :incorrect_answer_3 => 'Bluey the Walrus',
+                    :category           => 'racing',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'Which of the following is not a playable race in Dragon Age: Origins?',
+                    :correct_answer     => 'Dragonborn',
+                    :incorrect_answer_1 => 'Dwarf',
+                    :incorrect_answer_2 => 'Human',
+                    :incorrect_answer_3 => 'Elf',
+                    :category           => 'role-playing',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'How many player races are their in Skyrim?',
+                    :correct_answer     => '10',
+                    :incorrect_answer_1 => '8',
+                    :incorrect_answer_2 => '12',
+                    :incorrect_answer_3 => '6',
+                    :category           => 'role-playing',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'Call of Duty: Modern Warfare 2 is the ____ game in the Call of Duty series.',
+                    :correct_answer     => '5th',
+                    :incorrect_answer_1 => '3nd',
+                    :incorrect_answer_2 => '4rd',
+                    :incorrect_answer_3 => '2th',
+                    :category           => 'fps',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'Who do you play as in Grand Theft Auto: Vice City?',
+                    :correct_answer     => 'Tommy Vercetti',
+                    :incorrect_answer_1 => 'Lance Vance',
+                    :incorrect_answer_2 => 'Andy Kaufman',
+                    :incorrect_answer_3 => 'Donald Love',
+                    :category           => 'action',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
+
+Question.create([
+                    :question_text      => 'In Grand Theft Auto: Vice City, at what wanted level does the FBI begin pursuing you?',
+                    :correct_answer     => 'Five Stars',
+                    :incorrect_answer_1 => 'Six Stars',
+                    :incorrect_answer_2 => 'Four Stars',
+                    :incorrect_answer_3 => 'Seven Stars',
+                    :category           => 'action',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'Fausett'
+                ])
