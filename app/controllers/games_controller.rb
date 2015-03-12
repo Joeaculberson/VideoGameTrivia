@@ -56,6 +56,8 @@ class GamesController < ApplicationController
           @game.user_pieces << ' 6'
         end
         @game.user_pieces.lstrip!
+        sorted_pieces = @game.user_pieces.split.sort
+        @game.user_pieces = sorted_pieces.join(' ')
         @game.user_meter = 0
         session[:chosen_category] = ''
       end
