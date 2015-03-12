@@ -10,7 +10,6 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-
     if current_user.role.nil? || current_user.role.blank?
       current_user.role = 'Player'
       current_user.save
@@ -29,21 +28,31 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     @current_opponent = User.find_by email: @game.opponent_user_email
-    #if params.has_key? 'answered_correctly'
-      if session[:answered_correctly] == "true"
-        @game.user_meter = @game.user_meter + 1
-        if @game.user_meter < 2
-          @game.save!
-          session[:answered_correctly] = false
-        else
-          #offer chance to get a piece
-          #placeholder code for testing
+    if session[:answered_correctly] == "true"
+      @game.user_meter = @game.user_meter + 1
+      session[:answered_correctly] = false
 
-          @game.save!
-          session[:answered_correctly] = false
+      if @game.user_meter == 4
+        if session[:chosen_category].eql? 'action'
+          @game.user_pieces << ' 1'
+        elsif session[:chosen_category].eql? 'adventure'
+          @game.user_pieces << ' 2'
+        elsif session[:chosen_category].eql? 'arcade'
+          @game.user_pieces << ' 3'
+        elsif session[:chosen_category].eql? 'fps'
+          @game.user_pieces << ' 4'
+        elsif session[:chosen_category].eql? 'racing'
+          @game.user_pieces << ' 5'
+        elsif session[:chosen_category].eql? 'role-playing'
+          @game.user_pieces << ' 6'
         end
+        @game.user_pieces.lstrip!
+        @game.user_meter = 0
+        @game.save!
+        session[:chosen_category] = ''
       end
-    #end
+    end
+    @game.save!
     session[:current_game] = @game
   end
 
@@ -110,19 +119,19 @@ class GamesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_game
-      @game = Game.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_game
+    @game = Game.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def game_params
-      params.require(:game).permit(:user_email, :opponent_user_email, :user_pieces, :opponent_pieces, :round, :user_turn_email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def game_params
+    params.require(:game).permit(:user_email, :opponent_user_email, :user_pieces, :opponent_pieces, :round, :user_turn_email)
+  end
 
-    def require_login
-      unless current_user
-        redirect_to '/users/sign_in'
-      end
+  def require_login
+    unless current_user
+      redirect_to '/users/sign_in'
     end
+  end
 end
