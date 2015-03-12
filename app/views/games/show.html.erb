@@ -8,55 +8,56 @@
 </div>
 
 <div class="container round-edges">
-    <div class="row">
-        <div class="col-xs-1">
-          <div id="face-wrapper">
-            <% if current_user.image %>
-                <img src='<%= current_user.image %>' class="img-circle face">
-            <% else %>
-                <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
-            <% end %>
-          </div>
-        </div>
-        <div class="col-xs-5">
-            <%= @game.user_email %> </br>
-              <img id="userActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
-              <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
-              <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
-              <img id="userFpsImage" src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
-              <img id="userRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
-              <img id="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
-        </div>
-        <div class="col-xs-5" style="border-left-style: dotted">
-            <div class="pull-right">
-                <%= @game.opponent_user_email %></div> </br>
-          <div class="pull-right">
-            <img id="opponentRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50">
-            <img id="opponentRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50">
-            <img id="opponentFpsImage" src='<%= image_url('greyscale/fps.png')%>' width="50" height="50">
-            <img id="opponentArcadeImage" src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50">
-            <img id="opponentAdventureImage" src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50">
-            <img id="opponentActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50">
-          </div>
-        </div>
-        <div class="col-xs-1">
-            <div class="pull-right">
-              <div id="face-wrapper">
-                  <% if @current_opponent.image %>
-                      <img src='<%= @current_opponent.image %>' class="img-circle face">
-                  <% else %>
-                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
-                  <% end %>
-              </div>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-xs-1">
+      <div id="face-wrapper">
+        <% if current_user.image %>
+            <img src='<%= current_user.image %>' class="img-circle face">
+        <% else %>
+            <img src='<%= image_url('default_profile.png') %>' class="img-circle face">
+        <% end %>
+      </div>
     </div>
+    <div class="col-xs-5">
+      <%= @game.user_email %> </br>
+      <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
+      <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
+      <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
+      <img id="userFpsImage" src='<%= image_url('greyscale/fps.png') %>' width="50" height="50">
+      <img id="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50">
+      <img id="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
+    </div>
+    <div class="col-xs-5" style="border-left-style: dotted">
+      <div class="pull-right">
+        <%= @game.opponent_user_email %></div>
+      </br>
+      <div class="pull-right">
+        <img id="opponentRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
+        <img id="opponentRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50">
+        <img id="opponentFpsImage" src='<%= image_url('greyscale/fps.png') %>' width="50" height="50">
+        <img id="opponentArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
+        <img id="opponentAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
+        <img id="opponentActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
+      </div>
+    </div>
+    <div class="col-xs-1">
+      <div class="pull-right">
+        <div id="face-wrapper">
+          <% if @current_opponent.image %>
+              <img src='<%= @current_opponent.image %>' class="img-circle face">
+          <% else %>
+              <img src='<%= image_url('default_profile.png') %>' class="img-circle face">
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </br>
 
 <div class="row text-center">
-    <a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg')%>' class="img-circle"></a>
+  <a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg') %>' class="img-circle"></a>
 </div>
 
 
@@ -64,139 +65,171 @@
 </br>
 
 <div class="row text-center">
-  <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png')%>' width="150">
+  <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png') %>' width="150">
 </div>
 
 <div class="row text-center">
-    <%= link_to 'Edit', edit_game_path(@game) %> |
-    <%= link_to 'Back', games_path %>
+  <%= link_to 'Edit', edit_game_path(@game) %> |
+  <%= link_to 'Back', games_path %>
 </div>
-
-<% if @game.user_pieces.split.include? '1' %>
-    <script>
-        document.getElementById("userActionImage").src = '<%= image_url('icons/action.png')%>';
-    </script>
-<% end %>
-
-<% if @game.user_pieces.split.include? '2' %>
-    <script>
-        document.getElementById("userAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
-    </script>
-<% end %>
-
-<% if @game.user_pieces.split.include? '3' %>
-    <script>
-        document.getElementById("userArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
-    </script>
-<% end %>
-
-<% if @game.user_pieces.split.include? '4' %>
-    <script>
-        document.getElementById("userFpsImage").src = '<%= image_url('icons/fps.png')%>';
-    </script>
-<% end %>
-
-<% if @game.user_pieces.split.include? '5' %>
-    <script>
-        document.getElementById("userRacingImage").src = '<%= image_url('icons/racing.png')%>';
-    </script>
-<% end %>
-
-<% if @game.user_pieces.split.include? '6' %>
-    <script>
-        document.getElementById("userRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '1' %>
-    <script>
-        document.getElementById("opponentActionImage").src = '<%= image_url('icons/action.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '2' %>
-    <script>
-        document.getElementById("opponentAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '3' %>
-    <script>
-        document.getElementById("opponentArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '4' %>
-    <script>
-        document.getElementById("opponentFpsImage").src = '<%= image_url('icons/fps.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '5' %>
-    <script>
-        document.getElementById("opponentRacingImage").src = '<%= image_url('icons/racing.png')%>';
-    </script>
-<% end %>
-
-<% if @game.opponent_pieces.split.include? '6' %>
-    <script>
-        document.getElementById("opponentRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
-    </script>
-<% end %>
 
 <% if @game.user_meter == 3 %>
     <div class="modal fade" id="challengeModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-           <h4 class="modal-title">Challenge! Select a piece.</h4>
+            <h4 class="modal-title">Challenge! Select a piece.</h4>
           </div>
           <div class="modal-body row">
             <div class="container col-md-12 text-center">
               <div class="row">
-                <div class="col-md-3"><img id="userActionImage" class="userActionImage" src='<%= image_url('greyscale/action.png')%>' width="50" height="50"></br>Action</div>
-                <div class="col-md-3"><img id="userAdventureImage" class='userAdventureImage' src='<%= image_url('greyscale/adventure.png')%>' width="50" height="50"></br>Adventure</div>
-                <div class="col-md-3"><img id="userArcadeImage" class='userArcadeImage' src='<%= image_url('greyscale/arcade.png')%>' width="50" height="50"></br>Arcade</div>
+                <div class="col-md-3">
+                  <img id="userActionImage" class="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
+                  Action
+                </div>
+                <div class="col-md-3">
+                  <img id="userAdventureImage" class='userAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
+                  Adventure
+                </div>
+                <div class="col-md-3">
+                  <img id="userArcadeImage" class='userArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
+                  Arcade
+                </div>
               </div>
               <div class="row">
-                <div class="col-md-3"><img id="userFpsImage" class='userFpsImage' src='<%= image_url('greyscale/fps.png')%>' width="50" height="50"></br>Fps</div>
-                <div class="col-md-3"><img id="userRacingImage" class="userRacingImage" src='<%= image_url('greyscale/racing.png')%>' width="50" height="50"></br>Racing</div>
-                <div class="col-md-3"><img id="userRolePlayingImage" class="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png')%>' width="50" height="50"></br>Role-playing</div>
+                <div class="col-md-3">
+                  <img id="userFpsImage" class='userFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
+                  Fps
+                </div>
+                <div class="col-md-3">
+                  <img id="userRacingImage" class="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
+                  Racing
+                </div>
+                <div class="col-md-3">
+                  <img id="userRolePlayingImage" class="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
+                  Role-playing
+                </div>
               </div>
             </div>
           </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <script>
         $('#challengeModal').modal({
             backdrop: 'static',
             keyboard: false
         });
-        $(window).load( function () {
+        $(window).load(function () {
             $('#challengeModal').modal('show')
         });
     </script>
-    <script>
-        $('img.userActionImage').click(function() {
-            $.post('/chosen_category',{chosen_category:'action'});
-        });
-        $("img.userAdventureImage").click(function() {
-            $.post('/chosen_category',{chosen_category:'adventure'});
-        });
-        $("img.userArcadeImage").click(function() {
-            $.post('/chosen_category',{chosen_category:'arcade'});
-        });
-        $("img.userFpsImage").click(function() {
-            $.post('/chosen_category',{chosen_category:'fps'});
-        });
-        $("img.userRacingImage").click(function() {
-            $.post('/chosen_category',{chosen_category:'racing'});
-        });
-        $("img.userRolePlayingImage").click(function() {
-            $.post('/chosen_category',{chosen_category:'role-playing'});
-        });
-
-    </script>
-
 <% end %>
+
+<script>
+    <% if @game.user_pieces.split.include? '1' %>
+    document.getElementById("userActionImage").src = '<%= image_url('icons/action.png')%>';
+    $('img.userActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+    <% else %>
+    $('img.userActionImage').click(function () {
+        $.post('/chosen_category', {chosen_category: 'action'});
+    });
+    <% end %>
+
+    <% if @game.user_pieces.split.include? '2' %>
+
+    document.getElementById("userAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
+    $('img.userAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
+    <% else %>
+    $("img.userAdventureImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'adventure'});
+    });
+
+    <% end %>
+
+    <% if @game.user_pieces.split.include? '3' %>
+
+    document.getElementById("userArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
+    $('img.userArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+    <% else %>
+    $("img.userArcadeImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'arcade'});
+    });
+
+    <% end %>
+
+    <% if @game.user_pieces.split.include? '4' %>
+
+    document.getElementById("userFpsImage").src = '<%= image_url('icons/fps.png')%>';
+    $('img.userFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+    <% else %>
+    $("img.userFpsImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'fps'});
+    });
+
+    <% end %>
+
+    <% if @game.user_pieces.split.include? '5' %>
+
+    document.getElementById("userRacingImage").src = '<%= image_url('icons/racing.png')%>';
+    $('img.userRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+    <% else %>
+    $("img.userRacingImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'racing'});
+    });
+
+    <% end %>
+
+    <% if @game.user_pieces.split.include? '6' %>
+    document.getElementById("userRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
+    $('img.userRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+    <% else %>
+    $("img.userRolePlayingImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'role-playing'});
+    });
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '1' %>
+
+    document.getElementById("opponentActionImage").src = '<%= image_url('icons/action.png')%>';
+    $('img.opponentActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '2' %>
+
+    document.getElementById("opponentAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
+    $('img.opponentAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
+
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '3' %>
+
+    document.getElementById("opponentArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
+    $('img.opponentArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '4' %>
+
+    document.getElementById("opponentFpsImage").src = '<%= image_url('icons/fps.png')%>';
+    $('img.opponentFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '5' %>
+
+    document.getElementById("opponentRacingImage").src = '<%= image_url('icons/racing.png')%>';
+    $('img.opponentRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+
+    <% end %>
+
+    <% if @game.opponent_pieces.split.include? '6' %>
+
+    document.getElementById("opponentRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
+    $('img.opponentRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+
+    <% end %>
+</script>
