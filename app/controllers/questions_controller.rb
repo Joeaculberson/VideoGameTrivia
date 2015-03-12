@@ -6,7 +6,16 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.all
     @random_question = @questions.sample
-    redirect_to Question.order("RANDOM()").first
+    random_wheel_spin = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing', 'challenge'].sample
+    if random_wheel_spin.eql? 'challenge'
+      @game = Game.find(session[:current_game]['id'])
+      @game.user_meter = 3
+      @game.save!
+
+      redirect_to game_path(@game)
+    else
+      redirect_to Question.where(:category => random_wheel_spin).order("RANDOM()").first
+    end
   end
 
   def challenge
