@@ -42,17 +42,49 @@
               </div>
             </td>
             <td>
+              <% def show_pieces(pieces) %>
+                  <% if pieces.include? '1' %>
+                      <img src='<%= image_url('icons/action.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
+                  <% end %>
+                  <% if pieces.include? '2' %>
+                      <img src='<%= image_url('icons/adventure.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
+                  <% end %>
+                  <% if pieces.include? '3' %>
+                      <img src='<%= image_url('icons/arcade.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
+                  <% end %>
+                  <% if pieces.include? '4' %>
+                      <img src='<%= image_url('icons/fps.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/fps.png') %>' width="50" height="50">
+                  <% end %>
+                  <% if pieces.include? '5' %>
+                      <img src='<%= image_url('icons/racing.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/racing.png') %>' width="50" height="50">
+                  <% end %>
+                  <% if pieces.include? '6' %>
+                      <img src='<%= image_url('icons/role-playing.png') %>' width="50" height="50">
+                  <% else %>
+                      <img src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
+                  <% end %>
+              <% end %>
               <% if current_user.email == game.user_email %>
-                  <%= game.user_pieces.split.length %>
+                  <% show_pieces game.user_pieces.split %>
               <% else %>
-                  <%= game.opponent_pieces.split.length %>
+                  <% show_pieces game.opponent_pieces.split %>
               <% end %>
             </td>
             <td>
               <% if current_user.email == game.user_email %>
-                  <%= game.opponent_pieces.split.length %>
+                  <% show_pieces game.opponent_pieces.split %>
               <% else %>
-                  <%= game.user_pieces.split.length %>
+                  <% show_pieces game.user_pieces.split %>
               <% end %>
             </td>
             <td><%= game.round %></td>
@@ -100,16 +132,16 @@
             </td>
             <td>
               <% if current_user.email == game.user_email %>
-                  <%= game.user_pieces.split.length %>
+                  <% show_pieces game.user_pieces.split %>
               <% else %>
-                  <%= game.opponent_pieces.split.length %>
+                  <% show_pieces game.opponent_pieces.split %>
               <% end %>
             </td>
             <td>
               <% if current_user.email == game.user_email %>
-                  <%= game.opponent_pieces.split.length %>
+                  <% show_pieces game.opponent_pieces.split %>
               <% else %>
-                  <%= game.user_pieces.split.length %>
+                  <% show_pieces game.user_pieces.split %>
               <% end %>
             </td>
             <td><%= game.round %></td>
@@ -156,16 +188,16 @@
                 </div></td>
                 <td>
                   <% if current_user.email == game.user_email %>
-                      <%= game.user_pieces.split.length %>
+                      <% show_pieces game.user_pieces.split %>
                   <% else %>
-                      <%= game.opponent_pieces.split.length %>
+                      <% show_pieces game.opponent_pieces.split %>
                   <% end %>
                 </td>
                 <td>
                   <% if current_user.email == game.user_email %>
-                      <%= game.opponent_pieces.split.length %>
+                      <% show_pieces game.opponent_pieces.split %>
                   <% else %>
-                      <%= game.user_pieces.split.length %>
+                      <% show_pieces game.user_pieces.split %>
                   <% end %>
                 </td>
                 <td><%= game.round %></td>

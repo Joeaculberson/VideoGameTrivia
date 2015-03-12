@@ -6,8 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create(email: 'admin@admin.com', password: 'admin', role: 'Admin')
-
 Question.create([
                     :question_text      => 'In the game ‘Metal Gear Solid’,who is the twin brother of Solid Snake?',
                     :correct_answer     => 'Liquid Snake',
@@ -18,7 +16,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -31,7 +29,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -44,7 +42,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -57,7 +55,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -70,7 +68,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -83,7 +81,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -96,7 +94,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -109,7 +107,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -122,7 +120,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -135,7 +133,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -148,7 +146,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -161,7 +159,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -174,7 +172,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -187,7 +185,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -200,7 +198,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -213,7 +211,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -226,7 +224,7 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
                 ])
 
 Question.create([
@@ -239,5 +237,18 @@ Question.create([
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
                     :is_authorized      => true,
-                    :submitter          => 'Fausett'
+                    :submitter          => 'benjaminfausett@gmail.com'
+                ])
+
+Question.create([
+                    :question_text      => 'What is first pokemon you get in Puzzle Shuffle?',
+                    :correct_answer     => 'Espurr',
+                    :incorrect_answer_1 => 'Charmander',
+                    :incorrect_answer_2 => 'Mew',
+                    :incorrect_answer_3 => 'Pikachu',
+                    :category           => 'role-playing',
+                    :created_at         => DateTime.new,
+                    :updated_at         => DateTime.new,
+                    :is_authorized      => true,
+                    :submitter          => 'joeaculberson@aol.com'
                 ])

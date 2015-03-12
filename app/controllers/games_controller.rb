@@ -88,7 +88,6 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-
     if User.find_by(email: params[:game][:opponent_user_email]).blank?
       flash[:alert] = 'Could not find user ' + params[:game][:opponent_user_email]
       redirect_to games_url
