@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     end
     @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     @user_turn_games = Game.where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
-    @past_games = Game.where(:user_email => current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
+    @past_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
   end
 
   def chosen_category
@@ -64,8 +64,9 @@ class GamesController < ApplicationController
     else
       if @game.user_email.eql? current_user.email
         @game.user_turn_email = @game.opponent_user_email
-      else
-        @game.user_turn_email = @game.user_email
+        @game.user_email,@game.opponent_user_email = @game.opponent_user_email,@game.user_email
+        @game.user_pieces,@game.opponent_pieces = @game.opponent_pieces,@game.user_pieces
+        @game.user_meter,@game.opponent_meter = @game.opponent_meter,@game.user_meter
       end
       @game.save!
       redirect_to games_path
