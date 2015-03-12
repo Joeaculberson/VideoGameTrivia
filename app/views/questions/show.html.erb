@@ -11,6 +11,7 @@
     $(document).ready(function() {
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
+            $('#correct').toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
             $.post('/result',{result:false});
@@ -37,12 +38,15 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-xs-6">Submitter: <%= @question.submitter %></div>
+  <div class="col-xs-6 text-right">Category: <%= @question.category %></div>
+</div>
+
 <div class="text-center">
   <div class="center-block">
     <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0; width: 80%">
-
       <% randNumber = 1 + rand(4); %>
-
       <% def displayCorrectAnswer %>
           <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
               <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
@@ -69,6 +73,8 @@
     </div>
   </div>
 </div>
+
+
 
 <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
     <div class="text-center">
