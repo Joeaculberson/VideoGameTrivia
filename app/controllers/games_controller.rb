@@ -27,7 +27,16 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    if @game.nil?
+      @game = Game.find session[:current_game]['id']
+    end
     @current_opponent = User.find_by email: @game.opponent_user_email
+    @game.save!
+    session[:current_game] = @game
+  end
+
+  def assess_answer
+    @game = Game.find session[:current_game]['id']
     if session[:answered_correctly] == "true"
       @game.user_meter = @game.user_meter + 1
       session[:answered_correctly] = false
@@ -48,12 +57,19 @@ class GamesController < ApplicationController
         end
         @game.user_pieces.lstrip!
         @game.user_meter = 0
-        @game.save!
         session[:chosen_category] = ''
       end
+      @game.save!
+      redirect_to '/games/' + session[:current_game]['id'].to_s
+    else
+      if @game.user_email.eql? current_user.email
+        @game.user_turn_email = @game.opponent_user_email
+      else
+        @game.user_turn_email = @game.user_email
+      end
+      @game.save!
+      redirect_to games_path
     end
-    @game.save!
-    session[:current_game] = @game
   end
 
   # GET /games/new
