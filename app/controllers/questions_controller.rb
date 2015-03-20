@@ -105,6 +105,22 @@ class QuestionsController < ApplicationController
 
   def result
     session[:answered_correctly] = params[:result]
+
+    @question = Question.find(params[:questionID])
+
+    if(params[:result])
+      @question.difficulty -= 1
+    else
+      @question.difficulty += 1
+    end
+
+    if(@question.difficulty > 39)
+      @question.difficulty = 39
+    elsif(@question.difficulty < 10)
+      @question.difficulty = 10
+    end
+
+    @question.save
   end
 
   private

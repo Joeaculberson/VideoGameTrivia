@@ -14,7 +14,8 @@
             $('#correct').toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
-            $.post('/result',{result:false});
+            var id = <%= @question.id %>;
+            $.post('/result',{result:false, questionID:id});
         });
     });
     $(document).ready(function() {
@@ -22,7 +23,8 @@
             $(this).toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
-            $.post('/result',{result:true});
+            var id = <%= @question.id %>;
+            $.post('/result',{result:true, questionID:id});
         });
     });
     $(document).ready(function() {
