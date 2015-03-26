@@ -7,6 +7,9 @@
           <%= link_to 'Promote user', promote_path %>
         </li>
     <% end %>
+    <li>
+      <%= link_to 'Statistics & Achievements', '#', 'data-toggle' => 'modal', 'data-target' => '#statsModal' %>
+    </li>
 <% else %>
     <li>
       <%= link_to('Register', new_user_registration_path)  %>

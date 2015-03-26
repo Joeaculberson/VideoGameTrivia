@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 20150320220141) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "provider"
+    t.string   "uid"
     t.string   "username"
     t.string   "image"
     t.string   "role"
