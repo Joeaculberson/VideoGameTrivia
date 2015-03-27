@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320220141) do
+ActiveRecord::Schema.define(version: 20150326230828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,24 @@ ActiveRecord::Schema.define(version: 20150320220141) do
     t.boolean  "is_authorized"
     t.string   "submitter"
     t.integer  "difficulty",         default: 25
+  end
+
+  create_table "statistics", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "action_correct"
+    t.integer  "action_total"
+    t.integer  "adventure_correct"
+    t.integer  "adventure_total"
+    t.integer  "arcade_correct"
+    t.integer  "arcade_total"
+    t.integer  "fps_correct"
+    t.integer  "fps_total"
+    t.integer  "racing_correct"
+    t.integer  "racing_total"
+    t.integer  "role_playing_correct"
+    t.integer  "role_playing_total"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users", force: :cascade do |t|

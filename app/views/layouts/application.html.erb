@@ -92,6 +92,7 @@
     </style>
   </head>
   <body>
+  <% if user_signed_in? %>
   <div class="modal fade" id="statsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -110,8 +111,66 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="statistics">Some stats</div>
-              <div role="tabpanel" class="tab-pane" id="achievements">Some achievements</div>
+              <div role="tabpanel" class="tab-pane active" id="statistics">
+                <table>
+                  <tr>
+                    <td>
+                      <img src='<%= image_url('icons/action.png') %>' width="50" height="50">
+                      <% stat = Statistic.find_by email: current_user.email %>
+                      <% if stat.action_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.action_correct / stat.action_total) * 100 %>%
+                      <% end %>
+                    </td>
+                    <td>
+                      <img src='<%= image_url('icons/adventure.png') %>' width="50" height="50">
+                      <% if stat.adventure_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.adventure_correct / stat.adventure_total) * 100 %>%
+                      <% end %>
+                    </td>
+                    <td>
+                      <img src='<%= image_url('icons/arcade.png') %>' width="50" height="50">
+                      <% if stat.arcade_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.arcade_correct / stat.arcade_total) * 100 %>%
+                      <% end %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src='<%= image_url('icons/fps.png') %>' width="50" height="50">
+                      <% if stat.fps_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.fps_correct / stat.fps_total) * 100 %>%
+                      <% end %>
+                    </td>
+                    <td>
+                      <img src='<%= image_url('icons/racing.png') %>' width="50" height="50">
+                      <% if stat.racing_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.racing_correct / stat.racing_total) * 100 %>%
+                      <% end %>
+                    </td>
+                    <td>
+                      <img src='<%= image_url('icons/role-playing.png') %>' width="50" height="50">
+                      <% if stat.role_playing_total == 0 %>
+                          -%
+                      <% else %>
+                          <%= (stat.role_playing_correct / stat.role_playing_total) * 100 %>%
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="achievements">
+                Some achievements
+              </div>
             </div>
 
           </div>
@@ -122,6 +181,7 @@
       </div>
     </div>
   </div>
+  <% end %>
     <div class="navbar navbar-default navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">

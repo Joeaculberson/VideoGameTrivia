@@ -14,6 +14,11 @@ class GamesController < ApplicationController
       current_user.role = 'Player'
       current_user.save
     end
+
+    if Statistic.where(:email => current_user.email).blank?
+      Statistic.create email: current_user.email, action_correct: 0, action_total: 0, adventure_correct: 0, adventure_total: 0, arcade_correct: 0, arcade_total: 0, fps_correct: 0, fps_total: 0, racing_correct: 0, racing_total: 0, role_playing_correct: 0, role_playing_total: 0
+    end
+
     @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     @user_turn_games = Game.where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
     @past_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
@@ -37,9 +42,42 @@ class GamesController < ApplicationController
 
   def assess_answer
     @game = Game.find session[:current_game]['id']
+
+    statistic = Statistic.find_by email: @game.user_email
+    if session[:question_category].eql? 'action'
+      statistic.action_total = statistic.action_total + 1
+    elsif session[:question_category].eql? 'adventure'
+      statistic.adventure_total = statistic.adventure_total + 1
+    elsif session[:question_category].eql? 'arcade'
+      statistic.arcade_total = statistic.arcade_total + 1
+    elsif session[:question_category].eql? 'fps'
+      statistic.fps_total = statistic.fps_total + 1
+    elsif session[:question_category].eql? 'racing'
+      statistic.racing_total = statistic.racing_total + 1
+    elsif session[:question_category].eql? 'role-playing'
+      statistic.role_playing_total = statistic.role_playing_total + 1
+    end
+    statistic.save!
+
     if session[:answered_correctly] == "true"
       @game.user_meter = @game.user_meter + 1
       session[:answered_correctly] = false
+
+      statistic = Statistic.find_by email: @game.user_email
+      if session[:question_category].eql? 'action'
+        statistic.action_correct = statistic.action_correct + 1
+      elsif session[:question_category].eql? 'adventure'
+        statistic.adventure_correct = statistic.adventure_correct + 1
+      elsif session[:question_category].eql? 'arcade'
+        statistic.arcade_correct = statistic.arcade_correct + 1
+      elsif session[:question_category].eql? 'fps'
+        statistic.fps_correct = statistic.fps_correct + 1
+      elsif session[:question_category].eql? 'racing'
+        statistic.racing_correct = statistic.racing_correct + 1
+      elsif session[:question_category].eql? 'role-playing'
+        statistic.role_playing_correct = statistic.role_playing_correct + 1
+      end
+      statistic.save!
 
       if @game.user_meter == 4
         if session[:chosen_category].eql? 'action'
@@ -48,6 +86,7 @@ class GamesController < ApplicationController
           @game.user_pieces << ' 2'
         elsif session[:chosen_category].eql? 'arcade'
           @game.user_pieces << ' 3'
+
         elsif session[:chosen_category].eql? 'fps'
           @game.user_pieces << ' 4'
         elsif session[:chosen_category].eql? 'racing'

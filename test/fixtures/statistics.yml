@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  action_correct: 1
+  action_total: 1
+  adventure_correct: 1
+  adventure_total: 1
+  arcade_correct: 1
+  arcade_total: 1
+  fps_correct: 1
+  fps_total: 1
+  racing_correct: 1
+  racing_total: 1
+  role-playing_correct: 1
+  role-playing_total: 1
+
+two:
+  email: MyString
+  action_correct: 1
+  action_total: 1
+  adventure_correct: 1
+  adventure_total: 1
+  arcade_correct: 1
+  arcade_total: 1
+  fps_correct: 1
+  fps_total: 1
+  racing_correct: 1
+  racing_total: 1
+  role-playing_correct: 1
+  role-playing_total: 1
