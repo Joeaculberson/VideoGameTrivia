@@ -75,6 +75,9 @@ rails
 </div>
 
 <% if @game.user_pieces == "1 2 3 4 5 6" %>
+    <% @user = User.find_by(email: @game.user_email) %>
+    <% @user.coins += 5 %>
+    <% @user.save %>
     <div class="modal fade" id="wonModal">
       <div class="modal-dialog">
         <div class="modal-content">
