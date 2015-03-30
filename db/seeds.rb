@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Question.create([
-                    :question_text      => 'In the game ‘Metal Gear Solid’,who is the twin brother of Solid Snake?',
+                    :question_text      => 'In Metal Gear Solid, who is the twin brother of Solid Snake?',
                     :correct_answer     => 'Liquid Snake',
                     :incorrect_answer_1 => 'Big Boss',
                     :incorrect_answer_2 => 'Solidus Snake',
@@ -33,7 +33,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'What is the name of the gang member that video game ‘Grand Theft Auto: San Andreas’ revolves around?',
+                    :question_text      => 'What is the name of the gang member that video game Grand Theft Auto: San Andreas revolves around?',
                     :correct_answer     => 'Carl Johnson',
                     :incorrect_answer_1 => 'Big Smoke',
                     :incorrect_answer_2 => 'Frank Tenpenny',
@@ -46,7 +46,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'How many square blocks is each game piece composed of in the game of ‘Tetris’?',
+                    :question_text      => 'How many square blocks is each game piece composed of in the game of Tetris?',
                     :correct_answer     => '4',
                     :incorrect_answer_1 => '6',
                     :incorrect_answer_2 => '5',
@@ -59,7 +59,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'In the computer game ‘The Sims’, how many Simoleons does each family start the game with?',
+                    :question_text      => 'In the computer game The Sims, how many Simoleons does each family start the game with?',
                     :correct_answer     => '20,000',
                     :incorrect_answer_1 => '10,000',
                     :incorrect_answer_2 => '35,000',
@@ -72,7 +72,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'what colour is Pac-Man?',
+                    :question_text      => 'What color is Pac-Man?',
                     :correct_answer     => 'Yellow',
                     :incorrect_answer_1 => 'Red',
                     :incorrect_answer_2 => 'Green',
@@ -98,7 +98,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'In the game ‘Doom’, which planet is the space marine posted to after assaulting his commanding officer?',
+                    :question_text      => 'In the game Doom, which planet is the space marine posted to after assaulting his commanding officer?',
                     :correct_answer     => 'Mars',
                     :incorrect_answer_1 => 'Saturn',
                     :incorrect_answer_2 => 'Jupiter',
@@ -111,7 +111,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'How many rows of aliens are there usually at the start of a ‘Space Invaders’ game?',
+                    :question_text      => 'How many rows of aliens are there usually at the start of a Space Invaders game?',
                     :correct_answer     => '5',
                     :incorrect_answer_1 => '12',
                     :incorrect_answer_2 => '3',
@@ -189,7 +189,7 @@ Question.create([
                 ])
 
 Question.create([
-                    :question_text      => 'How many player races are their in Skyrim?',
+                    :question_text      => 'How many playable races are their in Skyrim?',
                     :correct_answer     => '10',
                     :incorrect_answer_1 => '8',
                     :incorrect_answer_2 => '12',
@@ -204,9 +204,9 @@ Question.create([
 Question.create([
                     :question_text      => 'Call of Duty: Modern Warfare 2 is the ____ game in the Call of Duty series.',
                     :correct_answer     => '5th',
-                    :incorrect_answer_1 => '3nd',
-                    :incorrect_answer_2 => '4rd',
-                    :incorrect_answer_3 => '2th',
+                    :incorrect_answer_1 => '3rd',
+                    :incorrect_answer_2 => '4th',
+                    :incorrect_answer_3 => '2nd',
                     :category           => 'fps',
                     :created_at         => DateTime.new,
                     :updated_at         => DateTime.new,
