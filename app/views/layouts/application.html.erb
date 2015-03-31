@@ -169,7 +169,11 @@
                 </table>
               </div>
               <div role="tabpanel" class="tab-pane" id="achievements">
-                Some achievements
+                <ul>
+                  <% current_user.badges.each do |badge| %>
+                      <li><%= badge.name %></li>
+                  <% end %>
+                </ul>
               </div>
             </div>
 

@@ -2,6 +2,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def all
     user = User.from_omniauth(request.env["omniauth.auth"])
+    @user = user
     if user.persisted?
       if user.role.nil? || user.role.blank?
         user.role = 'Player'
@@ -15,5 +16,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
   alias_method :facebook, :all
   alias_method :google_oauth2, :all
+
+  def update
+    @user = resource # Needed for Merit
+    super
+  end
 
 end

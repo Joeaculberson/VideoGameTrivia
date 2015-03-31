@@ -10,6 +10,8 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
+    @user = current_user # Needed for Merit
+
     if current_user.role.nil? || current_user.role.blank?
       current_user.role = 'Player'
       current_user.save
