@@ -104,39 +104,59 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Challenge! Select a piece.</h4>
+            <h4 class="modal-title">Earn a piece!</h4>
           </div>
           <div class="modal-body row">
-            <div class="container col-md-12 text-center">
-              <div class="row">
-                <div class="col-md-3">
-                  <img id="userActionImage" class="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
-                  Action
+            <div role="tabpanel">
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#challenge" aria-controls="challenge" role="tab" data-toggle="tab">Challenge</a></li>
+                <li role="presentation"><a href="#stealAPiece" aria-controls="stealAPiece" role="tab" data-toggle="tab">Steal a Piece</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="challenge">
+                  <div class="container col-md-12 text-center">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="userActionImage" class="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
+                        Action
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userAdventureImage" class='userAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
+                        Adventure
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userArcadeImage" class='userArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
+                        Arcade
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="userFpsImage" class='userFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
+                        Fps
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userRacingImage" class="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
+                        Racing
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userRolePlayingImage" class="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
+                        Role-playing
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-3">
-                  <img id="userAdventureImage" class='userAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
-                  Adventure
-                </div>
-                <div class="col-md-3">
-                  <img id="userArcadeImage" class='userArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
-                  Arcade
+                <div role="tabpanel" class="tab-pane" id="stealAPiece">
+                  Steal here
+
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <img id="userFpsImage" class='userFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
-                  Fps
-                </div>
-                <div class="col-md-3">
-                  <img id="userRacingImage" class="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
-                  Racing
-                </div>
-                <div class="col-md-3">
-                  <img id="userRolePlayingImage" class="userRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
-                  Role-playing
-                </div>
-              </div>
+
             </div>
+
           </div>
         </div>
         <!-- /.modal-content -->
