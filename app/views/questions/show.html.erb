@@ -1,4 +1,29 @@
 <script>
+    var currentTime = 3000;
+    var incrementTime = 10;
+    var timerIntervalId = 0;
+
+    function updateTimer() {
+        $('#countdown').html(formatTime(currentTime));
+        if (currentTime == 0) {
+            answeredIncorrectly();
+            return;
+        }
+        currentTime -= incrementTime / 10;
+        if (currentTime < 0) currentTime = 0;
+    }
+    function pad(number, length) {
+        var str = '' + number;
+        while (str.length < length) {str = '0' + str;}
+        return str;
+    }
+    function formatTime(time) {
+        var min = parseInt(time / 6000),
+                sec = parseInt(time / 100) - (min * 60),
+                hundredths = pad(time - (sec * 100) - (min * 6000), 2);
+        return pad(sec, 2) + ":" + hundredths;
+    }
+
   function disableAllButtons() {
       $("#correct").toggleClass("disabled");
       $("[id=incorrect]").toggleClass("disabled");
@@ -7,15 +32,21 @@
   function revealBackButton() {
       $("#backButton").show();
   }
-
+    function answeredIncorrectly() {
+        $('#correct').toggleClass("btn-success");
+        disableAllButtons();
+        revealBackButton();
+        clearInterval(timerIntervalId);
+        var id = <%= @question.id %>;
+        $.post('/result',{result:false, questionID:id});
+    }
+    function timerPowerUp() {
+        currentTime += 3000;
+    }
     $(document).ready(function() {
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
-            $('#correct').toggleClass("btn-success");
-            disableAllButtons();
-            revealBackButton();
-            var id = <%= @question.id %>;
-            $.post('/result',{result:false, questionID:id});
+            answeredIncorrectly();
         });
     });
     $(document).ready(function() {
@@ -23,12 +54,16 @@
             $(this).toggleClass("btn-success");
             disableAllButtons();
             revealBackButton();
+            clearInterval(timerIntervalId);
             var id = <%= @question.id %>;
             $.post('/result',{result:true, questionID:id});
         });
     });
     $(document).ready(function() {
         $("#backButton").hide();
+    });
+    $(document).ready(function() {
+        timerIntervalId = setInterval(updateTimer,10);
     });
 </script>
 
@@ -90,3 +125,7 @@
 <div id="backButton" class="text-center">
   <%= button_to 'Back to game', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 </div>
+<span id="countdown">00:30:00</span>
+<form id="example2form">
+  <input type='button' value='Time Power-up' onclick='timerPowerUp();' />
+</form>

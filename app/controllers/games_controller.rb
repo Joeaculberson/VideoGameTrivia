@@ -73,7 +73,12 @@ class GamesController < ApplicationController
     if session[:answered_correctly] == "true"
 
       @game.user_meter = @game.user_meter + 1
-      current_user.correct_answers_in_a_row += 1
+
+      if current_user.correct_answers_in_a_row.nil?
+        current_user.correct_answers_in_a_row = 0
+      end
+
+      current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
 
       if current_user.correct_answers_in_a_row == 5
         award_badge(3)
