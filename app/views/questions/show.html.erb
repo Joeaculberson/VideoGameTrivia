@@ -125,7 +125,9 @@
 <div id="backButton" class="text-center">
   <%= button_to 'Back to game', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 </div>
+
 <span id="countdown">00:30:00</span>
-<form id="example2form">
+<div id="coins">Coins: <%= current_user.coins %></div>
+<form id="powerUpForm">
   <input type='button' value='Time Power-up' onclick='timerPowerUp();' />
 </form>
