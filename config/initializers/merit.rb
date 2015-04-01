@@ -33,5 +33,20 @@ end
 # end
 Merit::Badge.create!(
   id: 1,
-  name: 'just-registered'
+  name: 'Just Registered',
+  description: 'Signed up to play',
+
+)
+
+Merit::Badge.create!(
+    id: 2,
+    name: 'Returning customer',
+    description: 'Signed in 5 times'
+
+)
+
+Merit::Badge.create!(
+    id: 3,
+    name: 'Smarty',
+    description: 'Answer 5 questions in a row correctly in the same game.'
 )

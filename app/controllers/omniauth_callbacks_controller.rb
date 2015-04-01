@@ -6,6 +6,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user.persisted?
       if user.role.nil? || user.role.blank?
         user.role = 'Player'
+        user.correct_answers_in_a_row = 0
         user.save
       end
       sign_in_and_redirect user, notice: "Signed in!"

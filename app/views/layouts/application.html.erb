@@ -171,7 +171,7 @@
               <div role="tabpanel" class="tab-pane" id="achievements">
                 <ul>
                   <% current_user.badges.each do |badge| %>
-                      <li><%= badge.name %></li>
+                      <li><%= badge.name %> : <%= badge.description %></li>
                   <% end %>
                 </ul>
               </div>

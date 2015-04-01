@@ -12,6 +12,15 @@ class GamesController < ApplicationController
   def index
     @user = current_user # Needed for Merit
 
+    if current_user.badges.size == 0
+      award_badge(1)
+    end
+
+
+    if current_user.sign_in_count == 5
+      award_badge(2)
+    end
+
     if current_user.role.nil? || current_user.role.blank?
       current_user.role = 'Player'
       current_user.save
@@ -62,7 +71,16 @@ class GamesController < ApplicationController
     statistic.save!
 
     if session[:answered_correctly] == "true"
+
       @game.user_meter = @game.user_meter + 1
+      current_user.correct_answers_in_a_row += 1
+
+      if current_user.correct_answers_in_a_row == 5
+        award_badge(3)
+      end
+
+
+
       session[:answered_correctly] = false
 
       statistic = Statistic.find_by email: @game.user_email
@@ -88,7 +106,6 @@ class GamesController < ApplicationController
           @game.user_pieces << ' 2'
         elsif session[:chosen_category].eql? 'arcade'
           @game.user_pieces << ' 3'
-
         elsif session[:chosen_category].eql? 'fps'
           @game.user_pieces << ' 4'
         elsif session[:chosen_category].eql? 'racing'
@@ -103,9 +120,11 @@ class GamesController < ApplicationController
         session[:chosen_category] = ''
       end
       @game.save!
+      current_user.save!
       redirect_to '/games/' + session[:current_game]['id'].to_s
     else
       @game.round = @game.round + 1
+      current_user.correct_answers_in_a_row = 0
       if @game.user_email.eql? current_user.email
         @game.user_turn_email = @game.opponent_user_email
         @game.user_email,@game.opponent_user_email = @game.opponent_user_email,@game.user_email
@@ -113,6 +132,7 @@ class GamesController < ApplicationController
         @game.user_meter,@game.opponent_meter = @game.opponent_meter,@game.user_meter
       end
       @game.save!
+      current_user.save!
       redirect_to games_path
     end
   end
@@ -151,7 +171,6 @@ class GamesController < ApplicationController
         end
       end
     end
-
   end
 
   # PATCH/PUT /games/1
@@ -182,6 +201,20 @@ class GamesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_game
     @game = Game.find(params[:id])
+  end
+
+  def award_badge(id)
+    has_badge = false
+    current_user.badges.each do |badge|
+      if badge.id == id
+        has_badge = true
+      end
+    end
+
+    if has_badge == false
+      current_user.add_badge(id)
+      flash.now[:notice] = Merit::Badge.find(id).name + ' achievement earned.'
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
