@@ -169,11 +169,13 @@
                 </table>
               </div>
               <div role="tabpanel" class="tab-pane" id="achievements">
-                <ul>
+
                   <% current_user.badges.each do |badge| %>
-                      <li><%= badge.name %> : <%= badge.description %></li>
+                      <div class="row">
+                        <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50" height="50"><%= badge.name %> : <%= badge.description %>
+                      </div>
                   <% end %>
-                </ul>
+
               </div>
             </div>
 
