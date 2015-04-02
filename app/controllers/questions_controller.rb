@@ -138,6 +138,7 @@ class QuestionsController < ApplicationController
 
     @question = Question.find(params[:questionID])
     session[:question_category] = @question.category
+    session[:question_difficulty] = @question.difficulty
 
     if(params[:result])
       @question.difficulty -= 1

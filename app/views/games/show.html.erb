@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-xs-5">
-      <%= @game.user_email %> </br>
+      <%= @game.user_email %> - Level: <%= (User.find_by(email: @game.user_email).level / 10) + 1 %> </br>
       <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
       <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
       <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
@@ -27,7 +27,7 @@
     </div>
     <div class="col-xs-5" style="border-left-style: dotted">
       <div class="pull-right">
-        <%= @game.opponent_user_email %></div>
+        <%= @game.opponent_user_email %> - Level: <%= (User.find_by(email: @game.opponent_user_email).level / 10) + 1 %></div>
       </br>
       <div class="pull-right">
         <img id="opponentRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">

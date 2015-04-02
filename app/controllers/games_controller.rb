@@ -56,6 +56,8 @@ class GamesController < ApplicationController
   def assess_answer
     @game = Game.find session[:current_game]['id']
 
+    @user = User.find_by(email: @game.user_email)
+
     statistic = Statistic.find_by email: @game.user_email
     if session[:question_category].eql? 'action'
       statistic.action_total = statistic.action_total + 1
@@ -74,6 +76,7 @@ class GamesController < ApplicationController
 
     if session[:answered_correctly] == "true"
       @game.user_meter = @game.user_meter + 1
+      @user.level += (session[:question_difficulty] / 10)
 
       if current_user.correct_answers_in_a_row.nil?
         current_user.correct_answers_in_a_row = 0
@@ -130,6 +133,7 @@ class GamesController < ApplicationController
       redirect_to '/games/' + session[:current_game]['id'].to_s
     else
       @game.round = @game.round + 1
+      @user.level -= 1
       current_user.correct_answers_in_a_row = 0
       if @game.user_email.eql? current_user.email
         @game.user_turn_email = @game.opponent_user_email
@@ -141,6 +145,16 @@ class GamesController < ApplicationController
       current_user.save!
       redirect_to games_path
     end
+
+    if(@user.level < 0)
+      @user.level = 0
+    end
+    if((@user.level / 10) + 1 > 10)
+      @user.role = "Reviewer"
+    end
+
+    @user.save
+
   end
 
   # GET /games/new
