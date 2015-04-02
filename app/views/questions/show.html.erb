@@ -2,6 +2,8 @@
     var currentTime = 3000;
     var incrementTime = 10;
     var timerIntervalId = 0;
+    var currentCoins = <%= current_user.coins %>;
+    var secondChance = false;
 
     function updateTimer() {
         $('#countdown').html(formatTime(currentTime));
