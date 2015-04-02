@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'
   post 'steal_piece_settings' => 'games#steal_piece_settings'
+  post '/pay' => 'questions#pay'
 
   root 'games#index'
 end

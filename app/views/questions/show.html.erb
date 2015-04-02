@@ -40,13 +40,50 @@
         var id = <%= @question.id %>;
         $.post('/result',{result:false, questionID:id});
     }
+    function updateCoins() {
+        $("#coins").html("Coins: " + currentCoins);
+    }
+    function isThereEnoughCoins(coins) {
+        return currentCoins >= coins;
+    }
     function timerPowerUp() {
-        currentTime += 3000;
+        if (isThereEnoughCoins(-3)) {
+            currentTime += 1500;
+            $.post('/pay',{amount:-3});
+            currentCoins -= -3;
+            updateCoins();
+            $('#timeButton').attr("disabled", true);
+        }
+    }
+    function skipPowerUp() {
+        if (isThereEnoughCoins(2)) {
+            currentTime += 1500;
+            $.post('/pay',{amount:2});
+            currentCoins -= 2;
+            clearInterval(timerIntervalId);
+            window.history.back();
+        }
+    }
+    function secondChancePowerUp() {
+        if (isThereEnoughCoins(5)) {
+            currentTime += 1500;
+            $.post('/pay',{amount:5});
+            currentCoins -= 5;
+            updateCoins();
+            secondChance = true;
+            $('#secondChanceButton').attr("disabled", true);
+        }
     }
     $(document).ready(function() {
         $("[id=incorrect]").click(function() {
             $(this).toggleClass("btn-danger");
-            answeredIncorrectly();
+
+            if (secondChance) {
+                $(this).toggleClass("disabled");
+                secondChance = false;
+            } else {
+                answeredIncorrectly();
+            }
         });
     });
     $(document).ready(function() {
@@ -139,5 +176,7 @@
 <span id="countdown">00:30:00</span>
 <div id="coins">Coins: <%= current_user.coins %></div>
 <form id="powerUpForm">
-  <input type='button' value='Time Power-up' onclick='timerPowerUp();' />
+  <input id="timeButton" type='button' value='Slow-motion' onclick='timerPowerUp();' />
+  <input type='button' value='Time Travel' onclick='skipPowerUp();' />
+  <input id="secondChanceButton" type='button' value='Fairy in a Bottle' onclick='secondChancePowerUp();' />
 </form>
