@@ -132,6 +132,11 @@ class GamesController < ApplicationController
           end_turn
           redirect_to games_path
         end
+      else
+        @game.user_meter = 0
+        @game.save!
+        end_turn
+        redirect_to games_path
       end
 
     end
