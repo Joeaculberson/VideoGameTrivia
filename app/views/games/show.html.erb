@@ -111,8 +111,10 @@
 
               <!-- Nav tabs -->
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#challenge" aria-controls="challenge" role="tab" data-toggle="tab">Challenge</a></li>
-                <li role="presentation"><a href="#stealAPiece" aria-controls="stealAPiece" role="tab" data-toggle="tab">Steal a Piece</a></li>
+                <li role="presentation" class="active">
+                  <a href="#challenge" aria-controls="challenge" role="tab" data-toggle="tab">Challenge</a></li>
+                <li role="presentation">
+                  <a href="#stealAPiece" aria-controls="stealAPiece" role="tab" data-toggle="tab">Steal a Piece</a></li>
               </ul>
 
               <!-- Tab panes -->
@@ -150,18 +152,80 @@
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="stealAPiece">
-                  Steal here
+                  <div id="betChoiceTab" class="container col-md-12 text-center">
+                    Piece to bet
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="userBetActionImage" class="userBetActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
+                        Action
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userBetAdventureImage" class='userBetAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
+                        Adventure
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userBetArcadeImage" class='userBetArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
+                        Arcade
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="userBetFpsImage" class='userBetFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
+                        Fps
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userBetRacingImage" class="userBetRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
+                        Racing
+                      </div>
+                      <div class="col-md-3">
+                        <img id="userBetRolePlayingImage" class="userBetRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
+                        Role-playing
+                      </div>
+                    </div>
+                  </div>
 
+                  <div id="stealChoiceTab" class="container col-md-12 text-center">
+                    Piece to steal
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="opponentStealActionImage" class="opponentStealActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
+                        Action
+                      </div>
+                      <div class="col-md-3">
+                        <img id="opponentStealAdventureImage" class='opponentStealAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
+                        Adventure
+                      </div>
+                      <div class="col-md-3">
+                        <img id="opponentStealArcadeImage" class='opponentStealArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
+                        Arcade
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img id="opponentStealFpsImage" class='opponentStealFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
+                        Fps
+                      </div>
+                      <div class="col-md-3">
+                        <img id="opponentStealRacingImage" class="opponentStealRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
+                        Racing
+                      </div>
+                      <div class="col-md-3">
+                        <img id="opponentStealRolePlayingImage" class="opponentStealRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
+                        Role-playing
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-
             </div>
 
           </div>
+
         </div>
-        <!-- /.modal-content -->
       </div>
-      <!-- /.modal-dialog -->
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <script>
         $('#challengeModal').modal({
@@ -175,107 +239,204 @@
 <% end %>
 
 <script>
+    $("#stealChoiceTab").hide();
+    var piece_to_bet = "";
     <% if @game.user_pieces.split.include? '1' %>
     document.getElementById("userActionImage").src = '<%= image_url('icons/action.png')%>';
     $('img.userActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+    $('img.userBetActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+    $(function () {
+        $("img.userBetActionImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'action';
+        });
+    });
     <% else %>
     $('img.userActionImage').click(function () {
-        $.post('/chosen_category', {chosen_category: 'action'});
+        $.post('/chosen_category', {chosen_category: 'action' , type: 'challenge'});
     });
     <% end %>
 
     <% if @game.user_pieces.split.include? '2' %>
-
     document.getElementById("userAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
     $('img.userAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
+    $('img.userBetAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
+    $(function () {
+        $("img.userBetAdventureImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'adventure';
+        });
+    });
     <% else %>
     $("img.userAdventureImage").click(function () {
-        $.post('/chosen_category', {chosen_category: 'adventure'});
+        $.post('/chosen_category', {chosen_category: 'adventure', type: 'challenge'});
     });
-
     <% end %>
 
     <% if @game.user_pieces.split.include? '3' %>
-
     document.getElementById("userArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
     $('img.userArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+    $('img.userBetArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+    $(function () {
+        $("img.userBetArcadeImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'arcade';
+        });
+    });
     <% else %>
     $("img.userArcadeImage").click(function () {
-        $.post('/chosen_category', {chosen_category: 'arcade'});
+        $.post('/chosen_category', {chosen_category: 'arcade', type: 'challenge'});
     });
-
     <% end %>
 
     <% if @game.user_pieces.split.include? '4' %>
-
     document.getElementById("userFpsImage").src = '<%= image_url('icons/fps.png')%>';
     $('img.userFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+    $('img.userBetFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+    $(function () {
+        $("img.userBetFpsImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'fps';
+        });
+    });
     <% else %>
     $("img.userFpsImage").click(function () {
-        $.post('/chosen_category', {chosen_category: 'fps'});
+        $.post('/chosen_category', {chosen_category: 'fps', type: 'challenge'});
     });
-
     <% end %>
 
     <% if @game.user_pieces.split.include? '5' %>
-
     document.getElementById("userRacingImage").src = '<%= image_url('icons/racing.png')%>';
     $('img.userRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+    $('img.userBetRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+    $(function () {
+        $("img.userBetRacingImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'racing';
+        });
+    });
     <% else %>
     $("img.userRacingImage").click(function () {
-        $.post('/chosen_category', {chosen_category: 'racing'});
+        $.post('/chosen_category', {chosen_category: 'racing', type: 'challenge'});
     });
-
     <% end %>
 
     <% if @game.user_pieces.split.include? '6' %>
     document.getElementById("userRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
     $('img.userRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+    $('img.userBetRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+    $(function () {
+        $("img.userBetRolePlayingImage").click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = 'role-playing';
+        });
+    });
     <% else %>
     $("img.userRolePlayingImage").click(function () {
-        $.post('/chosen_category', {chosen_category: 'role-playing'});
+        $.post('/chosen_category', {chosen_category: 'role-playing', type: 'challenge'});
     });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '1' %>
-
     document.getElementById("opponentActionImage").src = '<%= image_url('icons/action.png')%>';
     $('img.opponentActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+    $('img.opponentStealActionImage').attr("src", '<%= image_url('icons/action.png')%>');
+    $("img.opponentActionImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'action'});
+    });
 
+    $(function () {
+        $("img.opponentStealActionImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'action', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '2' %>
-
     document.getElementById("opponentAdventureImage").src = '<%= image_url('icons/adventure.png')%>';
     $('img.opponentAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
+    $('img.opponentStealAdventureImage').attr("src", '<%= image_url('icons/adventure.png')%>');
 
+    $("img.opponentAdventureImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'adventure'});
+    });
+
+    $(function () {
+        $("img.opponentStealAdventureImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'adventure', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '3' %>
-
     document.getElementById("opponentArcadeImage").src = '<%= image_url('icons/arcade.png')%>';
     $('img.opponentArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+    $('img.opponentStealArcadeImage').attr("src", '<%= image_url('icons/arcade.png')%>');
+    $("img.opponentArcadeImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'arcade'});
+    });
 
+    $(function () {
+        $("img.opponentStealArcadeImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'arcade', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '4' %>
-
     document.getElementById("opponentFpsImage").src = '<%= image_url('icons/fps.png')%>';
     $('img.opponentFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+    $('img.opponentStealFpsImage').attr("src", '<%= image_url('icons/fps.png')%>');
+    $("img.opponentFpsImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'fps'});
+    });
 
+    $(function () {
+        $("img.opponentStealFpsImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'fps', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '5' %>
-
     document.getElementById("opponentRacingImage").src = '<%= image_url('icons/racing.png')%>';
     $('img.opponentRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+    $('img.opponentStealRacingImage').attr("src", '<%= image_url('icons/racing.png')%>');
+    $("img.opponentRacingImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'racing'});
+    });
 
+    $(function () {
+        $("img.opponentStealRacingImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'racing', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 
     <% if @game.opponent_pieces.split.include? '6' %>
-
     document.getElementById("opponentRolePlayingImage").src = '<%= image_url('icons/role-playing.png')%>';
     $('img.opponentRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+    $('img.opponentStealRolePlayingImage').attr("src", '<%= image_url('icons/role-playing.png')%>');
+    $("img.opponentRolePlayingImage").click(function () {
+        $.post('/chosen_category', {chosen_category: 'role-playing'});
+    });
 
+    $(function () {
+        $("img.opponentStealRolePlayingImage").click(function () {
+            $.post('/chosen_category', {chosen_category: 'role-playing', bet_piece: piece_to_bet, type: 'steal'});
+        });
+    });
     <% end %>
 </script>

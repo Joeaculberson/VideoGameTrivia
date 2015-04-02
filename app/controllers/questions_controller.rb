@@ -11,7 +11,6 @@ class QuestionsController < ApplicationController
       @game = Game.find(session[:current_game]['id'])
       @game.user_meter = 3
       @game.save!
-
       redirect_to game_path(@game)
     else
       redirect_to Question.where(:category => random_wheel_spin).order("RANDOM()").first
@@ -19,7 +18,38 @@ class QuestionsController < ApplicationController
   end
 
   def challenge
-    redirect_to Question.where(:category => session[:chosen_category]).order("RANDOM()").first
+      redirect_to Question.where(:category => session[:chosen_category]).order("RANDOM()").first
+  end
+
+  def place_holder
+    @game = Game.find(session[:current_game]['id'])
+    categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
+    if @game.steal_question_ids.eql? ''
+      steal_question_ids = ''
+      for i in 1..6 do
+        steal_question_ids += Question.where(:category => categories.sample).order("RANDOM()").first.id.to_s + ' '
+      end
+      steal_question_ids.strip
+
+      @game.steal_question_ids = steal_question_ids
+      @game.save!
+      steal_question_ids = steal_question_ids.split
+      session[:steal_iteration] = 0
+      session[:is_in_steal] = true
+      redirect_to Question.find(steal_question_ids[session[:steal_iteration]])
+    else
+      session[:steal_iteration] = session[:steal_iteration] + 1
+
+      if session[:steal_iteration] != 6
+        redirect_to Question.find(@game.steal_question_ids.split[session[:steal_iteration]])
+      else
+        session[:type] = ''
+        session[:is_in_steal] = false
+        byebug
+        redirect_to games_path
+      end
+
+    end
   end
 
   # GET /questions/1

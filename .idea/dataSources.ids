@@ -2402,6 +2402,9 @@
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <column name="user_meter" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="opponent_meter" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_steal_correct" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="opponent_steal_correct" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="steal_question_ids" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="games_pkey" columns="id"/>
     </table>
     <table name="games_id_seq" schema="public" catalog="VideoGameTrivia_development" type="SEQUENCE">

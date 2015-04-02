@@ -37,6 +37,8 @@ class GamesController < ApplicationController
 
   def chosen_category
     session[:chosen_category] = params[:chosen_category]
+    session[:bet_piece] = params[:bet_piece]
+    session[:type] = params[:type]
     render js: "window.location = '#{challenge_url}'"
   end
 
@@ -71,7 +73,6 @@ class GamesController < ApplicationController
     statistic.save!
 
     if session[:answered_correctly] == "true"
-
       @game.user_meter = @game.user_meter + 1
 
       if current_user.correct_answers_in_a_row.nil?
@@ -166,6 +167,7 @@ class GamesController < ApplicationController
       @game.user_turn_email = current_user.email
       @game.user_meter = 0
       @game.opponent_meter = 0
+      @game.steal_question_ids = ''
 
       respond_to do |format|
         if @game.save
