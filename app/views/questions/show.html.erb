@@ -29,6 +29,9 @@
   function disableAllButtons() {
       $("#correct").toggleClass("disabled");
       $("[id=incorrect]").toggleClass("disabled");
+      $('#timeButton').attr("disabled", true);
+      $('#skipButton').attr("disabled", true);
+      $('#secondChanceButton').attr("disabled", true);
   }
 
   function revealBackButton() {
@@ -49,10 +52,10 @@
         return currentCoins >= coins;
     }
     function timerPowerUp() {
-        if (isThereEnoughCoins(-3)) {
+        if (isThereEnoughCoins(3)) {
             currentTime += 1500;
-            $.post('/pay',{amount:-3});
-            currentCoins -= -3;
+            $.post('/pay',{amount:3});
+            currentCoins -= 3;
             updateCoins();
             $('#timeButton').attr("disabled", true);
         }
@@ -179,6 +182,6 @@
 <div id="coins">Coins: <%= current_user.coins %></div>
 <form id="powerUpForm">
   <input id="timeButton" type='button' value='Slow-motion' onclick='timerPowerUp();' />
-  <input type='button' value='Time Travel' onclick='skipPowerUp();' />
+  <input id="skipButton" type='button' value='Time Travel' onclick='skipPowerUp();' />
   <input id="secondChanceButton" type='button' value='Fairy in a Bottle' onclick='secondChancePowerUp();' />
 </form>
