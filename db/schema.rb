@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402000957) do
+ActiveRecord::Schema.define(version: 20150402090013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 20150402000957) do
     t.integer  "user_steal_correct"
     t.integer  "opponent_steal_correct"
     t.string   "steal_question_ids"
+    t.boolean  "is_second_steal_turn"
+    t.string   "bet_piece"
+    t.string   "wanted_piece"
   end
 
   create_table "merit_actions", force: :cascade do |t|

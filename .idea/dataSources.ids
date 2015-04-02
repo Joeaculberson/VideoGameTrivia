@@ -2405,6 +2405,9 @@
       <column name="user_steal_correct" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="opponent_steal_correct" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="steal_question_ids" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="is_second_steal_turn" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="bet_piece" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="wanted_piece" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="games_pkey" columns="id"/>
     </table>
     <table name="games_id_seq" schema="public" catalog="VideoGameTrivia_development" type="SEQUENCE">

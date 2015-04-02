@@ -7,8 +7,8 @@ class QuestionsController < ApplicationController
     @questions = Question.all
     @random_question = @questions.sample
     random_wheel_spin = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing', 'challenge'].sample
+    @game = Game.find(session[:current_game]['id'])
     if random_wheel_spin.eql? 'challenge'
-      @game = Game.find(session[:current_game]['id'])
       @game.user_meter = 3
       @game.save!
       redirect_to game_path(@game)
@@ -18,44 +18,33 @@ class QuestionsController < ApplicationController
   end
 
   def challenge
-      redirect_to Question.where(:category => session[:chosen_category]).order("RANDOM()").first
+    redirect_to Question.where(:category => session[:chosen_category]).order("RANDOM()").first
   end
 
-  def place_holder
+  def steal_piece
+    session[:is_in_steal] = true
     @game = Game.find(session[:current_game]['id'])
-    categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
-    if @game.steal_question_ids.eql? ''
-      steal_question_ids = ''
-      for i in 1..6 do
-        steal_question_ids += Question.where(:category => categories.sample).order("RANDOM()").first.id.to_s + ' '
-      end
-      steal_question_ids.strip
-
-      @game.steal_question_ids = steal_question_ids
-      @game.save!
-      steal_question_ids = steal_question_ids.split
-      session[:steal_iteration] = 0
-      session[:is_in_steal] = true
-      redirect_to Question.find(steal_question_ids[session[:steal_iteration]])
+    @game.bet_piece = session[:bet_piece]
+    @game.wanted_piece = session[:chosen_category]
+    if !@game.steal_question_ids.eql? ''
+      @game.is_second_steal_turn = true
+      redirect_to Question.find(@game[:steal_question_ids].split[0].to_i)
     else
-      session[:steal_iteration] = session[:steal_iteration] + 1
+      rand_question = Question.all.sample
 
-      if session[:steal_iteration] != 6
-        redirect_to Question.find(@game.steal_question_ids.split[session[:steal_iteration]])
-      else
-        session[:type] = ''
-        session[:is_in_steal] = false
-        byebug
-        redirect_to games_path
-      end
-
+      @game.steal_question_ids = rand_question.id.to_s
+      @game.save!
+      redirect_to rand_question
     end
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
-
+    @game = Game.find session[:current_game]['id']
+    if @game.is_second_steal_turn
+      flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
+    end
   end
 
   def accept_review

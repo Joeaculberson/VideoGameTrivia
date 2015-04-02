@@ -77,7 +77,13 @@
 
 <div class="row">
   <div class="col-xs-6">Submitter: <%= @question.submitter %></div>
-  <div class="col-xs-6 text-right">Difficulty: <%= @question.difficulty / 10%> </br> Category: <%= @question.category %></div>
+  <div class="col-xs-6 text-right">Difficulty: <%= @question.difficulty / 10%>
+    </br> Category: <%= @question.category %>
+    </br>
+    <% if !@game.steal_question_ids.eql? '' %>
+        <%= @game.user_steal_correct.to_s %> / 6
+    <% end %>
+  </div>
 </div>
 
 <div class="text-center">
@@ -122,17 +128,12 @@
     </div>
 <% end %>
 
-<% if session[:type].eql? 'steal' %>
-    <div id="backButton" class="text-center">
-      <%= button_to 'Continue', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 
-    </div>
-<% else %>
-    <div id="backButton" class="text-center">
-      <%= button_to 'Back to game', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+<div id="backButton" class="text-center">
+  <%= button_to 'Continue', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 
-    </div>
-<% end %>
+</div>
+
 
 
 <span id="countdown">00:30:00</span>

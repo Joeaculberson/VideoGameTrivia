@@ -10,10 +10,13 @@ Rails.application.routes.draw do
   get 'accept_review' => 'questions#accept_review'
   get 'show_game' => 'games#show'
   get 'challenge' => 'questions#challenge'
+  get 'steal_piece' => 'questions#steal_piece'
   get 'assess_answer' => 'games#assess_answer'
+
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'
+  post 'steal_piece_settings' => 'games#steal_piece_settings'
 
   root 'games#index'
 end

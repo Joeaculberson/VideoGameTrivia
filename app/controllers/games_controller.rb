@@ -37,9 +37,14 @@ class GamesController < ApplicationController
 
   def chosen_category
     session[:chosen_category] = params[:chosen_category]
+    render js: "window.location = '#{challenge_url}'"
+  end
+
+  def steal_piece_settings
+    session[:chosen_category] = params[:chosen_category]
     session[:bet_piece] = params[:bet_piece]
     session[:type] = params[:type]
-    render js: "window.location = '#{challenge_url}'"
+    render js: "window.location = '#{steal_piece_url}'"
   end
 
   # GET /games/1
@@ -51,13 +56,196 @@ class GamesController < ApplicationController
     @current_opponent = User.find_by email: @game.opponent_user_email
     @game.save!
     session[:current_game] = @game
+    if !@game.steal_question_ids.eql? ''
+      redirect_to steal_piece_path
+    end
   end
+
 
   def assess_answer
     @game = Game.find session[:current_game]['id']
-
     @user = User.find_by(email: @game.user_email)
 
+    add_to_total_stat
+
+    if session[:answered_correctly] == "true"
+      @user.level += (session[:question_difficulty] / 10)
+
+      if current_user.correct_answers_in_a_row.nil?
+        current_user.correct_answers_in_a_row = 0
+      end
+
+      current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
+
+      if current_user.correct_answers_in_a_row == 5
+        award_badge(3)
+      end
+
+      add_to_partial_stat
+
+      if(@user.level < 0)
+        @user.level = 0
+      end
+      if((@user.level / 10) + 1 > 10)
+        @user.role = "Reviewer"
+      end
+
+      @user.save
+
+      if !@game.steal_question_ids.eql? ''
+        process_steal_turn
+      else
+        @game.user_meter = @game.user_meter + 1
+        if @game.user_meter == 4
+          award_piece session[:chosen_category]
+          session[:chosen_category] = ''
+          @game.user_meter = 0
+        end
+        @game.save!
+        current_user.save!
+        redirect_to '/games/' + session[:current_game]['id'].to_s
+      end
+    else
+      if !@game.steal_question_ids.eql? ''
+        if @game.is_second_steal_turn
+          if @game.user_steal_correct == @game.opponent_steal_correct
+            flash[:notice] = "Game is a tie, no one wins or loses a piece."
+            @game.save!
+          else
+            flash[:alert] = 'You lose the challenge! Opponent successfully stole a piece.'
+            remove_piece @game.wanted_piece
+            award_opponent_piece @game.wanted_piece
+            @game.save!
+          end
+          @game.user_steal_correct = 0
+          @game.opponent_steal_correct = 0
+          @game.steal_question_ids = ''
+          @game.is_second_steal_turn = false
+          @game.bet_piece = ''
+          @game.wanted_piece = ''
+          @game.save!
+          redirect_to '/games/' + session[:current_game]['id'].to_s
+        else
+          @game.is_second_steal_turn = true
+          @game.user_meter = 0
+          @game.save!
+          end_turn
+          redirect_to games_path
+        end
+      end
+
+    end
+  end
+
+  def process_steal_turn
+    @game.user_steal_correct += 1
+    @game.save!
+
+    if @game.user_steal_correct > @game.opponent_steal_correct && @game.is_second_steal_turn
+      @game.is_second_steal_turn = false
+
+
+      award_piece @game.bet_piece
+      remove_opponent_piece @game.bet_piece
+
+      flash[:notice] = 'You won the challenge! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
+      session[:chosen_category] = ''
+      @game.user_steal_correct = 0
+      @game.opponent_steal_correct = 0
+      @game.opponent_meter = 0
+      @game.steal_question_ids = ''
+      @game.bet_piece = ''
+      @game.wanted_piece = ''
+      @game.save!
+      redirect_to '/games/' + session[:current_game]['id'].to_s
+    elsif @game.user_steal_correct == 6
+      if @game.is_second_steal_turn
+        flash[:notice] = "Game is a tie, no one wins or loses a piece."
+        @game.user_steal_correct = 0
+        @game.opponent_steal_correct = 0
+        @game.steal_question_ids = ''
+        @game.is_second_steal_turn = false
+        @game.bet_piece = ''
+        @game.wanted_piece = ''
+        @game.save!
+        redirect_to '/games/' + session[:current_game]['id'].to_s
+      else
+        flash[:notice] = "You have answered 6 questions correctly, it is now your opponent's turn."
+        @game.user_meter = 0
+        @game.is_second_steal_turn = true
+        @game.save!
+        end_turn
+        redirect_to games_path
+      end
+
+    else
+      rand_question = Question.all.sample
+      question_ids = @game.steal_question_ids.split
+      if @game.is_second_steal_turn
+        redirect_to Question.find(question_ids[@game.user_steal_correct].to_i)
+      else
+        @game.steal_question_ids += ' ' + rand_question.id.to_s
+        @game.steal_question_ids.strip!
+        @game.save!
+        redirect_to rand_question
+      end
+
+    end
+  end
+
+  def remove_piece category
+    if category.eql? 'action'
+      @game.user_pieces = @game.user_pieces.delete('1').strip
+    elsif category.eql? 'adventure'
+      @game.user_pieces = @game.user_pieces.delete('2').strip
+    elsif category.eql? 'arcade'
+      @game.user_pieces = @game.user_pieces.delete('3').strip
+    elsif category.eql? 'fps'
+      @game.user_pieces = @game.user_pieces.delete('4').strip
+    elsif category.eql? 'racing'
+      @game.user_pieces = @game.user_pieces.delete('5').strip
+    elsif category.eql? 'role-playing'
+      @game.user_pieces = @game.user_pieces.delete('6').strip
+    end
+    @game.save!
+  end
+
+  def remove_opponent_piece category
+    if category.eql? 'action'
+      @game.opponent_pieces = @game.opponent_pieces.delete('1').strip
+    elsif category.eql? 'adventure'
+      @game.opponent_pieces = @game.opponent_pieces.delete('2').strip
+    elsif category.eql? 'arcade'
+      @game.opponent_pieces = @game.opponent_pieces.delete('3').strip
+    elsif category.eql? 'fps'
+      @game.opponent_pieces = @game.opponent_pieces.delete('4').strip
+    elsif category.eql? 'racing'
+      @game.opponent_pieces = @game.opponent_pieces.delete('5').strip
+    elsif category.eql? 'role-playing'
+      @game.opponent_pieces = @game.opponent_pieces.delete('6').strip
+    end
+    @game.save!
+  end
+
+  def add_to_partial_stat
+    statistic = Statistic.find_by email: @game.user_email
+    if session[:question_category].eql? 'action'
+      statistic.action_correct = statistic.action_correct + 1
+    elsif session[:question_category].eql? 'adventure'
+      statistic.adventure_correct = statistic.adventure_correct + 1
+    elsif session[:question_category].eql? 'arcade'
+      statistic.arcade_correct = statistic.arcade_correct + 1
+    elsif session[:question_category].eql? 'fps'
+      statistic.fps_correct = statistic.fps_correct + 1
+    elsif session[:question_category].eql? 'racing'
+      statistic.racing_correct = statistic.racing_correct + 1
+    elsif session[:question_category].eql? 'role-playing'
+      statistic.role_playing_correct = statistic.role_playing_correct + 1
+    end
+    statistic.save!
+  end
+
+  def add_to_total_stat
     statistic = Statistic.find_by email: @game.user_email
     if session[:question_category].eql? 'action'
       statistic.action_total = statistic.action_total + 1
@@ -73,89 +261,62 @@ class GamesController < ApplicationController
       statistic.role_playing_total = statistic.role_playing_total + 1
     end
     statistic.save!
-
-    if session[:answered_correctly] == "true"
-      @game.user_meter = @game.user_meter + 1
-      @user.level += (session[:question_difficulty] / 10)
-
-      if current_user.correct_answers_in_a_row.nil?
-        current_user.correct_answers_in_a_row = 0
-      end
-
-      current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
-
-      if current_user.correct_answers_in_a_row == 5
-        award_badge(3)
-      end
-
-
-
-      session[:answered_correctly] = false
-
-      statistic = Statistic.find_by email: @game.user_email
-      if session[:question_category].eql? 'action'
-        statistic.action_correct = statistic.action_correct + 1
-      elsif session[:question_category].eql? 'adventure'
-        statistic.adventure_correct = statistic.adventure_correct + 1
-      elsif session[:question_category].eql? 'arcade'
-        statistic.arcade_correct = statistic.arcade_correct + 1
-      elsif session[:question_category].eql? 'fps'
-        statistic.fps_correct = statistic.fps_correct + 1
-      elsif session[:question_category].eql? 'racing'
-        statistic.racing_correct = statistic.racing_correct + 1
-      elsif session[:question_category].eql? 'role-playing'
-        statistic.role_playing_correct = statistic.role_playing_correct + 1
-      end
-      statistic.save!
-
-      if @game.user_meter == 4
-        if session[:chosen_category].eql? 'action'
-          @game.user_pieces << ' 1'
-        elsif session[:chosen_category].eql? 'adventure'
-          @game.user_pieces << ' 2'
-        elsif session[:chosen_category].eql? 'arcade'
-          @game.user_pieces << ' 3'
-        elsif session[:chosen_category].eql? 'fps'
-          @game.user_pieces << ' 4'
-        elsif session[:chosen_category].eql? 'racing'
-          @game.user_pieces << ' 5'
-        elsif session[:chosen_category].eql? 'role-playing'
-          @game.user_pieces << ' 6'
-        end
-        @game.user_pieces.lstrip!
-        sorted_pieces = @game.user_pieces.split.sort
-        @game.user_pieces = sorted_pieces.join(' ')
-        @game.user_meter = 0
-        session[:chosen_category] = ''
-      end
-      @game.save!
-      current_user.save!
-      redirect_to '/games/' + session[:current_game]['id'].to_s
-    else
-      @game.round = @game.round + 1
-      @user.level -= 1
-      current_user.correct_answers_in_a_row = 0
-      if @game.user_email.eql? current_user.email
-        @game.user_turn_email = @game.opponent_user_email
-        @game.user_email,@game.opponent_user_email = @game.opponent_user_email,@game.user_email
-        @game.user_pieces,@game.opponent_pieces = @game.opponent_pieces,@game.user_pieces
-        @game.user_meter,@game.opponent_meter = @game.opponent_meter,@game.user_meter
-      end
-      @game.save!
-      current_user.save!
-      redirect_to games_path
-    end
-
-    if(@user.level < 0)
-      @user.level = 0
-    end
-    if((@user.level / 10) + 1 > 10)
-      @user.role = "Reviewer"
-    end
-
-    @user.save
-
   end
+
+  def end_turn
+    @game.round = @game.round + 1
+    @user.level -= 1
+    current_user.correct_answers_in_a_row = 0
+    if @game.user_email.eql? current_user.email
+      @game.user_turn_email = @game.opponent_user_email
+      @game.user_email,@game.opponent_user_email = @game.opponent_user_email,@game.user_email
+      @game.user_pieces,@game.opponent_pieces = @game.opponent_pieces,@game.user_pieces
+      @game.user_meter,@game.opponent_meter = @game.opponent_meter,@game.user_meter
+      @game.user_steal_correct,@game.opponent_steal_correct = @game.opponent_steal_correct,@game.user_steal_correct
+    end
+    @game.save!
+    current_user.save!
+  end
+
+  def award_piece category
+    if category.eql? 'action'
+      @game.user_pieces << ' 1'
+    elsif category.eql? 'adventure'
+      @game.user_pieces << ' 2'
+    elsif category.eql? 'arcade'
+      @game.user_pieces << ' 3'
+    elsif category.eql? 'fps'
+      @game.user_pieces << ' 4'
+    elsif category.eql? 'racing'
+      @game.user_pieces << ' 5'
+    elsif category.eql? 'role-playing'
+      @game.user_pieces << ' 6'
+    end
+    @game.user_pieces.lstrip!
+    sorted_pieces = @game.user_pieces.split.sort
+    @game.user_pieces = sorted_pieces.join(' ')
+  end
+
+  def award_opponent_piece category
+    if category.eql? 'action'
+      @game.opponent_pieces << ' 1'
+    elsif category.eql? 'adventure'
+      @game.opponent_pieces << ' 2'
+    elsif category.eql? 'arcade'
+      @game.opponent_pieces << ' 3'
+    elsif category.eql? 'fps'
+      @game.opponent_pieces << ' 4'
+    elsif category.eql? 'racing'
+      @game.opponent_pieces << ' 5'
+    elsif category.eql? 'role-playing'
+      @game.opponent_pieces << ' 6'
+    end
+    @game.opponent_pieces.lstrip!
+    sorted_pieces = @game.opponent_pieces.split.sort
+    @game.opponent_pieces = sorted_pieces.join(' ')
+    @game.save!
+  end
+
 
   # GET /games/new
   def new
@@ -182,6 +343,11 @@ class GamesController < ApplicationController
       @game.user_meter = 0
       @game.opponent_meter = 0
       @game.steal_question_ids = ''
+      @game.user_steal_correct = 0
+      @game.opponent_steal_correct = 0
+      @game.is_second_steal_turn = false
+      @game.bet_piece = ''
+      @game.wanted_piece = ''
 
       respond_to do |format|
         if @game.save
