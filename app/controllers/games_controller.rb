@@ -112,7 +112,7 @@ class GamesController < ApplicationController
             flash[:notice] = "Game is a tie, no one wins or loses a piece."
             @game.save!
           else
-            flash[:alert] = 'You lose the challenge! Opponent successfully stole a piece.'
+            flash[:alert] = 'You lose the challenge! Opponent successfully the ' + @game.wanted_piece + ' piece.'
             remove_piece @game.wanted_piece
             award_opponent_piece @game.wanted_piece
             @game.save!
