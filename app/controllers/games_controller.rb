@@ -64,12 +64,12 @@ class GamesController < ApplicationController
 
   def assess_answer
     @game = Game.find session[:current_game]['id']
-    @user = User.find_by(email: @game.user_email)
+    @user = current_user
 
     add_to_total_stat
 
     if session[:answered_correctly] == "true"
-      @user.level += (session[:question_difficulty] / 10)
+      current_user.level += (session[:question_difficulty] / 10)
 
       if current_user.correct_answers_in_a_row.nil?
         current_user.correct_answers_in_a_row = 0
@@ -87,7 +87,9 @@ class GamesController < ApplicationController
         @user.level = 0
       end
       if((@user.level / 10) + 1 > 10)
-        @user.role = "Reviewer"
+        if @user.role != 'Admin'
+          @user.role = "Reviewer"
+        end
       end
 
       @user.save
