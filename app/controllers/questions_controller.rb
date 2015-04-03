@@ -144,6 +144,11 @@ class QuestionsController < ApplicationController
     @question.save
   end
 
+  def pay
+    current_user.coins -= params[:amount].to_i
+    current_user.save!
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
