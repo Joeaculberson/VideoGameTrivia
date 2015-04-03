@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402090013) do
+ActiveRecord::Schema.define(version: 20150403181432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150402090013) do
     t.boolean  "is_second_steal_turn"
     t.string   "bet_piece"
     t.string   "wanted_piece"
+    t.boolean  "is_game_over"
   end
 
   create_table "merit_actions", force: :cascade do |t|
@@ -132,6 +133,8 @@ ActiveRecord::Schema.define(version: 20150402090013) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "provider"
+    t.string   "uid"
     t.string   "username"
     t.string   "image"
     t.string   "role"

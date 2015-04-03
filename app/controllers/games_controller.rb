@@ -30,9 +30,9 @@ class GamesController < ApplicationController
       Statistic.create email: current_user.email, action_correct: 0, action_total: 0, adventure_correct: 0, adventure_total: 0, arcade_correct: 0, arcade_total: 0, fps_correct: 0, fps_total: 0, racing_correct: 0, racing_total: 0, role_playing_correct: 0, role_playing_total: 0
     end
 
-    @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
-    @user_turn_games = Game.where(:user_turn_email => current_user.email).where("user_pieces != '1 2 3 4 5 6' AND opponent_pieces != '1 2 3 4 5 6'")
-    @past_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where("user_pieces = '1 2 3 4 5 6' OR opponent_pieces = '1 2 3 4 5 6'")
+    @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where(:is_game_over => false)
+    @user_turn_games = Game.where(:user_turn_email => current_user.email).where(:is_game_over => false)
+    @past_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where(:is_game_over => true)
   end
 
   def chosen_category
@@ -114,10 +114,14 @@ class GamesController < ApplicationController
             flash[:notice] = "Game is a tie, no one wins or loses a piece."
             @game.save!
           else
-            flash[:alert] = 'You lose the challenge! Opponent successfully the ' + @game.wanted_piece + ' piece.'
             remove_piece @game.wanted_piece
             award_opponent_piece @game.wanted_piece
             @game.save!
+            if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+              flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece. As a result, you lose the game.'
+            else
+              flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
+            end
           end
           @game.user_steal_correct = 0
           @game.opponent_steal_correct = 0
@@ -126,7 +130,13 @@ class GamesController < ApplicationController
           @game.bet_piece = ''
           @game.wanted_piece = ''
           @game.save!
-          redirect_to '/games/' + session[:current_game]['id'].to_s
+          if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+            end_turn
+            @game.save!
+            redirect_to games_path
+          else
+            redirect_to '/games/' + session[:current_game]['id'].to_s
+          end
         else
           @game.is_second_steal_turn = true
           @game.user_meter = 0
@@ -302,6 +312,9 @@ class GamesController < ApplicationController
     @game.user_pieces.lstrip!
     sorted_pieces = @game.user_pieces.split.sort
     @game.user_pieces = sorted_pieces.join(' ')
+    if @game.user_pieces.eql? '1 2 3 4 5 6'
+      @game.is_game_over = true
+    end
   end
 
   def award_opponent_piece category
@@ -404,6 +417,7 @@ class GamesController < ApplicationController
     game.is_second_steal_turn = false
     game.bet_piece = ''
     game.wanted_piece = ''
+    game.is_game_over = false
 
     respond_to do |format|
       if game.save
