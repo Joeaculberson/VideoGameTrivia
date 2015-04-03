@@ -339,30 +339,23 @@ class GamesController < ApplicationController
       flash[:alert] = 'Could not find user ' + params[:game][:opponent_user_email]
       redirect_to games_url
     else
-      @game = Game.new(game_params)
-      @game.user_email = current_user.email
-      @game.user_pieces = ''
-      @game.opponent_pieces = ''
-      @game.round = 0
-      @game.user_turn_email = current_user.email
-      @game.user_meter = 0
-      @game.opponent_meter = 0
-      @game.steal_question_ids = ''
-      @game.user_steal_correct = 0
-      @game.opponent_steal_correct = 0
-      @game.is_second_steal_turn = false
-      @game.bet_piece = ''
-      @game.wanted_piece = ''
-
-      respond_to do |format|
-        if @game.save
-          format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + @game.opponent_user_email }
-        else
-          format.html { render :new }
-          format.json { render json: @game.errors, status: :unprocessable_entity }
-        end
+      if params[:game][:opponent_user_email].eql? current_user.email
+        flash[:alert] = 'Cannot play against yourself.'
+        redirect_to games_url
+      else
+        @game = Game.new(game_params)
+        initialize_game @game
       end
     end
+  end
+
+  def random_game
+    rand_user = User.where.not(:id => current_user.id).sample
+
+    @game = Game.new
+    @game.opponent_user_email = rand_user.email
+    initialize_game @game
+
   end
 
   # PATCH/PUT /games/1
@@ -393,6 +386,31 @@ class GamesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_game
     @game = Game.find(params[:id])
+  end
+
+  def initialize_game game
+    game.user_email = current_user.email
+    game.user_pieces = ''
+    game.opponent_pieces = ''
+    game.round = 0
+    game.user_turn_email = current_user.email
+    game.user_meter = 0
+    game.opponent_meter = 0
+    game.steal_question_ids = ''
+    game.user_steal_correct = 0
+    game.opponent_steal_correct = 0
+    game.is_second_steal_turn = false
+    game.bet_piece = ''
+    game.wanted_piece = ''
+
+    respond_to do |format|
+      if game.save
+        format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + game.opponent_user_email }
+      else
+        format.html { render :new }
+        format.json { render json: game.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def award_badge(id)
