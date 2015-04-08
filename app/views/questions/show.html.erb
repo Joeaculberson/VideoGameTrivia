@@ -53,6 +53,8 @@
     }
     function timerPowerUp() {
         if (isThereEnoughCoins(3)) {
+            var audio = new Audio('<%= image_url('sounds/slowpoke.mp3') %>');
+            audio.play();
             currentTime += 1500;
             $.post('/pay',{amount:3});
             currentCoins -= 3;
@@ -62,6 +64,8 @@
     }
     function skipPowerUp() {
         if (isThereEnoughCoins(2)) {
+            var audio = new Audio('<%= image_url('sounds/croak.wav') %>');
+            audio.play();
             currentTime += 1500;
             $.post('/pay',{amount:2});
             currentCoins -= 2;
@@ -71,6 +75,8 @@
     }
     function secondChancePowerUp() {
         if (isThereEnoughCoins(5)) {
+            var audio = new Audio('<%= image_url('sounds/fairy.wav') %>');
+            audio.play();
             currentTime += 1500;
             $.post('/pay',{amount:5});
             currentCoins -= 5;
