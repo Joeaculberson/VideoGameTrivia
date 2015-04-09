@@ -50,3 +50,9 @@ Merit::Badge.create!(
     name: 'Smarty',
     description: 'Answer 5 questions in a row correctly in the same game.'
 )
+
+Merit::Badge.create!(
+    id: 4,
+    name: 'FBI Watch List',
+    description: 'Answer 20 fps questions correctly.'
+)

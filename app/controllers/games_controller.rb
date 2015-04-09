@@ -69,6 +69,8 @@ class GamesController < ApplicationController
     add_to_total_stat
 
     if session[:answered_correctly] == "true"
+      add_to_partial_stat
+
       current_user.level += (session[:question_difficulty] / 10)
 
       if current_user.correct_answers_in_a_row.nil?
@@ -81,14 +83,16 @@ class GamesController < ApplicationController
         award_badge(3)
       end
 
-      add_to_partial_stat
+      if Statistic.find_by(email: current_user.email).fps_correct == 20
+        award_badge(4)
+      end
 
       if(@user.level < 0)
         @user.level = 0
       end
       if((@user.level / 10) + 1 > 10)
         if @user.role != 'Admin'
-          @user.role = "Reviewer"
+          @user.role = 'Reviewer'
         end
       end
 
@@ -111,7 +115,7 @@ class GamesController < ApplicationController
       if !@game.steal_question_ids.eql? ''
         if @game.is_second_steal_turn
           if @game.user_steal_correct == @game.opponent_steal_correct
-            flash[:notice] = "Game is a tie, no one wins or loses a piece."
+            flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
             @game.save!
           else
             remove_piece @game.wanted_piece
@@ -439,7 +443,7 @@ class GamesController < ApplicationController
 
     if has_badge == false
       current_user.add_badge(id)
-      flash.now[:notice] = Merit::Badge.find(id).name + ' achievement earned.'
+      flash[:notice] = Merit::Badge.find(id).name + ' achievement earned.'
     end
   end
 

@@ -172,7 +172,7 @@
 
                   <% current_user.badges.each do |badge| %>
                       <div class="row">
-                        <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50" height="50"><%= badge.name %> : <%= badge.description %>
+                        <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
                       </div>
                   <% end %>
 
