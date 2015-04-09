@@ -84,6 +84,7 @@ class GamesController < ApplicationController
       end
 
       if Statistic.find_by(email: current_user.email).fps_correct == 20
+        byebug
         award_badge(4)
       end
 
@@ -370,7 +371,7 @@ class GamesController < ApplicationController
 
   def random_game
     rand_user = User.where.not(:id => current_user.id).sample
-
+    award_badge(5)
     @game = Game.new
     @game.opponent_user_email = rand_user.email
     initialize_game @game
@@ -425,7 +426,12 @@ class GamesController < ApplicationController
 
     respond_to do |format|
       if game.save
-        format.html { redirect_to games_url, notice: 'Game was successfully created against: ' + game.opponent_user_email }
+        format.html { redirect_to games_url }
+        if flash[:notice].blank?
+          flash[:notice] = 'Game was successfully created against: ' + game.opponent_user_email
+        else
+          flash[:notice] += ' Game was successfully created against: ' + game.opponent_user_email
+        end
       else
         format.html { render :new }
         format.json { render json: game.errors, status: :unprocessable_entity }
@@ -443,7 +449,12 @@ class GamesController < ApplicationController
 
     if has_badge == false
       current_user.add_badge(id)
-      flash[:notice] = Merit::Badge.find(id).name + ' achievement earned.'
+      if flash[:notice].blank?
+        flash[:notice] = Merit::Badge.find(id).name + ' achievement earned.'
+      else
+        flash[:notice] += ' ' + Merit::Badge.find(id).name + ' achievement earned.'
+      end
+
     end
   end
 

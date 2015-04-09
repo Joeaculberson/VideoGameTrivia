@@ -56,3 +56,9 @@ Merit::Badge.create!(
     name: 'FBI Watch List',
     description: 'Answer 20 fps questions correctly.'
 )
+
+Merit::Badge.create!(
+    id: 5,
+    name: 'Random Quest',
+    description: 'Start a game with a random player.'
+)
