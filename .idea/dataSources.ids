@@ -2574,6 +2574,8 @@
       <column name="role_playing_total" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="false" jdbcType="93"/>
+      <column name="wins" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="loses" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="statistics_pkey" columns="id"/>
     </table>
     <table name="statistics_id_seq" schema="public" catalog="VideoGameTrivia_development" type="SEQUENCE">

@@ -167,15 +167,15 @@
                     </td>
                   </tr>
                 </table>
+                Wins: <%= Statistic.find_by(email: current_user.email).wins %> ||
+                Loses: <%= Statistic.find_by(email: current_user.email).loses %>
               </div>
               <div role="tabpanel" class="tab-pane" id="achievements">
-
                   <% current_user.badges.each do |badge| %>
                       <div class="row">
                         <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
                       </div>
                   <% end %>
-
               </div>
             </div>
 

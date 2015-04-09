@@ -16,18 +16,18 @@ class GamesController < ApplicationController
       award_badge(1)
     end
 
-
     if current_user.sign_in_count == 5
       award_badge(2)
     end
 
     if current_user.role.nil? || current_user.role.blank?
       current_user.role = 'Player'
+      current_user.correct_answers_in_a_row = 0
       current_user.save
     end
 
     if Statistic.where(:email => current_user.email).blank?
-      Statistic.create email: current_user.email, action_correct: 0, action_total: 0, adventure_correct: 0, adventure_total: 0, arcade_correct: 0, arcade_total: 0, fps_correct: 0, fps_total: 0, racing_correct: 0, racing_total: 0, role_playing_correct: 0, role_playing_total: 0
+      Statistic.create email: current_user.email, action_correct: 0, action_total: 0, adventure_correct: 0, adventure_total: 0, arcade_correct: 0, arcade_total: 0, fps_correct: 0, fps_total: 0, racing_correct: 0, racing_total: 0, role_playing_correct: 0, role_playing_total: 0, wins: 0, loses: 0
     end
 
     @opponent_turn_games = Game.where('user_email = ? OR opponent_user_email = ?', current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where(:is_game_over => false)
@@ -60,7 +60,6 @@ class GamesController < ApplicationController
       redirect_to steal_piece_path
     end
   end
-
 
   def assess_answer
     @game = Game.find session[:current_game]['id']
@@ -318,6 +317,13 @@ class GamesController < ApplicationController
     @game.user_pieces = sorted_pieces.join(' ')
     if @game.user_pieces.eql? '1 2 3 4 5 6'
       @game.is_game_over = true
+      user_stats = Statistic.find_by(email: current_user.email)
+      user_stats.wins += 1
+      user_stats.save!
+
+      opponent_stats = Statistic.find_by(email: @game.opponent_user_email)
+      opponent_stats.loses += 1
+      opponent_stats.save!
     end
   end
 
