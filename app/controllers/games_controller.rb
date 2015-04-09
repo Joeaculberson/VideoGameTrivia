@@ -30,9 +30,9 @@ class GamesController < ApplicationController
       Statistic.create email: current_user.email, action_correct: 0, action_total: 0, adventure_correct: 0, adventure_total: 0, arcade_correct: 0, arcade_total: 0, fps_correct: 0, fps_total: 0, racing_correct: 0, racing_total: 0, role_playing_correct: 0, role_playing_total: 0
     end
 
-    @opponent_turn_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where(:is_game_over => false)
+    @opponent_turn_games = Game.where('user_email = ? OR opponent_user_email = ?', current_user.email, current_user.email).where.not(:user_turn_email => current_user.email).where(:is_game_over => false)
     @user_turn_games = Game.where(:user_turn_email => current_user.email).where(:is_game_over => false)
-    @past_games = Game.where("user_email = ? OR opponent_user_email = ?", current_user.email, current_user.email).where(:is_game_over => true)
+    @past_games = Game.where('user_email = ? OR opponent_user_email = ?', current_user.email, current_user.email).where(:is_game_over => true)
   end
 
   def chosen_category
@@ -84,7 +84,6 @@ class GamesController < ApplicationController
       end
 
       if Statistic.find_by(email: current_user.email).fps_correct == 20
-        byebug
         award_badge(4)
       end
 
@@ -182,7 +181,7 @@ class GamesController < ApplicationController
       redirect_to '/games/' + session[:current_game]['id'].to_s
     elsif @game.user_steal_correct == 6
       if @game.is_second_steal_turn
-        flash[:notice] = "Game is a tie, no one wins or loses a piece."
+        flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
         @game.user_steal_correct = 0
         @game.opponent_steal_correct = 0
         @game.steal_question_ids = ''
