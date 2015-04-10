@@ -54,10 +54,14 @@
 
 </br>
 
-<div class="row text-center">
-    <a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg') %>' class="img-circle"></a>
-</div>
+<div class="arrow-down"></div>
 
+<div class="row text-center" onClick="startSpin();">
+  <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434" >
+    <p class="noCanvasMsg" align="center" >Sorry, your browser doesn't support canvas.<br />Please try another.</p>
+  </canvas>
+</div>
+<a href='<%= questions_path %>'><img src='<%= image_url('spinner.jpg') %>' class="img-circle"></a>
 
 </br>
 </br>
@@ -490,4 +494,7 @@
     });
 
     <% end %>
+    wheelImageName = '<%= image_url('prizewheel.png') %>';
+    begin();
+    powerSelected(1);
 </script>
