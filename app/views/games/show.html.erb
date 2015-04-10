@@ -509,3 +509,94 @@
     powerSelected(1);
 </script>
 
+<div class="modal fade" id="opponentStatsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for <%= @current_opponent.email %></h4>
+      </div>
+      <div class="modal-body">
+        <div role="tabpanel">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</a></li>
+            <li role="presentation"><a href="#achievements" aria-controls="achievements" role="tab" data-toggle="tab">Achievements</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="statistics">
+              <table>
+                <tr>
+                  <td>
+                    <img src='<%= image_url('icons/action.png') %>' width="50" height="50">
+                    <% stat = Statistic.find_by email: @current_opponent.email %>
+                    <% if stat.action_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.action_correct / stat.action_total) * 100 %>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <img src='<%= image_url('icons/adventure.png') %>' width="50" height="50">
+                    <% if stat.adventure_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.adventure_correct / stat.adventure_total) * 100 %>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <img src='<%= image_url('icons/arcade.png') %>' width="50" height="50">
+                    <% if stat.arcade_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.arcade_correct / stat.arcade_total) * 100 %>%
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src='<%= image_url('icons/fps.png') %>' width="50" height="50">
+                    <% if stat.fps_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.fps_correct / stat.fps_total) * 100 %>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <img src='<%= image_url('icons/racing.png') %>' width="50" height="50">
+                    <% if stat.racing_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.racing_correct / stat.racing_total) * 100 %>%
+                    <% end %>
+                  </td>
+                  <td>
+                    <img src='<%= image_url('icons/role-playing.png') %>' width="50" height="50">
+                    <% if stat.role_playing_total == 0 %>
+                        -%
+                    <% else %>
+                        <%= (stat.role_playing_correct / stat.role_playing_total) * 100 %>%
+                    <% end %>
+                  </td>
+                </tr>
+              </table>
+              Wins: <%= Statistic.find_by(email: current_user.email).wins %> ||
+              Loses: <%= Statistic.find_by(email: current_user.email).loses %>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="achievements">
+              <% @current_opponent.badges.each do |badge| %>
+                  <div class="row">
+                    <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>s
