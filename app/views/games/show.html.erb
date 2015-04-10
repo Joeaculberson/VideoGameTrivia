@@ -520,12 +520,12 @@
         <div role="tabpanel">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</a></li>
-            <li role="presentation"><a href="#achievements" aria-controls="achievements" role="tab" data-toggle="tab">Achievements</a></li>
+            <li role="presentation" class="active"><a href="#oppstatistics" aria-controls="oppstatistics" role="tab" data-toggle="tab">Statistics</a></li>
+            <li role="presentation"><a href="#oppachievements" aria-controls="oppachievements" role="tab" data-toggle="tab">Achievements</a></li>
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="statistics">
+            <div role="tabpanel" class="tab-pane active" id="oppstatistics">
               <table>
                 <tr>
                   <td>
@@ -581,10 +581,10 @@
                   </td>
                 </tr>
               </table>
-              Wins: <%= Statistic.find_by(email: current_user.email).wins %> ||
-              Loses: <%= Statistic.find_by(email: current_user.email).loses %>
+              Wins: <%= Statistic.find_by(email: @current_opponent.email).wins %> ||
+              Loses: <%= Statistic.find_by(email: @current_opponent.email).loses %>
             </div>
-            <div role="tabpanel" class="tab-pane" id="achievements">
+            <div role="tabpanel" class="tab-pane" id="oppachievements">
               <% @current_opponent.badges.each do |badge| %>
                   <div class="row">
                     <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
@@ -599,4 +599,4 @@
       </div>
     </div>
   </div>
-</div>s
+</div>
