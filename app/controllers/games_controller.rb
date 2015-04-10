@@ -35,6 +35,11 @@ class GamesController < ApplicationController
     @past_games = Game.where('user_email = ? OR opponent_user_email = ?', current_user.email, current_user.email).where(:is_game_over => true)
   end
 
+  def spun_category
+    session[:spun_category] = params[:spun_category]
+    render js: "window.location = '#{questions_url}'"
+  end
+
   def chosen_category
     session[:chosen_category] = params[:chosen_category]
     render js: "window.location = '#{challenge_url}'"

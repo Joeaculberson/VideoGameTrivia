@@ -14,5 +14,4 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
-//= require winwheel_1.2.js
 //= require_tree .

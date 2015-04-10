@@ -5,8 +5,7 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     @questions = Question.all
-    @random_question = @questions.sample
-    random_wheel_spin = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing', 'challenge'].sample
+    random_wheel_spin = session[:spun_category]
     @game = Game.find(session[:current_game]['id'])
     if random_wheel_spin.eql? 'challenge'
       @game.user_meter = 3
