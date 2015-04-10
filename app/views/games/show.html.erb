@@ -1,3 +1,25 @@
+<head>
+  <style>
+      .row {
+          position: relative;
+      }
+
+      .buttonBox {
+          position: absolute;
+          bottom:0;
+          right:0;
+      }
+  </style>
+</head>
+
+<script>
+    $(document).ready(function() {
+        $('.pull-down').each(function() {
+            $(this).css('margin-top', $(this).parent().height()-$(this).height())
+        });
+    });
+</script>
+
 <div class="text-center">
   <p>
     <strong>Round:</strong>
@@ -62,17 +84,13 @@
 </br>
 </br>
 
-<div class="container">
-    <div class="row text-center">
-        <div class="col-xs-4">
-            <%= button_to 'Resign', games_path, :class => 'btn btn-info btn-block' %>
-        </div>
-        <div class="col-xs-4">
-            <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png') %>' width="150">
-        </div>
-        <div class="col-xs-4">
-        </div>
-    </div>
+<div class="row text-center">
+  <div class="col-xs-12">
+    <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png') %>' width="150">
+  </div>
+  <div class="col-xs-4 buttonBox">
+    <%= button_to 'Resign', games_path, :class => 'btn btn-info btn-block' %>
+  </div>
 </div>
 
 
