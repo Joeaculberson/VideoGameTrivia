@@ -781,7 +781,11 @@
                 </tr>
               </table>
               Wins: <%= Statistic.find_by(email: @current_opponent.email).wins %> ||
-              Loses: <%= Statistic.find_by(email: @current_opponent.email).loses %>
+              Losses: <%= Statistic.find_by(email: @current_opponent.email).loses %>
+              <br>
+              Record against player:
+              <br>
+              Wins: <%= @won_games.size %> || Losses: <%= @lost_games.size %>
             </div>
             <div role="tabpanel" class="tab-pane" id="oppachievements">
               <% @current_opponent.badges.each do |badge| %>
