@@ -129,7 +129,7 @@
                       <% if stat.action_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.action_correct / stat.action_total) * 100 %>%
+                          <%= '%.2f' % ((stat.action_correct.to_f / stat.action_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                     <td>
@@ -137,7 +137,7 @@
                       <% if stat.adventure_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.adventure_correct / stat.adventure_total) * 100 %>%
+                          <%= '%.2f' % ((stat.adventure_correct.to_f / stat.adventure_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                     <td>
@@ -145,7 +145,7 @@
                       <% if stat.arcade_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.arcade_correct / stat.arcade_total) * 100 %>%
+                          <%= '%.2f' % ((stat.arcade_correct.to_f / stat.arcade_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                   </tr>
@@ -155,7 +155,7 @@
                       <% if stat.fps_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.fps_correct / stat.fps_total) * 100 %>%
+                          <%= '%.2f' % ((stat.fps_correct.to_f / stat.fps_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                     <td>
@@ -163,7 +163,7 @@
                       <% if stat.racing_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.racing_correct / stat.racing_total) * 100 %>%
+                          <%= '%.2f' % ((stat.racing_correct.to_f / stat.racing_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                     <td>
@@ -171,7 +171,7 @@
                       <% if stat.role_playing_total == 0 %>
                           -%
                       <% else %>
-                          <%= (stat.role_playing_correct / stat.role_playing_total) * 100 %>%
+                          <%= '%.2f' % ((stat.role_playing_correct.to_f / stat.role_playing_total.to_f) * 100) %>%
                       <% end %>
                     </td>
                   </tr>

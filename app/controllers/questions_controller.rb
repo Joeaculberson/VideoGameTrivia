@@ -12,11 +12,11 @@ class QuestionsController < ApplicationController
       @game.save!
       redirect_to game_path(@game)
     else
-      questions = Question.where(:category => random_wheel_spin).order("RANDOM()")
-      if(questions.first.difficulty != current_user.level)
-        questions = questions.order("RANDOM()")
+      categoryQuestions = Question.where(:category => random_wheel_spin).order("RANDOM()")
+      if(categoryQuestions.first.difficulty != current_user.level)
+        categoryQuestions = categoryQuestions.order("RANDOM()")
       end
-      redirect_to questions.first
+      redirect_to categoryQuestions.first
     end
   end
 
