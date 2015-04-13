@@ -14,4 +14,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = resource # Needed for Merit
     super
   end
+
 end

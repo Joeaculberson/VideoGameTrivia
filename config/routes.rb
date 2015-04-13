@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :questions
   resources :games
+
   devise_for :users, controllers: {omniauth_callbacks: 'omniauth_callbacks', registrations: 'users/registrations'}
 
   get '/promote' => 'users#promote'
@@ -14,6 +15,11 @@ Rails.application.routes.draw do
   get 'assess_answer' => 'games#assess_answer'
   get 'random_game' => 'games#random_game'
   get 'resign_game' => 'games#resign'
+
+  get 'hide_picture' => 'users#hide_picture'
+  get 'show_picture' => 'users#show_picture'
+  get 'hide_email' => 'users#hide_email'
+  get 'show_email' => 'users#show_email'
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'

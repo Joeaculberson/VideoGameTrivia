@@ -16,4 +16,25 @@ class UsersController < ApplicationController
 
     redirect_to root_url
   end
+
+  def hide_picture
+    current_user.hide_picture = true
+    current_user.save
+  end
+
+  def show_picture
+    current_user.hide_picture = false
+    current_user.save
+  end
+
+  def hide_email
+    current_user.hide_email = true
+    current_user.save
+  end
+
+  def show_email
+    current_user.hide_email = false
+    current_user.save
+  end
+
 end
