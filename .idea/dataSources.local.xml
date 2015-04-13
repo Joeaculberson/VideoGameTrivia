@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Rails VideoGameTrivia: development" uuid="8c2689bf-a149-4f9d-9695-778889dfd8f1" />
-    <data-source name="Rails VideoGameTrivia: test" uuid="84f45b11-d9d9-4b16-831d-65e4e85a6964" />
+    <data-source name="Rails VideoGameTrivia: development" uuid="8c2689bf-a149-4f9d-9695-778889dfd8f1">
+      <schema-pattern>VideoGameTrivia_development.*</schema-pattern>
+      <default-schemas>VideoGameTrivia_development.*</default-schemas>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: test" uuid="84f45b11-d9d9-4b16-831d-65e4e85a6964">
+      <schema-pattern>VideoGameTrivia_test.*</schema-pattern>
+      <default-schemas>VideoGameTrivia_test.*</default-schemas>
+    </data-source>
     <data-source name="Rails VideoGameTrivia: production" uuid="0363bad1-abb1-4ace-8a74-c489925aa8a9">
+      <secret-storage>memory</secret-storage>
+      <first-sync>true</first-sync>
       <user-name>VideoGameTrivia</user-name>
-      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffcdfe3dfeedfefdfe5dfeddfebdfe7dfefdffedff8dfe3dffcdfe3dfebdff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
     </data-source>
   </component>
 </project>
