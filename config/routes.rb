@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'steal_piece' => 'questions#steal_piece'
   get 'assess_answer' => 'games#assess_answer'
   get 'random_game' => 'games#random_game'
+  get 'resign_game' => 'games#resign'
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'

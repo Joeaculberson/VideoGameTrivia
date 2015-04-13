@@ -52,6 +52,18 @@ class GamesController < ApplicationController
     render js: "window.location = '#{steal_piece_url}'"
   end
 
+  def resign
+    @game = Game.find session[:current_game]['id']
+    @user = current_user
+    end_turn
+    @game.is_game_over = true
+    @game.save!
+    opponent = User.find_by(email: @game.opponent_user_email)
+    opponent.coins += 5
+    opponent.save!
+    redirect_to games_path
+  end
+
   # GET /games/1
   # GET /games/1.json
   def show
