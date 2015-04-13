@@ -33,12 +33,17 @@
                     <% current_opponent = User.find_by email: game.user_email %>
                 <% end %>
 
-                <% if current_opponent.image %>
+                <% if current_opponent.image && !current_opponent.hide_picture %>
                     <img src='<%= current_opponent.image %>' class="img-circle face">
                 <% else %>
                     <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
                 <% end %>
-                <%= current_opponent.email %>
+                <% if(current_opponent.hide_email) %>
+                    Opponent
+                <% else %>
+                    <%= current_opponent.email %>
+                <% end %>
+
               </div>
             </td>
             <td>
@@ -122,12 +127,16 @@
               <% else %>
                   <% current_opponent = User.find_by email: game.user_email %>
               <% end %>
-              <% if current_opponent.image %>
+              <% if current_opponent.image && !current_opponent.hide_picture %>
                   <img src='<%= current_opponent.image %>' class="img-circle face">
               <% else %>
                   <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
               <% end %>
-              <%= current_opponent.email %>
+              <% if(current_opponent.hide_email) %>
+                  Opponent
+              <% else %>
+                  <%= current_opponent.email %>
+              <% end %>
             </div>
             </td>
             <td>
@@ -179,12 +188,16 @@
                   <% else %>
                       <% current_opponent = User.find_by email: game.user_email %>
                   <% end %>
-                  <% if current_opponent.image %>
+                  <% if current_opponent.image && !current_opponent.hide_picture %>
                       <img src='<%= current_opponent.image %>' class="img-circle face">
                   <% else %>
                       <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
                   <% end %>
-                  <%= current_opponent.email %>
+                  <% if(current_opponent.hide_email) %>
+                      Opponent
+                  <% else %>
+                      <%= current_opponent.email %>
+                  <% end %>
                 </div></td>
                 <td>
                   <% if current_user.email == game.user_email %>

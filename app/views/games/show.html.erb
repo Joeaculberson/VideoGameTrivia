@@ -240,7 +240,12 @@
     </div>
     <div class="col-xs-5" style="border-left-style: dotted">
       <div class="pull-right">
-        <%= @game.opponent_user_email %> - Level: <%= (@current_opponent.level / 10) + 1 %></div>
+        <% if(@current_opponent.hide_email) %>
+            Opponent - Level: <%= (@current_opponent.level / 10) + 1 %>
+        <% else %>
+            <%= @game.opponent_user_email %> - Level: <%= (@current_opponent.level / 10) + 1 %>
+        <% end %>
+        </div>
       </br>
       <div class="pull-right">
         <img id="opponentRolePlayingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
@@ -254,10 +259,11 @@
     <div class="col-xs-1">
       <div class="pull-right">
         <div id="face-wrapper">
-          <% if @current_opponent.image %>
+          <% if @current_opponent.image && !@current_opponent.hide_picture%>
               <%= link_to image_tag(@current_opponent.image, :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
           <% else %>
               <%= link_to image_tag("default_profile.png", :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
+
           <% end %>
         </div>
       </div>
@@ -713,7 +719,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for <%= @current_opponent.email %></h4>
+        <% if(@current_opponent.hide_email) %>
+            <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for Opponent</h4>
+        <% else %>
+            <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for <%= @current_opponent.email %></h4>
+        <% end %>
+
       </div>
       <div class="modal-body">
         <div role="tabpanel">
