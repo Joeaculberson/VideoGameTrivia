@@ -7,21 +7,22 @@
     </div>
     <br/>
     <div class="row text-center">
-      <div class="col-md-4"><img src='<%= image_url('coins/one_dollar.png')%>' width="50" height="50">
+      <div class="col-md-4">
+        <img src='<%= image_url('coins/one_dollar.png')%>' width="50" height="50">
         <br/>
-        $1 for 5 coins
+        <%= button_to '$1 for 5 coins', '#', :class => 'btn btn-warning' %>
       </div>
       <div class="col-md-4">
         <img src='<%= image_url('coins/five_dollars.png')%>' width="50" height="50">
         <br/>
-        $5 for 30 coins
+        <%= button_to '$5 for 30 coins', '#', :class => 'btn btn-warning' %>
         <br/>
         (5 coins free!)
       </div>
       <div class="col-md-4">
         <img src='<%= image_url('coins/ten_dollars.png')%>' width="50" height="50">
         <br/>
-        $10 for 75 coins
+        <%= button_to '$10 for 75 coins', '#', :class => 'btn btn-warning' %>
         <br/>
         (15 coins free!)
       </div>
