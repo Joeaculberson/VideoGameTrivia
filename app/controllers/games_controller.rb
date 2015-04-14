@@ -399,6 +399,9 @@ class GamesController < ApplicationController
     @game = Game.new
     @game.opponent_user_email = rand_user.email
     initialize_game @game
+  end
+
+  def coin_store
 
   end
 

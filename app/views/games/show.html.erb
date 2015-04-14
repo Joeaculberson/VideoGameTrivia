@@ -246,7 +246,7 @@
     </div>
     <div class="col-xs-5" style="border-left-style: dotted">
       <div class="pull-right">
-        <% if(@current_opponent.hide_email) %>
+        <% if @current_opponent.hide_email %>
             Opponent - Level: <%= (@current_opponent.level / 10) + 1 %>
         <% else %>
             <%= @game.opponent_user_email %> - Level: <%= (@current_opponent.level / 10) + 1 %>

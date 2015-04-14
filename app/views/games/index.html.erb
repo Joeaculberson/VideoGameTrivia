@@ -4,7 +4,6 @@
 
 <br>
 
-
 <% if @user_turn_games.size > 0 %>
     <div class="panel panel-default">
     <table class="table table-striped table-hover">
@@ -225,6 +224,7 @@
 
 <div class="text-center">
   <%= button_to 'Submit a question', new_question_path, :class => 'btn btn-primary btn-lg', :method => :get, :style => 'width: 80%' %>
+  <%= button_to 'Coin Store', coin_store_path, :class => 'btn btn-warning btn-lg', :method => :get, :style => 'width: 80%' %>
 </div>
 <% if current_user.role == 'Admin' || current_user.role == 'Reviewer' %>
     <div class="text-center">

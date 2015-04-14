@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get 'hide_location' => 'users#hide_location'
   get 'show_location' => 'users#show_location'
 
+  get 'coin_store' => 'games#coin_store'
+
   get '/users/:id', :to => 'users#add_location', :as => :user
   post '/users/:id', :to => 'users#add_location'
 
