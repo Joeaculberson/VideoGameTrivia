@@ -222,7 +222,7 @@
   <div class="row">
     <div class="col-xs-1">
       <div id="face-wrapper">
-        <% if current_user.image %>
+        <% if current_user.image && !current_user.hide_picture %>
             <%= link_to image_tag(current_user.image, :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#statsModal' %>
         <% else %>
             <%= link_to image_tag("default_profile.png", :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#statsModal' %>
@@ -230,7 +230,12 @@
       </div>
     </div>
     <div class="col-xs-5">
-      <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %> </br>
+      <% if(current_user.hide_email) %>
+      You - Level: <%= (current_user.level / 10) + 1 %>
+      <% else %>
+          <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %>
+      <% end %>
+       </br>
       <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
       <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
       <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
