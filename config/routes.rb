@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   get 'show_picture' => 'users#show_picture'
   get 'hide_email' => 'users#hide_email'
   get 'show_email' => 'users#show_email'
+  get 'hide_location' => 'users#hide_location'
+  get 'show_location' => 'users#show_location'
+
+  get '/users/:id', :to => 'users#add_location', :as => :user
+  post '/users/:id', :to => 'users#add_location'
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'

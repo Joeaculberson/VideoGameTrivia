@@ -14,5 +14,27 @@
       <first-sync>true</first-sync>
       <user-name>VideoGameTrivia</user-name>
     </data-source>
+    <data-source name="Rails VideoGameTrivia: development" uuid="2353407b-25e4-4ebe-a56d-22c27825b046">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: test" uuid="7b522c20-eba4-4188-88e7-87af56497070">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: production" uuid="0a4eee8b-e083-4fd0-be78-bda90d013eec">
+      <first-sync>true</first-sync>
+      <user-name>VideoGameTrivia</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffcdfe3dfeedfefdfe5dfeddfebdfe7dfefdffedff8dfe3dffcdfe3dfebdff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: development" uuid="0773464b-3f30-41b2-ba1b-fc8da6f950a0">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: test" uuid="74a2b195-a0bf-4d00-a83f-8c35b4703962">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails VideoGameTrivia: production" uuid="33836bdc-fd74-4a5b-bb45-f49504804a24">
+      <first-sync>true</first-sync>
+      <user-name>VideoGameTrivia</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffcdfe3dfeedfefdfe5dfeddfebdfe7dfefdffedff8dfe3dffcdfe3dfebdff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+    </data-source>
   </component>
 </project>

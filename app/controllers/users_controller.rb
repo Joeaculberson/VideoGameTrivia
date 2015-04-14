@@ -17,6 +17,12 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
 
+  def add_location
+    current_user.location = params[:user]['location']
+    current_user.save!
+    redirect_to edit_user_registration_path
+  end
+
   def hide_picture
     current_user.hide_picture = true
     current_user.save
@@ -40,5 +46,18 @@ class UsersController < ApplicationController
     current_user.save
     redirect_to edit_user_registration_path
   end
+
+  def hide_location
+    current_user.hide_location = true
+    current_user.save
+    redirect_to edit_user_registration_path
+  end
+
+  def show_location
+    current_user.hide_location = false
+    current_user.save
+    redirect_to edit_user_registration_path
+  end
+
 
 end

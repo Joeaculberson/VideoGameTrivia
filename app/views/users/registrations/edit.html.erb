@@ -39,10 +39,6 @@
 <h3>Privacy Settings</h3>
 
 
-
-
-
-
 <% if(current_user.hide_email) %>
     <%= button_to 'Show Email', show_email_path, :class => 'btn btn-default', :method => :get%>
 <% else %>
@@ -54,6 +50,20 @@
 <% else %>
     <%= button_to 'Hide Profile Picture', hide_picture_path, :class => 'btn btn-default', :method => :get%>
 <% end %>
+
+<% if current_user.location.nil? %>
+    <%= simple_form_for current_user, :method => :POST do |f| %>
+        <%= f.input :location, :label => 'Add Location' %>
+        <%= f.button :submit, 'Update' %>
+    <% end %>
+<% else %>
+    <% if current_user.hide_location %>
+        <%= button_to 'Show Location', show_location_path, :class => 'btn btn-default', :method => :get%>
+    <% else %>
+        <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-default', :method => :get%>
+    <% end %>
+<% end %>
+
 
 <h3>Cancel my account </h3>
 

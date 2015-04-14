@@ -124,7 +124,16 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-6">Submitter: <%= @question.submitter %></div>
+  <div class="col-xs-6">
+    Submitter: <%= @question.submitter %>
+    </br>
+    <% submitter = User.find_by(email: @question.submitter) %>
+    <% if !submitter.nil? %>
+        <% if !submitter.location.blank? && !submitter.hide_location %>
+            Location: <%= submitter.location %>
+        <% end %>
+    <% end %>
+  </div>
   <div class="col-xs-6 text-right">Difficulty: <%= @question.difficulty / 10%>
     </br> Category: <%= @question.category %>
     </br>

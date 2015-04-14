@@ -231,10 +231,11 @@
     </div>
     <div class="col-xs-5">
       <% if(current_user.hide_email) %>
-      You - Level: <%= (current_user.level / 10) + 1 %>
+          You - Level: <%= (current_user.level / 10) + 1 %>
       <% else %>
           <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %>
       <% end %>
+
        </br>
       <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
       <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
@@ -268,7 +269,6 @@
               <%= link_to image_tag(@current_opponent.image, :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
           <% else %>
               <%= link_to image_tag("default_profile.png", :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
-
           <% end %>
         </div>
       </div>
@@ -793,6 +793,10 @@
               Record against player:
               <br>
               Wins: <%= @won_games.size %> || Losses: <%= @lost_games.size %>
+              <br>
+              <% if !@current_opponent.location.blank? && !@current_opponent.hide_location %>
+                  Location: <%= @current_opponent.location %>
+              <% end %>
             </div>
             <div role="tabpanel" class="tab-pane" id="oppachievements">
               <% @current_opponent.badges.each do |badge| %>
