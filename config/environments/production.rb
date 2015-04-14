@@ -27,4 +27,13 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
+
+  ActiveMerchant::Billing::Base.mode = :test
+  paypal_options = {
+      login: "fakecapstone-facilitator_api1.gmail.com",
+      password: "92T3LU2GG9JD73KH",
+      signature: "Acahxk2GWNxOEVJIHTRY7rZRzpXoAoOO2tgBUKAeEvBKsjzdb6ZRXpmz"
+  }
+  ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  ::STANDARD_GATEWAY = ActiveMerchant::Billing::PaypalGateway.new(paypal_options)
 end

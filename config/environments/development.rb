@@ -8,7 +8,8 @@ Rails.application.configure do
       user_name:            'fakecapstone@gmail.com',
       password:             'capstone123',
       authentication:       'plain',
-      enable_starttls_auto: true  }
+      enable_starttls_auto: true
+  }
 
   config.cache_classes = false
   config.eager_load = false
@@ -20,4 +21,13 @@ Rails.application.configure do
   config.assets.debug = true
   config.assets.digest = true
   config.assets.raise_runtime_errors = true
+
+  ActiveMerchant::Billing::Base.mode = :test
+  paypal_options = {
+      login: "fakecapstone-facilitator_api1.gmail.com",
+      password: "92T3LU2GG9JD73KH",
+      signature: "Acahxk2GWNxOEVJIHTRY7rZRzpXoAoOO2tgBUKAeEvBKsjzdb6ZRXpmz"
+  }
+  ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+
 end

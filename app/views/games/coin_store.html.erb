@@ -10,19 +10,23 @@
       <div class="col-md-4">
         <img src='<%= image_url('coins/one_dollar.png')%>' width="50" height="50">
         <br/>
-        <%= button_to '$1 for 5 coins', '#', :class => 'btn btn-warning' %>
+
+        <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), {:controller => 'orders', :action => 'express_checkout', :payment_amount => 100, :coin_amount => 5}) %>
+        $1 for 5 coins
       </div>
       <div class="col-md-4">
         <img src='<%= image_url('coins/five_dollars.png')%>' width="50" height="50">
         <br/>
-        <%= button_to '$5 for 30 coins', '#', :class => 'btn btn-warning' %>
+        <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), {:controller => 'orders', :action => 'express_checkout', :payment_amount => 500, :coin_amount => 30}) %>
+        $5 for 30 coins
         <br/>
         (5 coins free!)
       </div>
       <div class="col-md-4">
         <img src='<%= image_url('coins/ten_dollars.png')%>' width="50" height="50">
         <br/>
-        <%= button_to '$10 for 75 coins', '#', :class => 'btn btn-warning' %>
+        <%= link_to(image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), {:controller => 'orders', :action => 'express_checkout', :payment_amount => 1000, :coin_amount => 75}) %>
+        $10 for 75 coins
         <br/>
         (15 coins free!)
       </div>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: MyString
+  card_id: MyString
+  ip: MyString
+  express_token: MyString
+  express_payer_id: MyString
+
+two:
+  id: MyString
+  card_id: MyString
+  ip: MyString
+  express_token: MyString
+  express_payer_id: MyString

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414045334) do
+ActiveRecord::Schema.define(version: 20150414190727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 20150414045334) do
     t.string  "category", default: "default"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string   "card_id"
+    t.string   "ip"
+    t.string   "express_token"
+    t.string   "express_payer_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "questions", force: :cascade do |t|
     t.text     "question_text"
     t.text     "correct_answer"
@@ -135,6 +144,8 @@ ActiveRecord::Schema.define(version: 20150414045334) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.string   "provider"
+    t.string   "uid"
     t.string   "username"
     t.string   "image"
     t.string   "role"

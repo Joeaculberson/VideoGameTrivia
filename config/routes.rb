@@ -24,6 +24,11 @@ Rails.application.routes.draw do
   get 'show_location' => 'users#show_location'
 
   get 'coin_store' => 'games#coin_store'
+  get 'buy_five_coins' => 'games#buy_five_coins'
+
+  get 'express_checkout' => 'orders#express_checkout'
+  get 'new_order' => 'orders#new'
+  get 'orders' => 'orders#show'
 
   get '/users/:id', :to => 'users#add_location', :as => :user
   post '/users/:id', :to => 'users#add_location'
