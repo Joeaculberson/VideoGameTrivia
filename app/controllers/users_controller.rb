@@ -20,21 +20,25 @@ class UsersController < ApplicationController
   def hide_picture
     current_user.hide_picture = true
     current_user.save
+    redirect_to edit_user_registration_path
   end
 
   def show_picture
     current_user.hide_picture = false
     current_user.save
+    redirect_to edit_user_registration_path
   end
 
   def hide_email
     current_user.hide_email = true
     current_user.save
+    redirect_to edit_user_registration_path
   end
 
   def show_email
     current_user.hide_email = false
     current_user.save
+    redirect_to edit_user_registration_path
   end
 
 end
