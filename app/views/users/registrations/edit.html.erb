@@ -1,4 +1,4 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2>Profile</h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -50,7 +50,7 @@
 <% else %>
     <%= button_to 'Hide Profile Picture', hide_picture_path, :class => 'btn btn-default', :method => :get%>
 <% end %>
-
+<br/>
 <% if current_user.location.nil? %>
     <%= simple_form_for current_user, :method => :POST do |f| %>
         <%= f.input :location, :label => 'Add Location' %>
@@ -60,7 +60,7 @@
     <% if current_user.hide_location %>
         <%= button_to 'Show Location', show_location_path, :class => 'btn btn-default', :method => :get%>
     <% else %>
-        <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-default', :method => :get%>
+        <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-default', :method => :get%> Location: <%= current_user.location %>
     <% end %>
 <% end %>
 
