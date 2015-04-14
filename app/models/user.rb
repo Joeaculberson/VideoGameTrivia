@@ -33,6 +33,14 @@ class User < ActiveRecord::Base
     else
       super
     end
-  end
+end
+
+def get_games_won_monthly
+    Game.where(:user_email => self.email).where(:is_game_over => true).where("created_at > ?", 1.month.ago).size
+end
+
+def get_games_won_weekly
+  Game.where(:user_email => self.email).where(:is_game_over => true).where("created_at > ?", 1.week.ago).size
+end
 
 end
