@@ -209,18 +209,88 @@
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#week" aria-controls="statistics" role="tab" data-toggle="tab">This Week</a></li>
-                  <li role="presentation"><a href="#month" aria-controls="achievements" role="tab" data-toggle="tab">This Month</a></li>
+                  <li role="presentation" class="active"><a href="#week" aria-controls="week" role="tab" data-toggle="tab">This Week</a></li>
+                  <li role="presentation"><a href="#month" aria-controls="month" role="tab" data-toggle="tab">This Month</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
 
                   <div role="tabpanel" class="tab-pane active" id="week">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>
+                          Username
+                        </th>
+                        <th>
+                          Won games
+                        </th>
+                        </thead>
 
+                    <tbody>
+                    <% User.all.sort {|a,b| a.get_games_won_weekly <=> b.get_games_won_weekly}.reverse[0..2].each do |user| %>
+                        <tr>
+                          <td>
+                            <div id="face-wrapper">
+                              <% if user.image && !user.hide_picture %>
+                                  <img src='<%= user.image %>' class="img-circle face">
+                              <% else %>
+                                  <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                              <% end %>
+                              <% if(user.hide_email) %>
+                                  User
+                              <% else %>
+                                  <%= user.email %>
+                              <% end %>
+                            </div>
+                          </td>
+                          <td>
+                            <%= user.get_games_won_weekly %>
+                          </td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                          </table>
+                      </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="month">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>
+                          Username
+                        </th>
+                        <th>
+                          Won games
+                        </th>
+                        </thead>
 
+                        <tbody>
+                        <% User.all.sort {|a,b| a.get_games_won_monthly <=> b.get_games_won_monthly}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <%= user.get_games_won_monthly %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
                 </div>

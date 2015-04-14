@@ -76,8 +76,8 @@ class GamesController < ApplicationController
     if !@game.steal_question_ids.eql? ''
       redirect_to steal_piece_path
     end
-    @won_games = Game.where(:user_email => current_user.email).where(:is_game_over => true)
-    @lost_games = Game.where(:opponent_user_email => current_user.email).where(:is_game_over => true)
+    @won_games = Game.where(:user_email => current_user.email).where(:opponent_user_email => @current_opponent.email).where(:is_game_over => true)
+    @lost_games = Game.where(:opponent_user_email => current_user.email).where(:user_email => @current_opponent.email).where(:is_game_over => true)
   end
 
   def assess_answer
