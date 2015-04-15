@@ -235,7 +235,7 @@
       <% else %>
           <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %>
       <% end %>
-            (Next level: <%= ((current_user.points % 10) - 10) * -1 %> exp)
+            (Next level: <%= ((current_user.level % 10) - 10) * -1 %> exp)
        </br>
       <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
       <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
