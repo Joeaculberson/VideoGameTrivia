@@ -64,12 +64,19 @@
     <% end %>
 <% end %>
 <br/>
-<% if current_user.hide_store %>
-    <%= button_to 'Enable in-app purchases', show_store_path, :class => 'btn btn-default', :method => :get%>
+<% if current_user.security_question.nil? %>
+    <%= simple_form_for current_user, :method => :POST do |f| %>
+        <%= f.input :security_question, :label => 'Set security question for enabling/disabling in-app purchases' %>
+        <%= f.input :security_answer, :label => 'Security question answer' %>
+        <%= f.button :submit, 'Submit' %>
+    <% end %>
 <% else %>
-    <%= button_to 'Disable in-app purchases', hide_store_path, :class => 'btn btn-default', :method => :get%>
+    <% if current_user.hide_store %>
+        <%= button_to 'Enable in-app purchases', show_store_path, :class => 'btn btn-default', :method => :get%>
+    <% else %>
+        <%= button_to 'Disable in-app purchases', hide_store_path, :class => 'btn btn-default', :method => :get%>
+    <% end %>
 <% end %>
-
 
 <h3>Cancel my account </h3>
 
