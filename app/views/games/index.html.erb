@@ -27,6 +27,7 @@
           <tr class="success" onclick="location.href='<%= game_path(game) %>'">
             <td>
               <div id="face-wrapper">
+                <% current_opponent = nil %>
                 <% if current_user.email == game.user_email %>
                     <% current_opponent = User.find_by email: game.opponent_user_email %>
                 <% else %>
