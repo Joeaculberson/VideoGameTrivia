@@ -13,14 +13,14 @@
       </div>
       <div class="col-md-3">
         <% if current_user.hide_email %>
-            Opponent
+            Email Hidden
         <% else %>
             <%= current_user.email %>
         <% end %>
         <br/>
         Level: <%= (current_user.level / 10) + 1 %>
         <br/>
-        Next level: <%= ((current_user.points % 10) - 10) * -1 %> exp
+        Next level: <%= ((current_user.level % 10) - 10) * -1 %> exp
         <br/>
         <% if current_user.location %>
             <% if !current_user.hide_location %>
