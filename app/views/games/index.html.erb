@@ -27,12 +27,7 @@
           <tr class="success" onclick="location.href='<%= game_path(game) %>'">
             <td>
               <div id="face-wrapper">
-                <% current_opponent = nil %>
-                <% if current_user.email == game.user_email %>
-                    <% current_opponent = User.find_by email: game.opponent_user_email %>
-                <% else %>
-                    <% current_opponent = User.find_by email: game.user_email %>
-                <% end %>
+                <% current_opponent = User.find_by email: game.opponent_user_email %>
 
                 <% if current_opponent.image && !current_opponent.hide_picture %>
                     <img src='<%= current_opponent.image %>' class="img-circle face">
