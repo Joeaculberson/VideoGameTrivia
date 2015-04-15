@@ -501,7 +501,7 @@
                                 <%= stat.racing_correct %>
                               </td>
                               <td>
-                                <% if stat.action_total == 0 %>
+                                <% if stat.racing_total == 0 %>
                                     -%
                                 <% else %>
                                     <%= '%.2f' % ((stat.racing_correct.to_f / stat.racing_total.to_f) * 100) %>%
