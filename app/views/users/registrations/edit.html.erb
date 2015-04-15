@@ -71,15 +71,15 @@
 <h3>Privacy Settings</h3>
 
 <% if(current_user.hide_email) %>
-    <%= button_to 'Show Email', show_email_path, :class => 'btn btn-success', :method => :get%>
+    <%= button_to 'Show Email', show_email_path, :class => 'btn btn-success btn-lg btn-block', :method => :get%>
 <% else %>
-    <%= button_to 'Hide Email', hide_email_path, :class => 'btn btn-danger', :method => :get%>
+    <%= button_to 'Hide Email', hide_email_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
 <% end %>
 <br/>
 <% if(current_user.hide_picture) %>
-    <%= button_to 'Show Profile Picture', show_picture_path, :class => 'btn btn-success', :method => :get%>
+    <%= button_to 'Show Profile Picture', show_picture_path, :class => 'btn btn-success btn-lg btn-block', :method => :get%>
 <% else %>
-    <%= button_to 'Hide Profile Picture', hide_picture_path, :class => 'btn btn-danger', :method => :get%>
+    <%= button_to 'Hide Profile Picture', hide_picture_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
 <% end %>
 <br/>
 <% if current_user.location.nil? %>
@@ -89,9 +89,9 @@
     <% end %>
 <% else %>
     <% if current_user.hide_location %>
-        <%= button_to 'Show Location', show_location_path, :class => 'btn btn-success', :method => :get%>
+        <%= button_to 'Show Location', show_location_path, :class => 'btn btn-success btn-lg btn-block', :method => :get%>
     <% else %>
-        <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-danger', :method => :get%>
+        <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
     <% end %>
 <% end %>
 <br/>
@@ -112,15 +112,13 @@
         </b>
         <%= simple_form_for current_user, :method => :POST do |f| %>
             <%= f.input :security_answer, :input_html => { :value => ''}, :label => 'Security question answer' %>
-            <%= f.button :submit, 'Enable in-app purchases', :class => 'btn btn-success' %>
+            <%= f.button :submit, 'Enable in-app purchases', :class => 'btn btn-success btn-lg btn-block' %>
         <% end %>
     <% else %>
-        <%= button_to 'Disable in-app purchases', hide_store_path, :class => 'btn btn-danger', :method => :get%>
+        <%= button_to 'Disable in-app purchases', hide_store_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
     <% end %>
 <% end %>
 <br/>
 <h3>Delete account</h3>
 
-<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" },  :class => 'btn btn-danger', method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" },  :class => 'btn btn-danger btn-lg btn-block', method: :delete %></p>
