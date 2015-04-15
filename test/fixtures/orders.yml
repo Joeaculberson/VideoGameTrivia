@@ -8,8 +8,8 @@ one:
   express_payer_id: MyString
 
 two:
-  id: MyString
-  card_id: MyString
-  ip: MyString
-  express_token: MyString
-  express_payer_id: MyString
+  id: MyString2
+  card_id: MyString2
+  ip: MyString2
+  express_token: MyString2
+  express_payer_id: MyString2
