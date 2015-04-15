@@ -2620,6 +2620,10 @@
       <column name="hide_picture" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7" def="ZmFsc2U="/>
       <column name="hide_email" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7" def="ZmFsc2U="/>
       <column name="location" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="hide_location" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="hide_store" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="security_question" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
+      <column name="security_answer" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="users_pkey" columns="id"/>
       <index name="index_users_on_confirmation_token" unique="true" columns="confirmation_token"/>
       <index name="index_users_on_email" unique="true" columns="email"/>

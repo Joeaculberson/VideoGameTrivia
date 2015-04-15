@@ -405,6 +405,8 @@ class GamesController < ApplicationController
 
   end
 
+
+
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update

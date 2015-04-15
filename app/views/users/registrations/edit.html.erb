@@ -20,6 +20,8 @@
         <br/>
         Level: <%= (current_user.level / 10) + 1 %>
         <br/>
+        Next level: <%= ((current_user.points % 10) - 10) * -1 %> exp
+        <br/>
         <% if current_user.location %>
             <% if !current_user.hide_location %>
                 <%= current_user.location %>
