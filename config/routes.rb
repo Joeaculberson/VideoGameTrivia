@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get 'show_email' => 'users#show_email'
   get 'hide_location' => 'users#hide_location'
   get 'show_location' => 'users#show_location'
+  get 'hide_store' => 'users#hide_store'
+  get 'show_store' => 'users#show_store'
 
   get 'coin_store' => 'games#coin_store'
   get 'buy_five_coins' => 'games#buy_five_coins'

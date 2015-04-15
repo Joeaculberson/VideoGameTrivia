@@ -63,6 +63,12 @@
         <%= button_to 'Hide Location', hide_location_path, :class => 'btn btn-default', :method => :get%> Location: <%= current_user.location %>
     <% end %>
 <% end %>
+<br/>
+<% if current_user.hide_store %>
+    <%= button_to 'Enable in-app purchases', show_store_path, :class => 'btn btn-default', :method => :get%>
+<% else %>
+    <%= button_to 'Disable in-app purchases', hide_store_path, :class => 'btn btn-default', :method => :get%>
+<% end %>
 
 
 <h3>Cancel my account </h3>

@@ -59,5 +59,16 @@ class UsersController < ApplicationController
     redirect_to edit_user_registration_path
   end
 
+  def hide_store
+    current_user.hide_store = true
+    current_user.save
+    redirect_to edit_user_registration_path
+  end
+
+  def show_store
+    current_user.hide_store = false
+    current_user.save
+    redirect_to edit_user_registration_path
+  end
 
 end
