@@ -17,8 +17,22 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
 
-  def add_location
-    current_user.location = params[:user]['location']
+  def update_profile
+    if params[:user]['location']
+      current_user.location = params[:user]['location']
+      flash[:notice] = 'Location successfully set.'
+    elsif params[:user]['security_question'] && params[:user]['security_question']
+      current_user.security_question = params[:user]['security_question']
+      current_user.security_answer = params[:user]['security_answer']
+      flash[:notice] = 'Security question successfully set.'
+    elsif params[:user]['security_answer']
+      if params[:user]['security_answer'].eql? current_user.security_answer
+        current_user.hide_store = false
+      else
+        flash[:error] = 'Incorrect password. Please try again.'
+      end
+    end
+
     current_user.save!
     redirect_to edit_user_registration_path
   end

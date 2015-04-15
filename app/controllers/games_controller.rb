@@ -405,10 +405,6 @@ class GamesController < ApplicationController
 
   end
 
-  def buy_five_coins
-
-  end
-
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update

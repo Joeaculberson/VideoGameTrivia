@@ -26,14 +26,13 @@ Rails.application.routes.draw do
   get 'show_store' => 'users#show_store'
 
   get 'coin_store' => 'games#coin_store'
-  get 'buy_five_coins' => 'games#buy_five_coins'
 
   get 'express_checkout' => 'orders#express_checkout'
   get 'new_order' => 'orders#new'
   get 'orders' => 'orders#show'
 
-  get '/users/:id', :to => 'users#add_location', :as => :user
-  post '/users/:id', :to => 'users#add_location'
+  get '/users/:id', :to => 'users#update_profile', :as => :user
+  post '/users/:id', :to => 'users#update_profile'
 
   post '/result' => 'questions#result'
   post '/chosen_category' => 'games#chosen_category'
