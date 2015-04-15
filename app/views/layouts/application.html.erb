@@ -209,8 +209,14 @@
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#week" aria-controls="week" role="tab" data-toggle="tab">This Week</a></li>
-                  <li role="presentation"><a href="#month" aria-controls="month" role="tab" data-toggle="tab">This Month</a></li>
+                  <li role="presentation" class="active"><a href="#week" aria-controls="week" role="tab" data-toggle="tab">Weekly</a></li>
+                  <li role="presentation"><a href="#month" aria-controls="month" role="tab" data-toggle="tab">Monthly</a></li>
+                  <li role="presentation"><a href="#action" aria-controls="action" role="tab" data-toggle="tab">Action</a></li>
+                  <li role="presentation"><a href="#adventure" aria-controls="adventure" role="tab" data-toggle="tab">Adventure</a></li>
+                  <li role="presentation"><a href="#arcade" aria-controls="arcade" role="tab" data-toggle="tab">Arcade</a></li>
+                  <li role="presentation"><a href="#fps" aria-controls="fps" role="tab" data-toggle="tab">FPS</a></li>
+                  <li role="presentation"><a href="#racing" aria-controls="racing" role="tab" data-toggle="tab">Racing</a></li>
+                  <li role="presentation"><a href="#rpg" aria-controls="rpg" role="tab" data-toggle="tab">RPG</a></li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -228,31 +234,31 @@
                         </th>
                         </thead>
 
-                    <tbody>
-                    <% User.all.sort {|a,b| a.get_games_won_weekly <=> b.get_games_won_weekly}.reverse[0..2].each do |user| %>
-                        <tr>
-                          <td>
-                            <div id="face-wrapper">
-                              <% if user.image && !user.hide_picture %>
-                                  <img src='<%= user.image %>' class="img-circle face">
-                              <% else %>
-                                  <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
-                              <% end %>
-                              <% if(user.hide_email) %>
-                                  User
-                              <% else %>
-                                  <%= user.email %>
-                              <% end %>
-                            </div>
-                          </td>
-                          <td>
-                            <%= user.get_games_won_weekly %>
-                          </td>
-                        </tr>
-                    <% end %>
-                    </tbody>
-                          </table>
-                      </div>
+                        <tbody>
+                        <% User.all.sort {|a,b| a.get_games_won_weekly <=> b.get_games_won_weekly}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <%= user.get_games_won_weekly %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   <div role="tabpanel" class="tab-pane" id="month">
                     <div class="panel panel-default">
@@ -293,8 +299,267 @@
                     </div>
                   </div>
 
-                </div>
+                  <div role="tabpanel" class="tab-pane" id="action">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).action_correct <=> Statistic.find_by( email: b.email).action_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.action_correct %>
+                              </td>
+                              <td>
+                                <% if stat.action_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.action_correct.to_f / stat.action_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
+                  <div role="tabpanel" class="tab-pane" id="adventure">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).adventure_correct <=> Statistic.find_by( email: b.email).adventure_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.adventure_correct %>
+                              </td>
+                              <td>
+                                <% if stat.adventure_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.adventure_correct.to_f / stat.adventure_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div role="tabpanel" class="tab-pane" id="arcade">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).arcade_correct <=> Statistic.find_by( email: b.email).arcade_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.arcade_correct %>
+                              </td>
+                              <td>
+                                <% if stat.arcade_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.arcade_correct.to_f / stat.arcade_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div role="tabpanel" class="tab-pane" id="fps">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).fps_correct <=> Statistic.find_by( email: b.email).fps_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.fps_correct %>
+                              </td>
+                              <td>
+                                <% if stat.fps_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.fps_correct.to_f / stat.fps_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div role="tabpanel" class="tab-pane" id="racing">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).racing_correct <=> Statistic.find_by( email: b.email).racing_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.racing_correct %>
+                              </td>
+                              <td>
+                                <% if stat.action_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.racing_correct.to_f / stat.racing_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div role="tabpanel" class="tab-pane" id="rpg">
+                    <div class="panel panel-default">
+                      <table class="table table-striped table-hover">
+                        <thead>
+                        <th>Username</th>
+                        <th>Correct Answers</th>
+                        <th>Percentage Correct</th>
+                        </thead>
+                        <tbody>
+                        <% User.all.sort {|a,b| Statistic.find_by( email: a.email).role_playing_correct <=> Statistic.find_by( email: b.email).role_playing_correct}.reverse[0..2].each do |user| %>
+                            <tr>
+                              <td>
+                                <div id="face-wrapper">
+                                  <% if user.image && !user.hide_picture %>
+                                      <img src='<%= user.image %>' class="img-circle face">
+                                  <% else %>
+                                      <img src='<%= image_url('default_profile.png')%>' class="img-circle face">
+                                  <% end %>
+                                  <% if(user.hide_email) %>
+                                      User
+                                  <% else %>
+                                      <%= user.email %>
+                                  <% end %>
+                                </div>
+                              </td>
+                              <td>
+                                <% stat = Statistic.find_by email: user.email %>
+                                <%= stat.role_playing_correct %>
+                              </td>
+                              <td>
+                                <% if stat.role_playing_total == 0 %>
+                                    -%
+                                <% else %>
+                                    <%= '%.2f' % ((stat.role_playing_correct.to_f / stat.role_playing_total.to_f) * 100) %>%
+                                <% end %>
+                              </td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+
+
+                </div>
               </div>
             </div>
             <div class="modal-footer">
