@@ -13,7 +13,16 @@ class QuestionsController < ApplicationController
       redirect_to game_path(@game)
     else
       categoryQuestions = Question.where(:category => random_wheel_spin).where(:is_authorized => 't').order("RANDOM()")
-      if(categoryQuestions.first.difficulty > ((current_user.level / 10) + 1) / 3 )
+      userDifficutly = 3;
+
+      if((current_user.level / 10) + 1 < 20)
+        userDifficutly = 2;
+      end
+      if((current_user.level / 10) + 1 < 10)
+        userDifficutly = 1;
+      end
+
+      if(categoryQuestions.first.difficulty != userDifficutly)
         categoryQuestions = categoryQuestions.order("RANDOM()")
       end
       redirect_to categoryQuestions.first
