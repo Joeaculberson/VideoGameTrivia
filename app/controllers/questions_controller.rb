@@ -44,7 +44,10 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
-    @game = Game.find session[:current_game]['id']
+    if !session[:current_game].blank?
+      @game = Game.find session[:current_game]['id']
+    end
+
     if @game.is_second_steal_turn
       flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
     end
