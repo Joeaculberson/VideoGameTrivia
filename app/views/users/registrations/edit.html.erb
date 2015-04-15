@@ -36,10 +36,12 @@
   <%= devise_error_messages! %>
 
     <% if current_user.provider.nil? %>
-
+        <h3>
+          Change Password
+        </h3>
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true %>
+        <%= f.email_field :email, autofocus: true, :class => 'string optional form-control' %>
       </div>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -48,21 +50,21 @@
 
       <div class="field">
         <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-        <%= f.password_field :password, autocomplete: "off" %>
+        <%= f.password_field :password, autocomplete: "off", :class => 'string optional form-control' %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", :class => 'string optional form-control' %>
       </div>
 
       <div class="field">
         <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off" %>
+        <%= f.password_field :current_password, autocomplete: "off", :class => 'string optional form-control' %>
       </div>
 
       <div class="actions">
-        <%= f.submit "Update" %>
+        <%= f.submit "Update", :class => 'btn btn-info btn-lg btn-block' %>
       </div>
 
     <% end %>
@@ -121,4 +123,4 @@
 <br/>
 <h3>Delete account</h3>
 
-<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" },  :class => 'btn btn-danger btn-lg btn-block', method: :delete %></p>
+<p><%= button_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure you want to delete your account? (Must confirm twice)" },  :class => 'btn btn-danger btn-lg btn-block', method: :delete %></p>
