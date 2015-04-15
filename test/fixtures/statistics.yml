@@ -12,8 +12,8 @@ one:
   fps_total: 1
   racing_correct: 1
   racing_total: 1
-  role-playing_correct: 1
-  role-playing_total: 1
+  role_playing_correct: 1
+  role_playing_total: 1
 
 two:
   email: MyString
@@ -27,5 +27,5 @@ two:
   fps_total: 1
   racing_correct: 1
   racing_total: 1
-  role-playing_correct: 1
-  role-playing_total: 1
+  role_playing_correct: 1
+  role_playing_total: 1
