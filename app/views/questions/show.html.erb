@@ -111,7 +111,9 @@
         $("#backButton").hide();
     });
     $(document).ready(function() {
-        timerIntervalId = setInterval(updateTimer,10);
+        <% if !@game.nil? %>
+            timerIntervalId = setInterval(updateTimer,10);
+        <% end %>
     });
 </script>
 
@@ -137,8 +139,10 @@
   <div class="col-xs-6 text-right">Difficulty: <%= @question.difficulty / 10%>
     </br> Category: <%= @question.category %>
     </br>
-    <% if !@game.steal_question_ids.eql? '' %>
-        <%= @game.user_steal_correct.to_s %> / 6
+    <% if !@game.nil? %>
+        <% if !@game.steal_question_ids.eql? '' %>
+            <%= @game.user_steal_correct.to_s %> / 6
+        <% end %>
     <% end %>
   </div>
 </div>
@@ -174,8 +178,6 @@
   </div>
 </div>
 
-
-
 <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
     <div class="text-center">
       <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: true }, :method => :get, :style => 'width: 80%' %>
@@ -185,31 +187,35 @@
     </div>
 <% end %>
 
-
 <div id="backButton" class="text-center">
   <%= button_to 'Continue', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 </div>
 
-<span id="countdown">00:30:00</span>
-<div id="coins">Coins: <%= current_user.coins %></div>
-
-<div class="btn-group btn-group-justified" role="group" aria-label="...">
-  <div class="btn-group" role="group">
-    <button id="timeButton" type="button" class="btn btn-default" onclick='timerPowerUp();'>
-      <img id="slowpoke" class='slowpoke' src='<%= image_url('slowpoke.png') %>' height="50">
-      Slow-motion 3 Gold
-    </button>
-  </div>
-  <div class="btn-group" role="group">
-    <button id="skipButton" type="button" class="btn btn-default" onclick='skipPowerUp();'>
-      <img id="frog" class='frog' src='<%= image_url('frog.png') %>' height="50">
-      Time Travel: 2 Gold
-    </button>
-  </div>
-  <div class="btn-group" role="group">
-    <button id="secondChanceButton" type="button" class="btn btn-default" onclick='secondChancePowerUp();'>
-      <img id="fairy" class='fairy' src='<%= image_url('fairy.png') %>' width="50" height="50">
-      Fairy in a Bottle: 5 Gold
-    </button>
-  </div>
-</div>
+<% if !@game.nil? %>
+    <span id="countdown">
+      00:30:00
+    </span>
+    <div id="coins">
+      Coins: <%= current_user.coins %>
+    </div>
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+      <div class="btn-group" role="group">
+        <button id="timeButton" type="button" class="btn btn-default" onclick='timerPowerUp();'>
+          <img id="slowpoke" class='slowpoke' src='<%= image_url('slowpoke.png') %>' height="50">
+          Slow-motion 3 Gold
+        </button>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="skipButton" type="button" class="btn btn-default" onclick='skipPowerUp();'>
+          <img id="frog" class='frog' src='<%= image_url('frog.png') %>' height="50">
+          Time Travel: 2 Gold
+        </button>
+      </div>
+      <div class="btn-group" role="group">
+        <button id="secondChanceButton" type="button" class="btn btn-default" onclick='secondChancePowerUp();'>
+          <img id="fairy" class='fairy' src='<%= image_url('fairy.png') %>' width="50" height="50">
+          Fairy in a Bottle: 5 Gold
+        </button>
+      </div>
+    </div>
+<% end %>

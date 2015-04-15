@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
       @game.save!
       redirect_to game_path(@game)
     else
-      categoryQuestions = Question.where(:category => random_wheel_spin).order("RANDOM()")
+      categoryQuestions = Question.where(:category => random_wheel_spin).where(:is_authorized => 't').order("RANDOM()")
       if(categoryQuestions.first.difficulty > ((current_user.level / 10) + 1) / 3 )
         categoryQuestions = categoryQuestions.order("RANDOM()")
       end
@@ -46,10 +46,9 @@ class QuestionsController < ApplicationController
   def show
     if !session[:current_game].blank?
       @game = Game.find session[:current_game]['id']
-    end
-
-    if @game.is_second_steal_turn
-      flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
+      if @game.is_second_steal_turn
+        flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
+      end
     end
   end
 
