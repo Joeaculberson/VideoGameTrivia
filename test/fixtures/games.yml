@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_email: MyString
-  opponent_user_email: MyString
-  user_pieces: MyString
-  opponent_pieces: MyString
+  user_email: "MyString1"
+  opponent_user_email: "MyString2"
+  user_pieces: "MyString"
+  opponent_pieces: "MyString"
   round: 1
-  user_turn_email: MyString
+  user_turn_email: "MyString1"
 
 two:
-  user_email: MyString
-  opponent_user_email: MyString
-  user_pieces: MyString
-  opponent_pieces: MyString
+  user_email: "MyString3"
+  opponent_user_email: "MyString4"
+  user_pieces: "MyString"
+  opponent_pieces: "MyString"
   round: 1
-  user_turn_email: MyString
+  user_turn_email: "MyString3"
