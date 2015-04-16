@@ -5,27 +5,8 @@ class QuestionsControllerTest < ActionController::TestCase
     @question = questions(:one)
   end
 
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:questions)
-  end
-
   test "should get new" do
     get :new
-    assert_response :success
-  end
-
-  test "should create question" do
-    assert_difference('Question.count') do
-      post :create, question: { category: @question.category, correct_answer: @question.correct_answer, incorrect_answer_1: @question.incorrect_answer_1, incorrect_answer_2: @question.incorrect_answer_2, incorrect_answer_3: @question.incorrect_answer_3, question_text: @question.question_text }
-    end
-
-    assert_redirected_to question_path(assigns(:question))
-  end
-
-  test "should show question" do
-    get :show, id: @question
     assert_response :success
   end
 
