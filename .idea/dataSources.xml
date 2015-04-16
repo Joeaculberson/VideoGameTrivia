@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="803714993">
+  <component name="DataSourceManagerImpl" format="xml" hash="123888924">
     <data-source source="LOCAL" name="Rails VideoGameTrivia: test" uuid="84f45b11-d9d9-4b16-831d-65e4e85a6964">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
@@ -48,13 +48,6 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql:VideoGameTrivia_production</jdbc-url>
-      <libraries />
-    </data-source>
-    <data-source source="LOCAL" name="Rails VideoGameTrivia: development" uuid="664bc360-73d6-44bd-bdad-7fa80521ba96">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql:VideoGameTrivia_development</jdbc-url>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails VideoGameTrivia: test" uuid="4d47055a-8eed-4c12-8065-40af070b659f">

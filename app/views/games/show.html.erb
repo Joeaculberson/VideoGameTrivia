@@ -6,7 +6,7 @@
        By Douglas McKechie @ www.dougtesting.net
        */
       var canvasId         = "myDrawingCanvas";   // Id of the canvas element on the page the wheel is to be rendered on.
-      var wheelImageName   = "prizewheel.png";	// File name of the image for the wheel.
+      var wheelImageName   = "question_spinner.png";	// File name of the image for the wheel.
       var spinButtonImgOn  = "spin_on.png";		// Name / path to the images for the spin button.
       var spinButtonImgOff = "spin_off.png";
       var theSpeed         = 20; 		 // Controls how often the spin function is called (is miliseconds value for animation timer).
@@ -58,6 +58,8 @@
 
       function startSpin(determinedValue)
       {
+          var audio = new Audio('<%= image_url('sounds/wheel_ding.wav') %>');
+          audio.play();
           var stopAngle = undefined;
           if (spinMode == "random")
           {
@@ -705,7 +707,7 @@
     });
 
     <% end %>
-    wheelImageName = '<%= image_url('prizewheel.png') %>';
+    wheelImageName = '<%= image_url('question_spinner.png') %>';
     begin();
     powerSelected(1);
 </script>
