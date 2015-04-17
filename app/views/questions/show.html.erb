@@ -170,13 +170,15 @@
   </div>
 </div>
 
-<% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
-    <div class="text-center">
-      <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: true }, :method => :get, :style => 'width: 80%' %>
-    </div>
-    <div class="text-center">
-      <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: false }, :method => :get, :style => 'width: 80%' %>
-    </div>
+<% if !session[:current_game_id].blank? %>
+    <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
+        <div class="text-center">
+          <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: true }, :method => :get, :style => 'width: 80%' %>
+        </div>
+        <div class="text-center">
+          <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: false }, :method => :get, :style => 'width: 80%' %>
+        </div>
+    <% end %>
 <% end %>
 
 
