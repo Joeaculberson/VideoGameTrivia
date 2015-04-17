@@ -32,7 +32,7 @@ gem 'omniauth-google-oauth2'
 gem 'font-awesome-rails'
 gem 'bootstrap-social-rails'
 gem 'merit'
-gem 'activemerchant', '~> 1.42.4'
+gem 'activemerchant'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

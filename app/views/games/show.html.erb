@@ -1,16 +1,3 @@
-<head>
-  <style>
-      .row {
-          position: relative;
-      }
-      .buttonBox {
-          position: absolute;
-          bottom:0;
-          right:0;
-      }
-  </style>
-</head>
-
 <div class="text-center">
   <p>
     <strong>Round:</strong>
@@ -37,12 +24,10 @@
       <% end %>
             (Next level: <%= ((current_user.level % 10) - 10) * -1 %> exp)
        </br>
-      <img id="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
-      <img id="userAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
-      <img id="userArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
-      <img id="userFpsImage" src='<%= image_url('greyscale/fps.png') %>' width="50" height="50">
-      <img id="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50">
-      <img id="userRole-playingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
+
+      <% @categories.each do |categories| %>
+          <img id='<%= 'user' + categories.capitalize + 'Image' %>' src='<%= image_url('greyscale/'+ categories + '.png') %>' width="50" height="50">
+      <% end %>
     </div>
     <div class="col-xs-5" style="border-left-style: dotted">
       <div class="pull-right">
@@ -54,12 +39,9 @@
         </div>
       </br>
       <div class="pull-right">
-        <img id="opponentRole-playingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50">
-        <img id="opponentRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50">
-        <img id="opponentFpsImage" src='<%= image_url('greyscale/fps.png') %>' width="50" height="50">
-        <img id="opponentArcadeImage" src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50">
-        <img id="opponentAdventureImage" src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50">
-        <img id="opponentActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50">
+        <% @categories.each do |categories| %>
+            <img id='<%= 'opponent' + categories.capitalize + 'Image' %>' src='<%= image_url('greyscale/'+ categories + '.png') %>' width="50" height="50">
+        <% end %>
       </div>
     </div>
     <div class="col-xs-1">
@@ -97,174 +79,13 @@
 </div>
 
 <% if @game.user_pieces == "1 2 3 4 5 6" %>
-    <% @game.is_game_over = true %>
-    <% @game.save! %>
-    <% @user = User.find_by(email: @game.user_email) %>
-    <% @user.coins += 5 %>
-    <% @user.save %>
-    <div class="modal fade" id="wonModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Congratulations! You've won!</h4>
-          </div>
-          <img id="youWin" src='<%= image_url('win.gif') %>'>
-          You win 5 coins! Total coins: <%= @user.coins %>
-          <%= button_to 'Back to game select', games_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <script>
-        $('#wonModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-        $(window).load(function () {
-            $('#wonModal').modal('show')
-        });
-    </script>
+    <%= render 'games/win_modal' %>
 <% end %>
 
 <% if @game.user_meter == 3 %>
-    <div class="modal fade" id="challengeModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Earn a piece!</h4>
-          </div>
-          <div class="modal-body row">
-            <div role="tabpanel">
-
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                  <a href="#challenge" aria-controls="challenge" role="tab" data-toggle="tab">Challenge</a></li>
-                <li role="presentation">
-                  <a href="#stealAPiece" aria-controls="stealAPiece" role="tab" data-toggle="tab">Steal a Piece</a></li>
-              </ul>
-
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="challenge">
-                  <div class="container col-md-12 text-center">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="userActionImage" class="userActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
-                        Action
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userAdventureImage" class='userAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
-                        Adventure
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userArcadeImage" class='userArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
-                        Arcade
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="userFpsImage" class='userFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
-                        Fps
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userRacingImage" class="userRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
-                        Racing
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userRole-playingImage" class="userRole-playingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
-                        Role-playing
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="stealAPiece">
-                  <div id="betChoiceTab" class="container col-md-12 text-center">
-                    Piece to bet (Note: you cannot bet pieces your opponent already has)
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="userBetActionImage" class="userBetActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
-                        Action
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userBetAdventureImage" class='userBetAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
-                        Adventure
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userBetArcadeImage" class='userBetArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
-                        Arcade
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="userBetFpsImage" class='userBetFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
-                        Fps
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userBetRacingImage" class="userBetRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
-                        Racing
-                      </div>
-                      <div class="col-md-3">
-                        <img id="userBetRole-playingImage" class="userBetRole-playingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
-                        Role-playing
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="stealChoiceTab" class="container col-md-12 text-center">
-                    Piece to steal (Note: you cannot steal pieces you already have)
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="opponentStealActionImage" class="opponentStealActionImage" src='<%= image_url('greyscale/action.png') %>' width="50" height="50"></br>
-                        Action
-                      </div>
-                      <div class="col-md-3">
-                        <img id="opponentStealAdventureImage" class='opponentStealAdventureImage' src='<%= image_url('greyscale/adventure.png') %>' width="50" height="50"></br>
-                        Adventure
-                      </div>
-                      <div class="col-md-3">
-                        <img id="opponentStealArcadeImage" class='opponentStealArcadeImage' src='<%= image_url('greyscale/arcade.png') %>' width="50" height="50"></br>
-                        Arcade
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <img id="opponentStealFpsImage" class='opponentStealFpsImage' src='<%= image_url('greyscale/fps.png') %>' width="50" height="50"></br>
-                        Fps
-                      </div>
-                      <div class="col-md-3">
-                        <img id="opponentStealRacingImage" class="opponentStealRacingImage" src='<%= image_url('greyscale/racing.png') %>' width="50" height="50"></br>
-                        Racing
-                      </div>
-                      <div class="col-md-3">
-                        <img id="opponentStealRole-playingImage" class="opponentStealRole-playingImage" src='<%= image_url('greyscale/role-playing.png') %>' width="50" height="50"></br>
-                        Role-playing
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <script>
-        $('#challengeModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-        $(window).load(function () {
-            $('#challengeModal').modal('show')
-        });
-    </script>
+    <%= render 'games/challenge_modal' %>
 <% end %>
+
 
 <script>
     $("#stealChoiceTab").hide();
@@ -315,107 +136,4 @@
     powerSelected(1);
 </script>
 
-<div class="modal fade" id="opponentStatsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <% if(@current_opponent.hide_email) %>
-            <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for Opponent</h4>
-        <% else %>
-            <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for <%= @current_opponent.email %></h4>
-        <% end %>
-
-      </div>
-      <div class="modal-body">
-        <div role="tabpanel">
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#oppstatistics" aria-controls="oppstatistics" role="tab" data-toggle="tab">Statistics</a></li>
-            <li role="presentation"><a href="#oppachievements" aria-controls="oppachievements" role="tab" data-toggle="tab">Achievements</a></li>
-          </ul>
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="oppstatistics">
-              <table>
-                <tr>
-                  <td>
-                    <img src='<%= image_url('icons/action.png') %>' width="50" height="50">
-                    <% stat = Statistic.find_by email: @current_opponent.email %>
-                    <% if stat.action_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.action_correct / stat.action_total) * 100 %>%
-                    <% end %>
-                  </td>
-                  <td>
-                    <img src='<%= image_url('icons/adventure.png') %>' width="50" height="50">
-                    <% if stat.adventure_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.adventure_correct / stat.adventure_total) * 100 %>%
-                    <% end %>
-                  </td>
-                  <td>
-                    <img src='<%= image_url('icons/arcade.png') %>' width="50" height="50">
-                    <% if stat.arcade_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.arcade_correct / stat.arcade_total) * 100 %>%
-                    <% end %>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src='<%= image_url('icons/fps.png') %>' width="50" height="50">
-                    <% if stat.fps_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.fps_correct / stat.fps_total) * 100 %>%
-                    <% end %>
-                  </td>
-                  <td>
-                    <img src='<%= image_url('icons/racing.png') %>' width="50" height="50">
-                    <% if stat.racing_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.racing_correct / stat.racing_total) * 100 %>%
-                    <% end %>
-                  </td>
-                  <td>
-                    <img src='<%= image_url('icons/role-playing.png') %>' width="50" height="50">
-                    <% if stat.role_playing_total == 0 %>
-                        -%
-                    <% else %>
-                        <%= (stat.role_playing_correct / stat.role_playing_total) * 100 %>%
-                    <% end %>
-                  </td>
-                </tr>
-              </table>
-              Wins: <%= Statistic.find_by(email: @current_opponent.email).wins %> ||
-              Losses: <%= Statistic.find_by(email: @current_opponent.email).loses %>
-              <br>
-              Record against player:
-              <br>
-              Wins: <%= @won_games.size %> || Losses: <%= @lost_games.size %>
-              <br>
-              <% if !@current_opponent.location.blank? && !@current_opponent.hide_location %>
-                  Location: <%= @current_opponent.location %>
-              <% end %>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="oppachievements">
-              <% @current_opponent.badges.each do |badge| %>
-                  <div class="row">
-                    <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
-                  </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'games/opponent_stats_modal' %>

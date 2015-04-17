@@ -1,0 +1,28 @@
+<% @game.is_game_over = true %>
+<% @game.save! %>
+<% @user = User.find_by(email: @game.user_email) %>
+<% @user.coins += 5 %>
+<% @user.save %>
+<div class="modal fade" id="wonModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Congratulations! You've won!</h4>
+      </div>
+      <img id="youWin" src='<%= image_url('win.gif') %>'>
+      You win 5 coins! Total coins: <%= @user.coins %>
+      <%= button_to 'Back to game select', games_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+    $('#wonModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $(window).load(function () {
+        $('#wonModal').modal('show')
+    });
+</script>

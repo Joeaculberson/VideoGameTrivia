@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require game
  *= require font-awesome
  *= require bootstrap-social
  */

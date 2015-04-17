@@ -1,0 +1,71 @@
+<div class="modal fade" id="opponentStatsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <% if(@current_opponent.hide_email) %>
+                <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for Opponent</h4>
+                <% else %>
+                <h4 class="modal-title" id="myModalLabel">Statistics and Achievements for <%= @current_opponent.email %></h4>
+                <% end %>
+
+            </div>
+            <div class="modal-body">
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#oppstatistics" aria-controls="oppstatistics" role="tab" data-toggle="tab">Statistics</a></li>
+                        <li role="presentation"><a href="#oppachievements" aria-controls="oppachievements" role="tab" data-toggle="tab">Achievements</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="oppstatistics">
+                            <table>
+                                <tr>
+                                    <% @categories.each_with_index do |category, i|  %>
+                                    <% if i == 3 %>
+                                </tr>
+                                <tr>
+                                    <% end %>
+                                    <td>
+                                        <img src='<%= image_url('icons/'+ category + '.png') %>' width="50" height="50">
+                                        <% if category.eql? 'role-playing' %>
+                                        <% category = category.split('-').join('_') %>
+                                        <% end %>
+                                        <% stat = Statistic.find_by email: @current_opponent.email %>
+                                        <% if stat.send(category + '_total') == 0 %>
+                                        -%
+                                        <% else %>
+                                        <%= (stat.send(category + '_correct') / stat.send(category + '_total')) * 100 %>%
+                                        <% end %>
+                                    </td>
+                                    <% end %>
+                                </tr>
+                            </table>
+                            Wins: <%= Statistic.find_by(email: @current_opponent.email).wins %> ||
+                            Losses: <%= Statistic.find_by(email: @current_opponent.email).loses %>
+                            <br>
+                            Record against player:
+                            <br>
+                            Wins: <%= @won_games.size %> || Losses: <%= @lost_games.size %>
+                            <br>
+                            <% if !@current_opponent.location.blank? && !@current_opponent.hide_location %>
+                            Location: <%= @current_opponent.location %>
+                            <% end %>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="oppachievements">
+                            <% @current_opponent.badges.each do |badge| %>
+                            <div class="row">
+                                <img src='<%= image_url('achievements/' + badge.id.to_s + '.png') %>' width="50px"><%= badge.name %> : <%= badge.description %>
+                            </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
