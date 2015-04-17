@@ -85,11 +85,11 @@ function timerPowerUp() {
     }
 }
 function revealOnePowerUp() {
-    if (isThereEnoughCoins(2)) {
+    if (isThereEnoughCoins(1)) {
         var audio = new Audio('<%= image_url('sounds/kerboom.wav') %>');
         audio.play();
-        $.post('/pay',{amount:2});
-        currentCoins -= 2;
+        $.post('/pay',{amount:1});
+        currentCoins -= 1;
         shuffle($(".incorrect")).slice(0,1).toggleClass("incorrect disabled");
     }
 }
