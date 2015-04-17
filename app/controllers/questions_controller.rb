@@ -57,6 +57,7 @@ class QuestionsController < ApplicationController
       if @game.user_turn_email != current_user.email
         redirect_to games_path
       end
+      session[:question_viewed] = true
       if @game.is_second_steal_turn && @game.user_steal_correct < 0
         flash[:alert] = 'Your opponent is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
       end
