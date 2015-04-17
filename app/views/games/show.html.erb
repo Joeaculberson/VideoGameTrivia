@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="col-xs-5">
-      <% if(current_user.hide_email) %>
+      <% if current_user.hide_email %>
           You - Level: <%= (current_user.level / 10) + 1 %>
       <% else %>
           <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %>

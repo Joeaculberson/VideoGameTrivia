@@ -55,12 +55,12 @@ class GamesController < ApplicationController
   def resign
     @game = Game.find session[:current_game_id]
     @user = current_user
-    end_turn
-    @game.is_game_over = true
-    @game.save!
     opponent = User.find_by(email: @game.opponent_user_email)
     opponent.coins += 5
     opponent.save!
+    end_turn
+    @game.is_game_over = true
+    @game.save!
     redirect_to games_path
   end
 
