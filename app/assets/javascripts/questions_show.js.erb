@@ -84,9 +84,9 @@ function timerPowerUp() {
         disableAllPowerUpButtons();
     }
 }
-function skipPowerUp() {
+function revealOnePowerUp() {
     if (isThereEnoughCoins(2)) {
-        var audio = new Audio('<%= image_url('sounds/croak.wav') %>');
+        var audio = new Audio('<%= image_url('sounds/kerboom.wav') %>');
         audio.play();
         $.post('/pay',{amount:2});
         currentCoins -= 2;
