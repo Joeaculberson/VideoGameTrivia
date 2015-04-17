@@ -34,6 +34,12 @@
       $('#secondChanceButton').attr("disabled", true);
   }
 
+    function disableAllPowerUpButtons() {
+        $('#timeButton').attr("disabled", true);
+        $('#skipButton').attr("disabled", true);
+        $('#secondChanceButton').attr("disabled", true);
+    }
+
     function revealIncorrectAnswerButton() {
       $("#incorrectAnswerButton").show();
     }
@@ -60,7 +66,7 @@
             $.post('/pay',{amount:3});
             currentCoins -= 3;
             updateCoins();
-            $('#timeButton').attr("disabled", true);
+            disableAllPowerUpButtons();
         }
     }
     function skipPowerUp() {
@@ -83,7 +89,7 @@
             currentCoins -= 5;
             updateCoins();
             secondChance = true;
-            $('#secondChanceButton').attr("disabled", true);
+            disableAllPowerUpButtons();
         }
     }
     var answered_correctly;
