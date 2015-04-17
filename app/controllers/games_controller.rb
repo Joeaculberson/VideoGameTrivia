@@ -114,11 +114,11 @@ class GamesController < ApplicationController
       award_piece @game.bet_piece
       remove_opponent_piece @game.bet_piece
       if @game.user_steal_correct == 7
-        flash[:notice] = 'You won the tie breaker! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
+        flash[:notice] = 'You won the tie breaker!'
       else
-        flash[:notice] = 'You won the challenge! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
+        flash[:notice] = 'You won the challenge!'
       end
-
+      flash[:notice] += ' Opponent surrenders the ' + @game.bet_piece + ' piece.'
       session[:chosen_category] = ''
       @game.user_steal_correct = 0
       @game.opponent_steal_correct = 0
@@ -130,6 +130,8 @@ class GamesController < ApplicationController
       redirect_to game_path session[:current_game_id]
     elsif @game.user_steal_correct == 6
       if @game.is_second_steal_turn
+        @game.is_tie_breaker = true
+        @game.save!
         flash[:notice] = 'Tie breaker!'
         redirect_to Question.where(:is_authorized => 't').sample
       else
@@ -415,16 +417,29 @@ class GamesController < ApplicationController
     if !@game.steal_question_ids.eql? ''
       if @game.is_second_steal_turn
         if @game.user_steal_correct == @game.opponent_steal_correct
-          flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
-          @game.save!
+          if @game.is_tie_breaker
+            @game.is_tie_breaker = false
+            award_opponent_piece @game.wanted_piece
+            remove_piece @game.wanted_piece
+
+            flash[:alert] = 'You lose the tie breaker. Opponent stole your ' + @game.wanted_piece + ' piece.'
+            if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+              flash[:alert] += ' As a result, you lose the game'
+            end
+            @game.save!
+          else
+            @game.is_tie_breaker = true
+            @game.save!
+            flash[:notice] = 'Tie breaker!'
+            redirect_to Question.where(:is_authorized => 't').sample and return
+          end
         else
           remove_piece @game.wanted_piece
           award_opponent_piece @game.wanted_piece
           @game.save!
+          flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
           if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-            flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece. As a result, you lose the game.'
-          else
-            flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
+             flash[:alert] += ' As a result, you lose the game.'
           end
         end
         @game.user_steal_correct = 0
@@ -433,10 +448,12 @@ class GamesController < ApplicationController
         @game.is_second_steal_turn = false
         @game.bet_piece = ''
         @game.wanted_piece = ''
+        @game.is_tie_breaker = false
         @game.save!
         if @game.opponent_pieces.eql? '1 2 3 4 5 6'
           end_turn
           @game.save!
+
           redirect_to games_path
         else
           redirect_to game_path session[:current_game_id]

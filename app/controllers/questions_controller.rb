@@ -54,8 +54,8 @@ class QuestionsController < ApplicationController
   def show
     if !session[:current_game_id].blank?
       @game = Game.find session[:current_game_id]
-      if @game.is_second_steal_turn
-        flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
+      if @game.is_second_steal_turn && @game.user_steal_correct < 0
+        flash[:alert] = 'Your opponent is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
       end
     end
 
