@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require questions_show.js.erb
+//= require spinner.js.erb
 //= require turbolinks
 //= require_tree .
