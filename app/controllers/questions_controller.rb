@@ -57,10 +57,10 @@ class QuestionsController < ApplicationController
       if @game.is_second_steal_turn
         flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
       end
-
-      @answer_choices = [@question.correct_answer, @question.incorrect_answer_1, @question.incorrect_answer_2, @question.incorrect_answer_3]
-      @answer_choices.shuffle!
     end
+
+    @answer_choices = [@question.correct_answer, @question.incorrect_answer_1, @question.incorrect_answer_2, @question.incorrect_answer_3]
+    @answer_choices.shuffle!
   end
 
   def accept_review
