@@ -71,6 +71,11 @@ class GamesController < ApplicationController
     if @game.nil?
       @game = Game.find session[:current_game_id]
     end
+    if (session[:question_viewed])
+      session[:question_viewed] = false
+      end_turn
+      redirect_to games_path
+    end
     @current_opponent = User.find_by email: @game.opponent_user_email
     @game.save!
     session[:current_game_id] = @game.id
@@ -85,6 +90,7 @@ class GamesController < ApplicationController
     @game = Game.find session[:current_game_id]
     @user = current_user
     @question = Question.find params[:question_id]
+    session[:question_viewed] = false
 
     add_to_total_stat
     if params[:answered_correctly] == "true"
@@ -231,9 +237,12 @@ class GamesController < ApplicationController
 
   def end_turn
     @game.round = @game.round + 1
-    if(@user.level > 0)
-      @user.level -= 1
-      @user.save
+    if(current_user.level > 0)
+      current_user.level -= 1
+    end
+
+    if @game.user_meter == 3
+      @game.user_meter = 0
     end
     current_user.correct_answers_in_a_row = 0
     if @game.user_email.eql? current_user.email
