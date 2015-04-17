@@ -194,36 +194,36 @@ class GamesController < ApplicationController
 
   def add_to_partial_stat
     statistic = Statistic.find_by email: @game.user_email
-    if session[:question_category].eql? 'action'
-      statistic.action_correct = statistic.action_correct + 1
-    elsif session[:question_category].eql? 'adventure'
-      statistic.adventure_correct = statistic.adventure_correct + 1
-    elsif session[:question_category].eql? 'arcade'
-      statistic.arcade_correct = statistic.arcade_correct + 1
-    elsif session[:question_category].eql? 'fps'
-      statistic.fps_correct = statistic.fps_correct + 1
-    elsif session[:question_category].eql? 'racing'
-      statistic.racing_correct = statistic.racing_correct + 1
-    elsif session[:question_category].eql? 'role-playing'
-      statistic.role_playing_correct = statistic.role_playing_correct + 1
+    if @question.category.eql? 'action'
+      statistic.action_correct += 1
+    elsif @question.category.eql? 'adventure'
+      statistic.adventure_correct += 1
+    elsif @question.category.eql? 'arcade'
+      statistic.arcade_correct += 1
+    elsif @question.category.eql? 'fps'
+      statistic.fps_correct += 1
+    elsif @question.category.eql? 'racing'
+      statistic.racing_correct += 1
+    elsif @question.category.eql? 'role-playing'
+      statistic.role_playing_correct += 1
     end
     statistic.save!
   end
 
   def add_to_total_stat
     statistic = Statistic.find_by email: @game.user_email
-    if session[:question_category].eql? 'action'
-      statistic.action_total = statistic.action_total + 1
-    elsif session[:question_category].eql? 'adventure'
-      statistic.adventure_total = statistic.adventure_total + 1
-    elsif session[:question_category].eql? 'arcade'
-      statistic.arcade_total = statistic.arcade_total + 1
-    elsif session[:question_category].eql? 'fps'
-      statistic.fps_total = statistic.fps_total + 1
-    elsif session[:question_category].eql? 'racing'
-      statistic.racing_total = statistic.racing_total + 1
-    elsif session[:question_category].eql? 'role-playing'
-      statistic.role_playing_total = statistic.role_playing_total + 1
+    if @question.category.eql? 'action'
+      statistic.action_total += 1
+    elsif @question.category.eql? 'adventure'
+      statistic.adventure_total += 1
+    elsif @question.category.eql? 'arcade'
+      statistic.arcade_total += 1
+    elsif @question.category.eql? 'fps'
+      statistic.fps_total += 1
+    elsif @question.category.eql? 'racing'
+      statistic.racing_total += 1
+    elsif @question.category.eql? 'role-playing'
+      statistic.role_playing_total += 1
     end
     statistic.save!
   end
