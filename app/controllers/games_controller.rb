@@ -239,6 +239,10 @@ class GamesController < ApplicationController
     if(current_user.level > 0)
       current_user.level -= 1
     end
+
+    if @game.user_meter == 3
+      @game.user_meter = 0
+    end
     current_user.correct_answers_in_a_row = 0
     if @game.user_email.eql? current_user.email
       @game.user_turn_email = @game.opponent_user_email
