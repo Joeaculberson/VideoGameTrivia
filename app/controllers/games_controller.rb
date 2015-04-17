@@ -67,6 +67,7 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    @categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
     if @game.nil?
       @game = Game.find session[:current_game_id]
     end
