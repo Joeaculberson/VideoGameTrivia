@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   def index
     @questions = Question.all
     random_wheel_spin = session[:spun_category]
-    @game = Game.find(session[:current_game]['id'])
+    @game = Game.find(session[:current_game_id])
     if random_wheel_spin.eql? 'challenge'
       @game.user_meter = 3
       @game.save!
@@ -35,15 +35,14 @@ class QuestionsController < ApplicationController
 
   def steal_piece
     session[:is_in_steal] = true
-    @game = Game.find(session[:current_game]['id'])
+    @game = Game.find(session[:current_game_id])
     @game.bet_piece = session[:bet_piece]
     @game.wanted_piece = session[:chosen_category]
     if !@game.steal_question_ids.eql? ''
       @game.is_second_steal_turn = true
       redirect_to Question.find(@game[:steal_question_ids].split[0].to_i)
     else
-      rand_question = Question.all.sample
-
+      rand_question = Question.where(:category => 'action').where(:is_authorized => 't').sample
       @game.steal_question_ids = rand_question.id.to_s
       @game.save!
       redirect_to rand_question
@@ -53,11 +52,14 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
-    if !session[:current_game].blank?
-      @game = Game.find session[:current_game]['id']
+    if !session[:current_game_id].blank?
+      @game = Game.find session[:current_game_id]
       if @game.is_second_steal_turn
         flash[:alert] = @game.opponent_user_email + ' is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
       end
+
+      @answer_choices = [@question.correct_answer, @question.incorrect_answer_1, @question.incorrect_answer_2, @question.incorrect_answer_3]
+      @answer_choices.shuffle!
     end
   end
 
@@ -134,28 +136,6 @@ class QuestionsController < ApplicationController
       format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def result
-    session[:answered_correctly] = params[:result]
-
-    @question = Question.find(params[:questionID])
-    session[:question_category] = @question.category
-    session[:question_difficulty] = @question.difficulty
-
-    if(params[:result])
-      @question.difficulty -= 1
-    else
-      @question.difficulty += 1
-    end
-
-    if(@question.difficulty > 39)
-      @question.difficulty = 39
-    elsif(@question.difficulty < 10)
-      @question.difficulty = 10
-    end
-
-    @question.save
   end
 
   def pay

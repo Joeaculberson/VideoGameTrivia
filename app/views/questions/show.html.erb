@@ -27,23 +27,24 @@
     }
 
   function disableAllButtons() {
-      $("#correct").toggleClass("disabled");
-      $("[id=incorrect]").toggleClass("disabled");
+      $(".correct").toggleClass("disabled");
+      $(".incorrect").toggleClass("disabled");
       $('#timeButton').attr("disabled", true);
       $('#skipButton').attr("disabled", true);
       $('#secondChanceButton').attr("disabled", true);
   }
 
-  function revealBackButton() {
-      $("#backButton").show();
-  }
+    function revealIncorrectAnswerButton() {
+      $("#incorrectAnswerButton").show();
+    }
+    function revealCorrectAnswerButton() {
+        $("#correctAnswerButton").show();
+    }
     function answeredIncorrectly() {
-        $('#correct').toggleClass("btn-success");
+        $('.correct').toggleClass("btn-success");
         disableAllButtons();
-        revealBackButton();
+        revealIncorrectAnswerButton();
         clearInterval(timerIntervalId);
-        var id = <%= @question.id %>;
-        $.post('/result',{result:false, questionID:id});
     }
     function updateCoins() {
         $("#coins").html("Coins: " + currentCoins);
@@ -85,10 +86,18 @@
             $('#secondChanceButton').attr("disabled", true);
         }
     }
+    var answered_correctly;
     $(document).ready(function() {
-        $("[id=incorrect]").click(function() {
-            $(this).toggleClass("btn-danger");
+        $(document).on('click', '.correct', function() {
+            $(this).toggleClass("btn-success");
+            disableAllButtons();
+            revealCorrectAnswerButton();
+            clearInterval(timerIntervalId);
+            var id = <%= @question.id %>;
+        });
 
+    $(document).on('click', '.incorrect', function() {
+        $(this).toggleClass("btn-danger");
             if (secondChance) {
                 $(this).toggleClass("disabled");
                 secondChance = false;
@@ -96,25 +105,13 @@
                 answeredIncorrectly();
             }
         });
-    });
-    $(document).ready(function() {
-        $("#correct").click(function() {
-            $(this).toggleClass("btn-success");
-            disableAllButtons();
-            revealBackButton();
-            clearInterval(timerIntervalId);
-            var id = <%= @question.id %>;
-            $.post('/result',{result:true, questionID:id});
-        });
-    });
-    $(document).ready(function() {
-        $("#backButton").hide();
-    });
-    $(document).ready(function() {
-        <% if !@game.nil? %>
-            timerIntervalId = setInterval(updateTimer,10);
-        <% end %>
-    });
+
+    $("#incorrectAnswerButton").hide();
+    $("#correctAnswerButton").hide();
+    <% if !@game.nil? %>
+        timerIntervalId = setInterval(updateTimer,10);
+    <% end %>
+});
 </script>
 
 <div class="container round-edges">
@@ -150,30 +147,25 @@
 <div class="text-center">
   <div class="center-block">
     <div class="btn-group-vertical btn-group-lg" style="margin: 9px 0; width: 80%">
-      <% randNumber = 1 + rand(4); %>
-      <% def displayCorrectAnswer %>
-          <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
-              <button type="button" class="btn btn-success" id="correct"><%= @question.correct_answer %></button>
-          <% else %>
-              <button type="button" class="btn btn-default" id="correct"><%= @question.correct_answer %></button>
-          <% end %>
+
+      <% @answer_choices.each do |answer_choice| %>
+        <% if answer_choice.eql? @question.correct_answer %>
+            <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
+                <button type="button" class="btn btn-success correct">
+                  <%= answer_choice %>
+                </button>
+            <% else %>
+                <button type="button" class="btn btn-default correct">
+                  <%= answer_choice %>
+                </button>
+            <% end %>
+        <% else %>
+              <button type="button" class="btn btn-default incorrect">
+                <%= answer_choice %>
+              </button>
+        <% end %>
       <% end %>
 
-      <% if randNumber == 1  %>
-        <% displayCorrectAnswer %>
-      <% end %>
-      <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_1 %></button>
-      <% if randNumber == 2 %>
-          <% displayCorrectAnswer %>
-      <% end %>
-      <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_2 %></button>
-      <% if randNumber == 3 %>
-          <% displayCorrectAnswer %>
-      <% end %>
-      <button type="button" class="btn btn-default" id="incorrect"><%= @question.incorrect_answer_3 %></button>
-      <% if randNumber == 4 %>
-          <% displayCorrectAnswer %>
-      <% end %>
     </div>
   </div>
 </div>
@@ -187,8 +179,12 @@
     </div>
 <% end %>
 
-<div id="backButton" class="text-center">
-  <%= button_to 'Continue', assess_answer_path, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+
+<div id="incorrectAnswerButton" class="text-center">
+  <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: false }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+</div>
+<div id="correctAnswerButton" class="text-center">
+  <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: true }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
 </div>
 
 <% if !@game.nil? %>

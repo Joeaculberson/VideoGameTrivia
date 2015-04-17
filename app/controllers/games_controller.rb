@@ -53,7 +53,7 @@ class GamesController < ApplicationController
   end
 
   def resign
-    @game = Game.find session[:current_game]['id']
+    @game = Game.find session[:current_game_id]
     @user = current_user
     end_turn
     @game.is_game_over = true
@@ -68,11 +68,11 @@ class GamesController < ApplicationController
   # GET /games/1.json
   def show
     if @game.nil?
-      @game = Game.find session[:current_game]['id']
+      @game = Game.find session[:current_game_id]
     end
     @current_opponent = User.find_by email: @game.opponent_user_email
     @game.save!
-    session[:current_game] = @game
+    session[:current_game_id] = @game.id
     if !@game.steal_question_ids.eql? ''
       redirect_to steal_piece_path
     end
@@ -81,98 +81,26 @@ class GamesController < ApplicationController
   end
 
   def assess_answer
-    @game = Game.find session[:current_game]['id']
+    @game = Game.find session[:current_game_id]
     @user = current_user
+    @question = Question.find params[:question_id]
 
     add_to_total_stat
-
-    if session[:answered_correctly] == "true"
-      add_to_partial_stat
-
-      current_user.level += (session[:question_difficulty] / 10)
-
-      if current_user.correct_answers_in_a_row.nil?
-        current_user.correct_answers_in_a_row = 0
-      end
-
-      current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
-
-      if current_user.correct_answers_in_a_row == 5
-        award_badge(3)
-      end
-
-      if Statistic.find_by(email: current_user.email).fps_correct == 20
-        award_badge(4)
-      end
-
-      if(@user.level < 0)
-        @user.level = 0
-      end
-      if((@user.level / 10) + 1 > 10)
-        if @user.role != 'Admin'
-          @user.role = 'Reviewer'
-        end
-      end
-
-      @user.save
-
-      if !@game.steal_question_ids.eql? ''
-        process_steal_turn
-      else
-        @game.user_meter = @game.user_meter + 1
-        if @game.user_meter == 4
-          award_piece session[:chosen_category]
-          session[:chosen_category] = ''
-          @game.user_meter = 0
-        end
-        @game.save!
-        current_user.save!
-        redirect_to '/games/' + session[:current_game]['id'].to_s
-      end
+    if params[:answered_correctly] == "true"
+      process_correct_answer
     else
-      if !@game.steal_question_ids.eql? ''
-        if @game.is_second_steal_turn
-          if @game.user_steal_correct == @game.opponent_steal_correct
-            flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
-            @game.save!
-          else
-            remove_piece @game.wanted_piece
-            award_opponent_piece @game.wanted_piece
-            @game.save!
-            if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-              flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece. As a result, you lose the game.'
-            else
-              flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
-            end
-          end
-          @game.user_steal_correct = 0
-          @game.opponent_steal_correct = 0
-          @game.steal_question_ids = ''
-          @game.is_second_steal_turn = false
-          @game.bet_piece = ''
-          @game.wanted_piece = ''
-          @game.save!
-          if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-            end_turn
-            @game.save!
-            redirect_to games_path
-          else
-            redirect_to '/games/' + session[:current_game]['id'].to_s
-          end
-        else
-          @game.is_second_steal_turn = true
-          @game.user_meter = 0
-          @game.save!
-          end_turn
-          redirect_to games_path
-        end
-      else
-        @game.user_meter = 0
-        @game.save!
-        end_turn
-        redirect_to games_path
-      end
+      process_wrong_answer
+    end
 
+    set_question_difficulty
+    @question.save!
+  end
+
+  def set_question_difficulty
+    if (@question.difficulty > 39)
+      @question.difficulty = 39
+    elsif (@question.difficulty < 10)
+      @question.difficulty = 10
     end
   end
 
@@ -182,7 +110,6 @@ class GamesController < ApplicationController
 
     if @game.user_steal_correct > @game.opponent_steal_correct && @game.is_second_steal_turn
       @game.is_second_steal_turn = false
-
 
       award_piece @game.bet_piece
       remove_opponent_piece @game.bet_piece
@@ -196,7 +123,7 @@ class GamesController < ApplicationController
       @game.bet_piece = ''
       @game.wanted_piece = ''
       @game.save!
-      redirect_to '/games/' + session[:current_game]['id'].to_s
+      redirect_to game_path session[:current_game_id]
     elsif @game.user_steal_correct == 6
       if @game.is_second_steal_turn
         flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
@@ -207,7 +134,7 @@ class GamesController < ApplicationController
         @game.bet_piece = ''
         @game.wanted_piece = ''
         @game.save!
-        redirect_to '/games/' + session[:current_game]['id'].to_s
+        redirect_to game_path session[:current_game_id]
       else
         flash[:notice] = "You have answered 6 questions correctly, it is now your opponent's turn."
         @game.user_meter = 0
@@ -216,19 +143,19 @@ class GamesController < ApplicationController
         end_turn
         redirect_to games_path
       end
-
     else
-      rand_question = Question.all.sample
       question_ids = @game.steal_question_ids.split
       if @game.is_second_steal_turn
         redirect_to Question.find(question_ids[@game.user_steal_correct].to_i)
       else
+        categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
+        rand_question = Question.where(:category => categories[@game.user_steal_correct]).where(:is_authorized => 't').sample
+
         @game.steal_question_ids += ' ' + rand_question.id.to_s
         @game.steal_question_ids.strip!
         @game.save!
         redirect_to rand_question
       end
-
     end
   end
 
@@ -432,6 +359,103 @@ class GamesController < ApplicationController
   end
 
   private
+  def process_correct_answer
+    @question.difficulty -= 1
+    add_to_partial_stat
+    current_user.level += (@question.difficulty / 10)
+
+    if current_user.correct_answers_in_a_row.nil?
+      current_user.correct_answers_in_a_row = 0
+    end
+
+    current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
+    award_badges_if_earned
+    handle_user_level_and_role
+
+    @user.save!
+
+    if !@game.steal_question_ids.eql? ''
+      process_steal_turn
+    else
+      @game.user_meter = @game.user_meter + 1
+      if @game.user_meter == 4
+        award_piece @question.category
+        @game.user_meter = 0
+      end
+      @game.save!
+      current_user.save!
+      redirect_to game_path session[:current_game_id]
+    end
+  end
+
+  def handle_user_level_and_role
+    if (@user.level < 0)
+      @user.level = 0
+    end
+
+    if ((@user.level / 10) + 1 > 10)
+      if @user.role != 'Admin'
+        @user.role = 'Reviewer'
+      end
+    end
+  end
+
+  def award_badges_if_earned
+    if current_user.correct_answers_in_a_row == 5
+      award_badge(3)
+    end
+
+    if Statistic.find_by(email: current_user.email).fps_correct == 20
+      award_badge(4)
+    end
+  end
+
+  def process_wrong_answer
+    @question.difficulty += 1
+    if !@game.steal_question_ids.eql? ''
+      if @game.is_second_steal_turn
+        if @game.user_steal_correct == @game.opponent_steal_correct
+          flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
+          @game.save!
+        else
+          remove_piece @game.wanted_piece
+          award_opponent_piece @game.wanted_piece
+          @game.save!
+          if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+            flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece. As a result, you lose the game.'
+          else
+            flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
+          end
+        end
+        @game.user_steal_correct = 0
+        @game.opponent_steal_correct = 0
+        @game.steal_question_ids = ''
+        @game.is_second_steal_turn = false
+        @game.bet_piece = ''
+        @game.wanted_piece = ''
+        @game.save!
+        if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+          end_turn
+          @game.save!
+          redirect_to games_path
+        else
+          redirect_to game_path session[:current_game_id]
+        end
+      else
+        @game.is_second_steal_turn = true
+        @game.user_meter = 0
+        @game.save!
+        end_turn
+        redirect_to games_path
+      end
+    else
+      @game.user_meter = 0
+      @game.save!
+      end_turn
+      redirect_to games_path
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_game
     @game = Game.find(params[:id])
