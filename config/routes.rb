@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   get 'new_order' => 'orders#new'
   get 'orders' => 'orders#show'
 
+  get 'leaderboard' => 'games#leaderboard'
+
   get '/users/:id', :to => 'users#update_profile', :as => :user
   post '/users/:id', :to => 'users#update_profile'
 

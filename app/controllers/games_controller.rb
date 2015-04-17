@@ -334,7 +334,10 @@ class GamesController < ApplicationController
 
   end
 
-
+  def leaderboard
+    @times = ['weekly', 'monthly']
+    @categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role_playing']
+  end
 
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json

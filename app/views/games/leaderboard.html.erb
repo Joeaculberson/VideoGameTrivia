@@ -1,0 +1,117 @@
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <% (@times + @categories).each_with_index do |tab, i| %>
+        <% if i == 0 %>
+            <li role="presentation" class="active">
+              <a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab"><%= tab.capitalize %></a>
+            </li>
+        <% else %>
+            <li role="presentation"><a href="#<%= tab %>" aria-controls="<%= tab %>" role="tab" data-toggle="tab">
+              <% if tab.eql? 'role_playing' %>
+                  <%= tab.split('_').join(' ').capitalize %>
+              <% else %>
+                  <%= tab.capitalize %>
+              <% end %>
+            </a>
+            </li>
+        <% end %>
+    <% end %>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <% @times.each_with_index do |time, i| %>
+        <% if i == 0 %>
+            <div role="tabpanel" class="tab-pane active" id='<%= time %>'>
+        <% else %>
+            <div role="tabpanel" class="tab-pane" id='<%= time %>'>
+        <% end %>
+        <div class="panel panel-default">
+          <table class="table table-striped table-hover">
+            <thead>
+            <th>
+              Username
+            </th>
+            <th>
+              Won games
+            </th>
+            </thead>
+            <tbody>
+            <% User.all.sort { |a, b| a.send('get_games_won_' + time) <=> b.send('get_games_won_' + time) }.reverse[0..2].each do |user| %>
+                <tr>
+                  <td>
+                    <div id="face-wrapper">
+                      <% if user.image && !user.hide_picture %>
+                          <img src='<%= user.image %>' class="img-circle face">
+                      <% else %>
+                          <img src='<%= image_url('default_profile.png') %>' class="img-circle face">
+                      <% end %>
+                      <% if user.hide_email %>
+                          User
+                      <% else %>
+                          <%= user.email %>
+                      <% end %>
+                    </div>
+                  </td>
+                  <td>
+                    <%= user.send('get_games_won_' + time) %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        </div>
+    <% end %>
+
+    <% @categories.each do |category| %>
+        <div role="tabpanel" class="tab-pane" id='<%= category %>'>
+          <div class="panel panel-default">
+            <table class="table table-striped table-hover">
+              <thead>
+              <th>Username</th>
+              <th>Correct Answers</th>
+              <th>Percentage Correct</th>
+              </thead>
+              <tbody>
+              <% User.all.sort { |a, b| Statistic.find_by(email: a.email).send(category + '_correct') <=> Statistic.find_by(email: b.email).send(category + '_correct') }.reverse[0..2].each do |user| %>
+                  <tr>
+                    <td>
+                      <div id="face-wrapper">
+                        <% if user.image && !user.hide_picture %>
+                            <img src='<%= user.image %>' class="img-circle face">
+                        <% else %>
+                            <img src='<%= image_url('default_profile.png') %>' class="img-circle face">
+                        <% end %>
+                        <% if (user.hide_email) %>
+                            User
+                        <% else %>
+                            <%= user.email %>
+                        <% end %>
+                      </div>
+                    </td>
+                    <td>
+                      <% stat = Statistic.find_by email: user.email %>
+                      <%= stat.send(category + '_correct') %>
+                    </td>
+                    <td>
+                      <% if stat.send(category + '_total') == 0 %>
+                          -%
+                      <% else %>
+                          <%= '%.2f' % ((stat.send(category + '_correct').to_f / stat.send(category + '_correct').to_f) * 100) %>
+                          %
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    <% end %>
+    </div>
+  </div>
+
+</div>
