@@ -100,7 +100,7 @@
                       <% if stat.send(category + '_total') == 0 %>
                           -%
                       <% else %>
-                          <%= '%.2f' % ((stat.send(category + '_correct').to_f / stat.send(category + '_correct').to_f) * 100) %>
+                          <%= '%.2f' % ((stat.send(category + '_correct').to_f / stat.send(category + '_total').to_f) * 100) %>
                           %
                       <% end %>
                     </td>
