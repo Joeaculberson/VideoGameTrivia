@@ -113,8 +113,12 @@ class GamesController < ApplicationController
 
       award_piece @game.bet_piece
       remove_opponent_piece @game.bet_piece
+      if @game.user_steal_correct == 7
+        flash[:notice] = 'You won the tie breaker! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
+      else
+        flash[:notice] = 'You won the challenge! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
+      end
 
-      flash[:notice] = 'You won the challenge! ' + @game.opponent_user_email + ' surrenders the ' + @game.bet_piece + ' piece.'
       session[:chosen_category] = ''
       @game.user_steal_correct = 0
       @game.opponent_steal_correct = 0
@@ -126,15 +130,8 @@ class GamesController < ApplicationController
       redirect_to game_path session[:current_game_id]
     elsif @game.user_steal_correct == 6
       if @game.is_second_steal_turn
-        flash[:notice] = 'Game is a tie, no one wins or loses a piece.'
-        @game.user_steal_correct = 0
-        @game.opponent_steal_correct = 0
-        @game.steal_question_ids = ''
-        @game.is_second_steal_turn = false
-        @game.bet_piece = ''
-        @game.wanted_piece = ''
-        @game.save!
-        redirect_to game_path session[:current_game_id]
+        flash[:notice] = 'Tie breaker!'
+        redirect_to Question.where(:is_authorized => 't').sample
       else
         flash[:notice] = "You have answered 6 questions correctly, it is now your opponent's turn."
         @game.user_meter = 0
