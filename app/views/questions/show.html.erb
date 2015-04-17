@@ -170,7 +170,7 @@
   </div>
 </div>
 
-<% if !session[:current_game_id].blank? %>
+
     <% if @question.is_authorized == false && (current_user.role == 'Admin' || current_user.role == 'Reviewer') %>
         <div class="text-center">
           <%= button_to 'Accept question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: true }, :method => :get, :style => 'width: 80%' %>
@@ -179,15 +179,16 @@
           <%= button_to 'Decline question', accept_review_path, :class => 'btn btn-primary btn-lg', params: { id: params[:id], is_accepted: false }, :method => :get, :style => 'width: 80%' %>
         </div>
     <% end %>
+
+
+<% if !session[:current_game_id].blank? %>
+    <div id="incorrectAnswerButton" class="text-center">
+      <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: false }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+    </div>
+    <div id="correctAnswerButton" class="text-center">
+      <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: true }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
+    </div>
 <% end %>
-
-
-<div id="incorrectAnswerButton" class="text-center">
-  <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: false }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
-</div>
-<div id="correctAnswerButton" class="text-center">
-  <%= button_to 'Continue', assess_answer_path, params: { question_id: params[:id], answered_correctly: true }, :class => 'btn btn-info btn-lg btn-block', :method => :get %>
-</div>
 
 <% if !@game.nil? %>
     <span id="countdown">
