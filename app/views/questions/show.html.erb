@@ -29,9 +29,7 @@
   function disableAllButtons() {
       $(".correct").toggleClass("disabled");
       $(".incorrect").toggleClass("disabled");
-      $('#timeButton').attr("disabled", true);
-      $('#skipButton').attr("disabled", true);
-      $('#secondChanceButton').attr("disabled", true);
+      disableAllPowerUpButtons();
   }
 
     function disableAllPowerUpButtons() {
@@ -73,18 +71,15 @@
         if (isThereEnoughCoins(2)) {
             var audio = new Audio('<%= image_url('sounds/croak.wav') %>');
             audio.play();
-            currentTime += 1500;
             $.post('/pay',{amount:2});
             currentCoins -= 2;
-            clearInterval(timerIntervalId);
-            window.history.back();
+
         }
     }
     function secondChancePowerUp() {
         if (isThereEnoughCoins(5)) {
             var audio = new Audio('<%= image_url('sounds/fairy.wav') %>');
             audio.play();
-            currentTime += 1500;
             $.post('/pay',{amount:5});
             currentCoins -= 5;
             updateCoins();
