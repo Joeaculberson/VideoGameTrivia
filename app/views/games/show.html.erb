@@ -22,8 +22,8 @@
       <% else %>
           <%= @game.user_email %> - Level: <%= (current_user.level / 10) + 1 %>
       <% end %>
-            (Next level: <%= ((current_user.level % 10) - 10) * -1 %> exp)
-       </br>
+      (Next level: <%= ((current_user.level % 10) - 10) * -1 %> exp)
+      </br>
 
       <% @categories.each do |categories| %>
           <img id='<%= 'user' + categories.capitalize + 'Image' %>' src='<%= image_url('greyscale/'+ categories + '.png') %>' width="50" height="50">
@@ -36,7 +36,7 @@
         <% else %>
             <%= @game.opponent_user_email %> - Level: <%= (@current_opponent.level / 10) + 1 %>
         <% end %>
-        </div>
+      </div>
       </br>
       <div class="pull-right">
         <% @categories.each do |categories| %>
@@ -47,7 +47,7 @@
     <div class="col-xs-1">
       <div class="pull-right">
         <div id="face-wrapper">
-          <% if @current_opponent.image && !@current_opponent.hide_picture%>
+          <% if @current_opponent.image && !@current_opponent.hide_picture %>
               <%= link_to image_tag(@current_opponent.image, :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
           <% else %>
               <%= link_to image_tag("default_profile.png", :class => 'img-circle face'), '#', 'data-toggle' => 'modal', 'data-target' => '#opponentStatsModal' %>
@@ -63,8 +63,8 @@
 <div class="arrow-down"></div>
 
 <div class="row text-center" onClick="startSpin();">
-  <canvas class="the_canvas" id="myDrawingCanvas" width="300" height="300" >
-    <p class="noCanvasMsg" align="center" >Sorry, your browser doesn't support canvas.<br />Please try another.</p>
+  <canvas class="the_canvas" id="myDrawingCanvas" width="300" height="300">
+    <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br/>Please try another.</p>
   </canvas>
 </div>
 
@@ -74,7 +74,7 @@
     <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png') %>' width="150">
   </div>
   <div class="col-xs-4 buttonBox">
-    <%= button_to 'Resign', resign_game_path, data: { confirm: 'Are you sure you want to resign? (Must confirm twice)' }, :class => 'btn btn-info btn-block', :method => :get%>
+    <%= button_to 'Resign', resign_game_path, data: {confirm: 'Are you sure you want to resign? (Must confirm twice)'}, :class => 'btn btn-info btn-block', :method => :get %>
   </div>
 </div>
 
@@ -91,44 +91,48 @@
     $("#stealChoiceTab").hide();
     var piece_to_bet = "";
     <% @categories.each_with_index do |category, i| %>
-        <% if @game.user_pieces.split.include? (i + 1).to_s %>
-            document.getElementById('user' + '<%= category.capitalize %>' + 'Image').src = '<%= image_url('icons/'+ category +'.png')%>';
-            $('img.user'+ '<%= category.capitalize %>' +'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
-            <% if !@game.opponent_pieces.split.include? (i + 1).to_s %>
-            $('img.userBet' + '<%= category.capitalize %>' +'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
-            $(function () {
-                $('img.userBet'+ '<%= category.capitalize %>' +'Image').click(function () {
-                    $(this).css('border', "solid 2px red");
-                    $("#betChoiceTab").hide();
-                    $("#stealChoiceTab").show();
-                    piece_to_bet = '<%= category %>';
-                });
-            });
-            <% end %>
-        <% else %>
-            $('img.user'+ '<%= category.capitalize %>' +'Image').click(function () {
-                $.post('/chosen_category', {chosen_category: '<%= category %>' , type: 'challenge'});
-            });
-        <% end %>
+    <% if @game.user_pieces.split.include? (i + 1).to_s %>
+    document.getElementById('user' + '<%= category.capitalize %>' + 'Image').src = '<%= image_url('icons/'+ category +'.png')%>';
+    $('img.user' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
+    <% if !@game.opponent_pieces.split.include? (i + 1).to_s %>
+    $('img.userBet' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
+    $(function () {
+        $('img.userBet' + '<%= category.capitalize %>' + 'Image').click(function () {
+            $(this).css('border', "solid 2px red");
+            $("#betChoiceTab").hide();
+            $("#stealChoiceTab").show();
+            piece_to_bet = '<%= category %>';
+        });
+    });
+    <% end %>
+    <% else %>
+    $('img.user' + '<%= category.capitalize %>' + 'Image').click(function () {
+        $.post('/chosen_category', {chosen_category: '<%= category %>', type: 'challenge'});
+    });
+    <% end %>
     <% end %>
 
     <% @categories.each_with_index do |category, i| %>
-        <% if @game.opponent_pieces.split.include? (i + 1).to_s %>
-        document.getElementById('opponent'+ '<%= category.capitalize %>' +'Image').src = '<%= image_url('icons/'+ category + '.png')%>';
-        $('img.opponent'+ '<%= category.capitalize %>' +'Image').attr("src", '<%= image_url('icons/'+ category + '.png')%>');
-            <% if !@game.user_pieces.split.include? (i + 1).to_s %>
-                $('img.opponentSteal'+ '<%= category.capitalize %>' +'Image').attr("src", '<%= image_url('icons/' + category + '.png')%>');
-                $(function () {
-                    $('img.opponentSteal'+ '<%= category.capitalize %>' +'Image').click(function () {
-                        $.post('/steal_piece_settings', {chosen_category: '<%= category %>', bet_piece: piece_to_bet, type: 'steal'});
-                    });
-                });
-            <% end %>
-
-        $('img.opponent'+ '<%= category.capitalize %>' +'Image').click(function () {
-            $.post('/chosen_category', {chosen_category: '<%= category %>'});
+    <% if @game.opponent_pieces.split.include? (i + 1).to_s %>
+    document.getElementById('opponent' + '<%= category.capitalize %>' + 'Image').src = '<%= image_url('icons/'+ category + '.png')%>';
+    $('img.opponent' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category + '.png')%>');
+    <% if !@game.user_pieces.split.include? (i + 1).to_s %>
+    $('img.opponentSteal' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/' + category + '.png')%>');
+    $(function () {
+        $('img.opponentSteal' + '<%= category.capitalize %>' + 'Image').click(function () {
+            $.post('/steal_piece_settings', {
+                chosen_category: '<%= category %>',
+                bet_piece: piece_to_bet,
+                type: 'steal'
+            });
         });
-        <% end %>
+    });
+    <% end %>
+
+    $('img.opponent' + '<%= category.capitalize %>' + 'Image').click(function () {
+        $.post('/chosen_category', {chosen_category: '<%= category %>'});
+    });
+    <% end %>
     <% end %>
 
     wheelImageName = '<%= image_url('question_spinner.png') %>';
