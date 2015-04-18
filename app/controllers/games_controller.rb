@@ -70,7 +70,7 @@ class GamesController < ApplicationController
     if @game.nil?
       @game = Game.find session[:current_game_id]
     end
-    if (session[:question_viewed])
+    if session[:question_viewed] && @game.steal_question_ids.eql?('')
       session[:question_viewed] = false
       end_turn
       redirect_to games_path
@@ -79,8 +79,7 @@ class GamesController < ApplicationController
     @game.save!
     session[:current_game_id] = @game.id
     if !@game.steal_question_ids.eql? ''
-      @game.is_second_steal_turn = true
-      @game.save!
+      flash[:notice] = 'You opponent is trying to steal your ' + @game.bet_piece + ' piece. Defend yourself!'
       redirect_to steal_piece_path
     end
     @won_games = Game.where(:user_email => current_user.email).where(:opponent_user_email => @current_opponent.email).where(:is_game_over => true)
@@ -134,7 +133,8 @@ class GamesController < ApplicationController
       redirect_to game_path @game
     else
       if @game.is_second_steal_turn && (@game.user_steal_correct > @game.opponent_steal_correct)
-        flash[:notice] = 'Congrats, you successfully defended yourself and earned the ' + @game.bet_piece + ' piece.'
+        flash[:notice] = 'Congrats, you successfully defended yourself and stole your opponents ' + @game.bet_piece + ' piece.'
+        end_steal
         redirect_to game_path @game
       else
         redirect_to question_path @game.steal_question_ids.split[session[:steal_question_counter]]
@@ -430,7 +430,11 @@ class GamesController < ApplicationController
           if @game.is_tie_breaker
             give_piece_to_opponent @game.wanted_piece
           else
-            process_tie_breaker
+            if session[:steal_question_counter] == 6
+              process_tie_breaker
+            else
+              redirect_to question_path Question.find(@game.steal_question_ids.split[session[:steal_question_counter]])
+            end
           end
         else
           if session[:steal_question_counter] == 6
@@ -460,6 +464,8 @@ class GamesController < ApplicationController
   def end_attacker_steal_turn
     flash[:notice] = 'You got ' + @game.user_steal_correct.to_s + ' out of 6 questions correct. It is now your opponents turn.'
     session[:steal_question_counter] == 0
+    @game.is_second_steal_turn = true
+    @game.save!
     end_turn
     redirect_to games_path
   end
