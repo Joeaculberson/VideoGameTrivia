@@ -477,7 +477,7 @@ class GamesController < ApplicationController
   def give_piece_to_opponent piece
     remove_piece piece
     award_opponent_piece piece
-    flash[:alert] = 'Oh no! You lost your ' + @game.wanted_piece + ' piece to the opponent.'
+    flash[:alert] = 'Oh no! You lost your ' + piece + ' piece to the opponent.'
     end_steal
     if @game.opponent_pieces.eql? '1 2 3 4 5 6'
       flash[:alert] += ' You lose the game.'
