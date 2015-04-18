@@ -74,31 +74,33 @@ function isThereEnoughCoins(coins) {
     return currentCoins >= coins;
 }
 function timerPowerUp() {
-    if (isThereEnoughCoins(3)) {
+    if (isThereEnoughCoins(1)) {
         var audio = new Audio('<%= image_url('sounds/slowpoke.mp3') %>');
         audio.play();
         currentTime += 1500;
-        $.post('/pay',{amount:3});
-        currentCoins -= 3;
+        $.post('/pay',{amount:1});
+        currentCoins -= 1;
         updateCoins();
         disableAllPowerUpButtons();
     }
 }
 function revealOnePowerUp() {
-    if (isThereEnoughCoins(1)) {
+    if (isThereEnoughCoins(2)) {
         var audio = new Audio('<%= image_url('sounds/kerboom.wav') %>');
         audio.play();
-        $.post('/pay',{amount:1});
-        currentCoins -= 1;
+        $.post('/pay',{amount:2});
+        currentCoins -= 2;
+        updateCoins();
         shuffle($(".incorrect")).slice(0,1).toggleClass("incorrect disabled");
+        disableAllPowerUpButtons();
     }
 }
 function secondChancePowerUp() {
-    if (isThereEnoughCoins(5)) {
+    if (isThereEnoughCoins(3)) {
         var audio = new Audio('<%= image_url('sounds/fairy.wav') %>');
         audio.play();
-        $.post('/pay',{amount:5});
-        currentCoins -= 5;
+        $.post('/pay',{amount:3});
+        currentCoins -= 3;
         updateCoins();
         secondChance = true;
         disableAllPowerUpButtons();
