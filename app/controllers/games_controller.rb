@@ -448,7 +448,6 @@ class GamesController < ApplicationController
           end
         else
           if session[:steal_question_counter] == 6
-            end_steal
             give_piece_to_opponent @game.wanted_piece
           else
             redirect_to question_path Question.find(@game.steal_question_ids.split[session[:steal_question_counter]])
