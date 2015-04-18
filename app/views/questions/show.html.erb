@@ -29,7 +29,7 @@
     </br>
     <% if !@game.nil? %>
         <% if !@game.steal_question_ids.eql? '' %>
-            <%= @game.user_steal_correct.to_s %> / 6
+            Correct: <%= @game.user_steal_correct.to_s %> / 6
         <% end %>
     <% end %>
   </div>

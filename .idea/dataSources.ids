@@ -2421,6 +2421,7 @@
       <column name="bet_piece" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="wanted_piece" sqlType="varchar" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="is_game_over" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="is_tie_breaker" sqlType="bool" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="games_pkey" columns="id"/>
     </table>
     <table name="games_id_seq" schema="public" catalog="VideoGameTrivia_development" type="SEQUENCE">

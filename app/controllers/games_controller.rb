@@ -48,7 +48,6 @@ class GamesController < ApplicationController
   def steal_piece_settings
     session[:chosen_category] = params[:chosen_category]
     session[:bet_piece] = params[:bet_piece]
-    session[:type] = params[:type]
     render js: "window.location = '#{steal_piece_url}'"
   end
 
@@ -71,15 +70,17 @@ class GamesController < ApplicationController
     if @game.nil?
       @game = Game.find session[:current_game_id]
     end
-    if (session[:question_viewed])
-      session[:question_viewed] = false
-      end_turn
-      redirect_to games_path
-    end
+    #if (session[:question_viewed])
+      #session[:question_viewed] = false
+      #end_turn
+      #redirect_to games_path
+    #end
     @current_opponent = User.find_by email: @game.opponent_user_email
     @game.save!
     session[:current_game_id] = @game.id
     if !@game.steal_question_ids.eql? ''
+      @game.is_second_steal_turn = true
+      @game.save!
       redirect_to steal_piece_path
     end
     @won_games = Game.where(:user_email => current_user.email).where(:opponent_user_email => @current_opponent.email).where(:is_game_over => true)
@@ -93,6 +94,11 @@ class GamesController < ApplicationController
     session[:question_viewed] = false
 
     add_to_total_stat
+
+    if !session[:steal_question_counter].blank?
+      session[:steal_question_counter] += 1
+    end
+
     if params[:answered_correctly] == "true"
       process_correct_answer
     else
@@ -115,54 +121,42 @@ class GamesController < ApplicationController
     @game.user_steal_correct += 1
     @game.save!
 
-    if @game.user_steal_correct > @game.opponent_steal_correct && @game.is_second_steal_turn
-      @game.is_second_steal_turn = false
-
-      award_piece @game.bet_piece
+    if session[:steal_question_counter] == 6
+      if @game.is_second_steal_turn
+        process_tie_breaker
+      else
+        end_attacker_steal_turn
+      end
+    elsif session[:steal_question_counter] == 7
       remove_opponent_piece @game.bet_piece
-      if @game.user_steal_correct == 7
-        flash[:notice] = 'You won the tie breaker!'
-      else
-        flash[:notice] = 'You won the challenge!'
-      end
-      flash[:notice] += ' Opponent surrenders the ' + @game.bet_piece + ' piece.'
-      session[:chosen_category] = ''
-      @game.user_steal_correct = 0
-      @game.opponent_steal_correct = 0
-      @game.opponent_meter = 0
-      @game.steal_question_ids = ''
-      @game.bet_piece = ''
-      @game.wanted_piece = ''
-      @game.save!
-      redirect_to game_path session[:current_game_id]
-    elsif @game.user_steal_correct == 6
-      if @game.is_second_steal_turn
-        @game.is_tie_breaker = true
-        @game.save!
-        flash[:notice] = 'Tie breaker!'
-        redirect_to Question.where(:is_authorized => 't').sample
-      else
-        flash[:notice] = "You have answered 6 questions correctly, it is now your opponent's turn."
-        @game.user_meter = 0
-        @game.is_second_steal_turn = true
-        @game.save!
-        end_turn
-        redirect_to games_path
-      end
+      flash[:notice] = "Congrats! You sent your opponent's " + @game.bet_piece + " piece to the void!"
+      end_steal
+      redirect_to game_path @game
     else
-      question_ids = @game.steal_question_ids.split
-      if @game.is_second_steal_turn
-        redirect_to Question.find(question_ids[@game.user_steal_correct].to_i)
+      if @game.is_second_steal_turn && (@game.user_steal_correct > @game.opponent_steal_correct)
+        flash[:notice] = 'Congrats, you successfully defended yourself and earned the ' + @game.bet_piece + ' piece.'
+        redirect_to game_path @game
       else
-        categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
-        rand_question = Question.where(:category => categories[@game.user_steal_correct]).where(:is_authorized => 't').sample
-
-        @game.steal_question_ids += ' ' + rand_question.id.to_s
-        @game.steal_question_ids.strip!
-        @game.save!
-        redirect_to rand_question
+        redirect_to question_path @game.steal_question_ids.split[session[:steal_question_counter]]
       end
     end
+  end
+
+  def process_tie_breaker
+    flash[:notice] = 'Tie breaker! Answer this correctly or else the opponent will steal your ' + @game.wanted_piece + ' piece.'
+    @game.is_tie_breaker = true
+    @game.save!
+    redirect_to Question.where(:is_authorized => true).sample
+  end
+
+  def end_steal
+    @game.is_second_steal_turn = false
+    @game.bet_piece = ''
+    @game.wanted_piece = ''
+    @game.steal_question_ids = ''
+    @game.is_tie_breaker = false
+    @game.save!
+    session[:steal_question_counter] = nil
   end
 
   def remove_piece category
@@ -431,58 +425,53 @@ class GamesController < ApplicationController
       if @game.is_second_steal_turn
         if @game.user_steal_correct == @game.opponent_steal_correct
           if @game.is_tie_breaker
-            @game.is_tie_breaker = false
-            award_opponent_piece @game.wanted_piece
-            remove_piece @game.wanted_piece
-
-            flash[:alert] = 'You lose the tie breaker. Opponent stole your ' + @game.wanted_piece + ' piece.'
-            if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-              flash[:alert] += ' As a result, you lose the game'
-            end
-            @game.save!
+            give_piece_to_opponent @game.wanted_piece
           else
-            @game.is_tie_breaker = true
+            process_tie_breaker
+          end
+        else
+          if session[:steal_question_counter] == 6
+            give_piece_to_opponent @game.wanted_piece
+            award_piece @game.wanted_piece
+            end_steal
+            give_piece_to_opponent @game.wanted_piece
             @game.save!
-            flash[:notice] = 'Tie breaker!'
-            redirect_to Question.where(:is_authorized => 't').sample and return
+            redirect_to game_path @game
+          else
+            redirect_to question_path Question.find(@game.steal_question_ids.split[session[:steal_question_counter]])
           end
-        else
-          remove_piece @game.wanted_piece
-          award_opponent_piece @game.wanted_piece
-          @game.save!
-          flash[:alert] = 'You lose the challenge! Opponent successfully stole the ' + @game.wanted_piece + ' piece.'
-          if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-             flash[:alert] += ' As a result, you lose the game.'
-          end
-        end
-        @game.user_steal_correct = 0
-        @game.opponent_steal_correct = 0
-        @game.steal_question_ids = ''
-        @game.is_second_steal_turn = false
-        @game.bet_piece = ''
-        @game.wanted_piece = ''
-        @game.is_tie_breaker = false
-        @game.save!
-        if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-          end_turn
-          @game.save!
-
-          redirect_to games_path
-        else
-          redirect_to game_path session[:current_game_id]
         end
       else
-        @game.is_second_steal_turn = true
-        @game.user_meter = 0
-        @game.save!
-        end_turn
-        redirect_to games_path
+        if session[:steal_question_counter] == 6
+          end_attacker_steal_turn
+        else
+          redirect_to question_path Question.find(@game.steal_question_ids.split[session[:steal_question_counter]])
+        end
       end
     else
-      @game.user_meter = 0
-      @game.save!
       end_turn
       redirect_to games_path
+    end
+  end
+
+  def end_attacker_steal_turn
+    flash[:notice] = 'You got ' + @game.user_steal_correct.to_s + ' out of 6 questions correct. It is now your opponents turn.'
+    session[:steal_question_counter] == 0
+    end_turn
+    redirect_to games_path
+  end
+
+  def give_piece_to_opponent piece
+    remove_piece piece
+    award_opponent_piece piece
+    flash[:notice] = 'Oh no! You lost your ' + piece + ' piece to the opponent.'
+    end_steal
+    if @game.opponent_pieces.eql? '1 2 3 4 5 6'
+      flash[:notice] += ' You lose the game.'
+      end_turn
+      redirect_to games_path
+    else
+      redirect_to game_path @game
     end
   end
 

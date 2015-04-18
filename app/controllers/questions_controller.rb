@@ -35,17 +35,25 @@ class QuestionsController < ApplicationController
 
   def steal_piece
     session[:is_in_steal] = true
+    session[:steal_question_counter] = 0
     @game = Game.find(session[:current_game_id])
     @game.bet_piece = session[:bet_piece]
     @game.wanted_piece = session[:chosen_category]
+
     if !@game.steal_question_ids.eql? ''
       @game.is_second_steal_turn = true
       redirect_to Question.find(@game[:steal_question_ids].split[0].to_i)
     else
-      rand_question = Question.where(:category => 'action').where(:is_authorized => 't').sample
-      @game.steal_question_ids = rand_question.id.to_s
+      categories = ['action', 'adventure', 'arcade', 'fps', 'racing', 'role-playing']
+      rand_questions = ''
+      categories.each do |category|
+        rand_questions += Question.where(:category => category).where(:is_authorized => 't').sample.id.to_s + ' '
+      end
+      rand_questions.rstrip!
+
+      @game.steal_question_ids = rand_questions
       @game.save!
-      redirect_to rand_question
+      redirect_to Question.find(rand_questions.split[session[:steal_question_counter]])
     end
   end
 
