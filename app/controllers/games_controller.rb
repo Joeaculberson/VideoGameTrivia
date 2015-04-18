@@ -447,6 +447,9 @@ class GamesController < ApplicationController
               redirect_to question_path Question.find(@game.steal_question_ids.split[session[:steal_question_counter]])
             end
           end
+          #If it is impossible for the defender to win the steal, end the steal
+        elsif @game.opponent_steal_correct > (@game.user_steal_correct + (6 - session[:steal_question_counter]))
+          give_piece_to_opponent @game.wanted_piece
         else
           if session[:steal_question_counter] == 6
             give_piece_to_opponent @game.wanted_piece
