@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="123888924">
+  <component name="DataSourceManagerImpl" format="xml" hash="1903325727">
     <data-source source="LOCAL" name="Rails VideoGameTrivia: test" uuid="84f45b11-d9d9-4b16-831d-65e4e85a6964">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
