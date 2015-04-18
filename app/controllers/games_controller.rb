@@ -122,7 +122,17 @@ class GamesController < ApplicationController
 
     if session[:steal_question_counter] == 6
       if @game.is_second_steal_turn
-        process_tie_breaker
+        if @game.user_steal_correct == @game.opponent_steal_correct
+          process_tie_breaker
+        elsif @game.user_steal_correct < @game.opponent_steal_correct
+          give_piece_to_opponent @game.wanted_piece
+        else
+          award_piece @game.bet_piece
+          remove_opponent_piece @game.bet_piece
+          end_steal
+          flash[:notice] = "Congrats! You stole the " + @game.bet_piece + " piece from your opponent."
+          redirect_to game_path @game
+        end
       else
         end_attacker_steal_turn
       end
@@ -468,10 +478,10 @@ class GamesController < ApplicationController
   def give_piece_to_opponent piece
     remove_piece piece
     award_opponent_piece piece
-    flash[:notice] = 'Oh no! You lost your ' + @game.wanted_piece + ' piece to the opponent.'
+    flash[:alert] = 'Oh no! You lost your ' + @game.wanted_piece + ' piece to the opponent.'
     end_steal
     if @game.opponent_pieces.eql? '1 2 3 4 5 6'
-      flash[:notice] += ' You lose the game.'
+      flash[:alert] += ' You lose the game.'
       end_turn
       redirect_to games_path
     else
