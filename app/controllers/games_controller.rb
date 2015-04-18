@@ -74,16 +74,17 @@ class GamesController < ApplicationController
       session[:question_viewed] = false
       end_turn
       redirect_to games_path
+    else
+      @current_opponent = User.find_by email: @game.opponent_user_email
+      @game.save!
+      session[:current_game_id] = @game.id
+      if !@game.steal_question_ids.eql? ''
+        flash[:notice] = 'You opponent is trying to steal your ' + @game.bet_piece + ' piece. Answer more than ' + @game.opponent_steal_correct.to_s + ' question(s) correct to fend off the opponent.'
+        redirect_to steal_piece_path
+      end
+      @won_games = Game.where(:user_email => current_user.email).where(:opponent_user_email => @current_opponent.email).where(:is_game_over => true)
+      @lost_games = Game.where(:opponent_user_email => current_user.email).where(:user_email => @current_opponent.email).where(:is_game_over => true)
     end
-    @current_opponent = User.find_by email: @game.opponent_user_email
-    @game.save!
-    session[:current_game_id] = @game.id
-    if !@game.steal_question_ids.eql? ''
-      flash[:notice] = 'You opponent is trying to steal your ' + @game.bet_piece + ' piece. Answer more than ' + @game.opponent_steal_correct.to_s + ' question(s) correct to fend off the opponent.'
-      redirect_to steal_piece_path
-    end
-    @won_games = Game.where(:user_email => current_user.email).where(:opponent_user_email => @current_opponent.email).where(:is_game_over => true)
-    @lost_games = Game.where(:opponent_user_email => current_user.email).where(:user_email => @current_opponent.email).where(:is_game_over => true)
   end
 
   def assess_answer
