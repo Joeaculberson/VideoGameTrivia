@@ -449,6 +449,7 @@ class GamesController < ApplicationController
           end
           #If it is impossible for the defender to win the steal, end the steal
         elsif @game.opponent_steal_correct > (@game.user_steal_correct + (6 - session[:steal_question_counter]))
+          flash[:alert] = 'It became impossible for you to win. '
           give_piece_to_opponent @game.wanted_piece
         else
           if session[:steal_question_counter] == 6
@@ -481,7 +482,12 @@ class GamesController < ApplicationController
   def give_piece_to_opponent piece
     remove_piece piece
     award_opponent_piece piece
-    flash[:alert] = 'Oh no! You lost your ' + piece + ' piece to the opponent.'
+    if flash[:alert].blank?
+      flash[:alert] = 'Oh no! You lost your ' + piece + ' piece to the opponent.'
+    else
+      flash[:alert] += ' You lost your ' + piece + ' piece to the opponent.'
+    end
+
     end_steal
     if @game.opponent_pieces.eql? '1 2 3 4 5 6'
       flash[:alert] += ' You lose the game.'
