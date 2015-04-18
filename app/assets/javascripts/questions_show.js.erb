@@ -91,7 +91,7 @@ function revealOnePowerUp() {
         $.post('/pay',{amount:2});
         currentCoins -= 2;
         updateCoins();
-        shuffle($(".incorrect")).slice(0,1).toggleClass("incorrect disabled");
+        shuffle($(".incorrect")).slice(0,1).toggleClass("incorrect disabled btn-danger");
         disableAllPowerUpButtons();
     }
 }

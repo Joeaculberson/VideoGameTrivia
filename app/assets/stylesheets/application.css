@@ -16,3 +16,63 @@
  *= require font-awesome
  *= require bootstrap-social
  */
+
+/* User sign in and sign forms. */
+.border-form-div {
+    max-width: 500px;
+    height: auto;
+    width: auto;
+    padding: 19px 29px 29px;
+    margin: 0 auto 20px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.border-form-div .form-signin-heading,
+.border-form-div .checkbox {
+    margin-bottom: 10px;
+}
+.border-form-div input[type="text"],
+.border-form-div input[type="email"],
+.border-form-div input[type="password"] {
+    font-size: 16px;
+    height: auto;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 7px 9px;
+}
+.round-edges {
+    background: #2b9ac4;
+    padding: 2%;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    color: white;
+}
+.box-shadow{
+    -moz-box-shadow: 0px 0px 0px 15px #e8e6e6; /* Firefox */
+
+    -webkit-box-shadow: 0px 0px 0px 15px #e8e6e6; /* Safari, Chrome */
+
+    box-shadow: 0px 0px 0px 15px #e8e6e6; /* CSS3 */
+}
+#face-wrapper .face {
+    z-index: 1;
+    -moz-box-shadow: 0px 0px 0px 6px #ffffff; /* Firefox */
+    -webkit-box-shadow: 0px 0px 0px 6px #ffffff; /* Safari, Chrome */
+    box-shadow: 0px 0px 0px 6px #ffffff; /* CSS3 */
+}
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #000000;
+    margin-left: auto;
+    margin-right: auto;
+}
