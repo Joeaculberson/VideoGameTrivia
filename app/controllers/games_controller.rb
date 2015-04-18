@@ -155,6 +155,8 @@ class GamesController < ApplicationController
     @game.wanted_piece = ''
     @game.steal_question_ids = ''
     @game.is_tie_breaker = false
+    @game.opponent_steal_correct = 0
+    @game.user_steal_correct = 0
     @game.save!
     session[:steal_question_counter] = nil
   end
