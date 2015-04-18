@@ -70,11 +70,11 @@ class GamesController < ApplicationController
     if @game.nil?
       @game = Game.find session[:current_game_id]
     end
-    #if (session[:question_viewed])
-      #session[:question_viewed] = false
-      #end_turn
-      #redirect_to games_path
-    #end
+    if (session[:question_viewed])
+      session[:question_viewed] = false
+      end_turn
+      redirect_to games_path
+    end
     @current_opponent = User.find_by email: @game.opponent_user_email
     @game.save!
     session[:current_game_id] = @game.id
@@ -232,6 +232,7 @@ class GamesController < ApplicationController
   end
 
   def end_turn
+    session[:question_viewed] = false
     @game.round = @game.round + 1
     if(current_user.level > 0)
       current_user.level -= 1
