@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   get 'orders' => 'orders#show'
 
   get 'leaderboard' => 'games#leaderboard'
+  get 'process_wrong_answer' => 'games#process_wrong_answer'
+  get 'end_attacker_steal_turn' => 'games#end_attacker_steal_turn'
 
   get '/users/:id', :to => 'users#update_profile', :as => :user
   post '/users/:id', :to => 'users#update_profile'

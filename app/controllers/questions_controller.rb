@@ -73,6 +73,16 @@ class QuestionsController < ApplicationController
           flash[:alert] = 'Your opponent is trying to steal your ' + @game.wanted_piece + ' piece. Defend yourself!'
         end
       end
+
+      if session['steal_question_' + session[:steal_question_counter].to_s + '_viewed'] && @game.is_second_steal_turn == false
+        redirect_to end_attacker_steal_turn_path
+      elsif session['steal_question_' + session[:steal_question_counter].to_s + '_viewed'] && @game.is_second_steal_turn
+        redirect_to process_wrong_answer_path
+      end
+
+      if !@game.steal_question_ids.eql? ''
+        session['steal_question_' + session[:steal_question_counter].to_s + '_viewed'] = true
+      end
     end
 
     @answer_choices = [@question.correct_answer, @question.incorrect_answer_1, @question.incorrect_answer_2, @question.incorrect_answer_3]

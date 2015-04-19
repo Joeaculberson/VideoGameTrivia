@@ -117,7 +117,7 @@ class GamesController < ApplicationController
     end
   end
 
-  def process_steal_turn
+  def process_correct_steal_turn
     @game.user_steal_correct += 1
     @game.save!
 
@@ -381,60 +381,33 @@ class GamesController < ApplicationController
     end
   end
 
-  private
-  def process_correct_answer
-    @question.difficulty -= 1
-    add_to_partial_stat
-    current_user.level += (@question.difficulty / 10)
-
-    if current_user.correct_answers_in_a_row.nil?
-      current_user.correct_answers_in_a_row = 0
+  def end_attacker_steal_turn
+    if @game.nil?
+      @game = Game.find session[:current_game_id]
     end
-
-    current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
-    award_badges_if_earned
-    handle_user_level_and_role
-
-    @user.save!
-
-    if !@game.steal_question_ids.eql? ''
-      process_steal_turn
-    else
-      @game.user_meter = @game.user_meter + 1
-      if @game.user_meter == 4
-        award_piece @question.category
-        @game.user_meter = 0
-      end
-      @game.save!
-      current_user.save!
-      redirect_to game_path session[:current_game_id]
+    flash[:notice] = 'You got ' + @game.user_steal_correct.to_s + ' out of 6 questions correct. It is now your opponents turn.'
+    session[:steal_question_counter] == 0
+    @game.is_second_steal_turn = true
+    end_turn
+    (0..5).each do |i|
+      session['steal_question_' + i.to_s + '_viewed'] = false
     end
-  end
-
-  def handle_user_level_and_role
-    if (@user.level < 0)
-      @user.level = 0
-    end
-
-    if ((@user.level / 10) + 1 > 10)
-      if @user.role != 'Admin'
-        @user.role = 'Reviewer'
-      end
-    end
-  end
-
-  def award_badges_if_earned
-    if current_user.correct_answers_in_a_row == 5
-      award_badge(3)
-    end
-
-    if Statistic.find_by(email: current_user.email).fps_correct == 20
-      award_badge(4)
-    end
+    redirect_to games_path
   end
 
   def process_wrong_answer
-    @question.difficulty += 1
+    if @game.nil?
+      @game = Game.find session[:current_game_id]
+      if session[:steal_question_counter] != 7
+        session[:steal_question_counter] = 6
+      end
+      (0..5).each do |i|
+        session['steal_question_' + i.to_s + '_viewed'] = false
+      end
+    else
+      @question.difficulty += 1
+    end
+
     if !@game.steal_question_ids.eql? ''
       if @game.is_second_steal_turn
         if @game.user_steal_correct == @game.opponent_steal_correct
@@ -471,12 +444,56 @@ class GamesController < ApplicationController
     end
   end
 
-  def end_attacker_steal_turn
-    flash[:notice] = 'You got ' + @game.user_steal_correct.to_s + ' out of 6 questions correct. It is now your opponents turn.'
-    session[:steal_question_counter] == 0
-    @game.is_second_steal_turn = true
-    end_turn
-    redirect_to games_path
+  private
+  def process_correct_answer
+    @question.difficulty -= 1
+    add_to_partial_stat
+    current_user.level += (@question.difficulty / 10)
+
+    if current_user.correct_answers_in_a_row.nil?
+      current_user.correct_answers_in_a_row = 0
+    end
+
+    current_user.correct_answers_in_a_row = current_user.correct_answers_in_a_row + 1
+    award_badges_if_earned
+    handle_user_level_and_role
+
+    @user.save!
+
+    if !@game.steal_question_ids.eql? ''
+      process_correct_steal_turn
+    else
+      @game.user_meter = @game.user_meter + 1
+      if @game.user_meter == 4
+        award_piece @question.category
+        @game.user_meter = 0
+      end
+      @game.save!
+      current_user.save!
+      redirect_to game_path session[:current_game_id]
+    end
+  end
+
+  def handle_user_level_and_role
+    if (@user.level < 0)
+      @user.level = 0
+    end
+
+    if ((@user.level / 10) + 1 > 10)
+      if @user.role != 'Admin'
+        @user.role = 'Reviewer'
+      end
+    end
+  end
+
+  def award_badges_if_earned
+    if current_user.correct_answers_in_a_row == 5
+      award_badge(3)
+    end
+
+    if Statistic.find_by(email: current_user.email).fps_correct == 20
+      award_badge(4)
+    end
   end
 
   def give_piece_to_opponent piece
