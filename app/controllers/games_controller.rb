@@ -169,6 +169,9 @@ class GamesController < ApplicationController
     @game.opponent_steal_correct = 0
     @game.user_steal_correct = 0
     @game.save!
+    (0..session[:steal_question_counter].to_i).each do |i|
+      session['steal_question_' + i.to_s + '_viewed'] = false
+    end
     session[:steal_question_counter] = nil
   end
 
@@ -389,7 +392,7 @@ class GamesController < ApplicationController
     session[:steal_question_counter] == 0
     @game.is_second_steal_turn = true
     end_turn
-    (0..5).each do |i|
+    (0..6).each do |i|
       session['steal_question_' + i.to_s + '_viewed'] = false
     end
     redirect_to games_path
@@ -398,9 +401,8 @@ class GamesController < ApplicationController
   def process_wrong_answer
     if @game.nil?
       @game = Game.find session[:current_game_id]
-      if session[:steal_question_counter] != 7
-        session[:steal_question_counter] = 6
-      end
+      session[:steal_question_counter] = 6
+
       (0..5).each do |i|
         session['steal_question_' + i.to_s + '_viewed'] = false
       end
@@ -509,6 +511,9 @@ class GamesController < ApplicationController
     if @game.opponent_pieces.eql? '1 2 3 4 5 6'
       flash[:alert] += ' You lose the game.'
       end_turn
+      (0..session[:steal_question_counter].to_i).each do |i|
+        session['steal_question_' + i.to_s + '_viewed'] = false
+      end
       redirect_to games_path
     else
       redirect_to game_path @game
