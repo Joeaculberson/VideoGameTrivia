@@ -113,6 +113,8 @@ $(document).ready(function() {
         disableAllButtons();
         revealCorrectAnswerButton();
         clearInterval(timerIntervalId);
+        var audio = new Audio('<%= image_url('sounds/success.wav') %>');
+        audio.play();
     });
 
     $(document).on('click', '.incorrect', function() {
@@ -123,6 +125,8 @@ $(document).ready(function() {
         } else {
             answeredIncorrectly();
         }
+        var audio = new Audio('<%= image_url('sounds/failure.wav') %>');
+        audio.play();
     });
 
     $("#incorrectAnswerButton").hide();

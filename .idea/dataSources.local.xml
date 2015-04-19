@@ -1,17 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="dataSourceStorageLocal">
-    <data-source name="Rails VideoGameTrivia: test" uuid="84f45b11-d9d9-4b16-831d-65e4e85a6964" />
-    <data-source name="Rails VideoGameTrivia: production" uuid="0363bad1-abb1-4ace-8a74-c489925aa8a9">
-      <user-name>VideoGameTrivia</user-name>
-      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddffcdfe3dfeedfefdfe5dfeddfebdfe7dfefdffedff8dfe3dffcdfe3dfebdff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
-    </data-source>
-    <data-source name="Rails VideoGameTrivia: test" uuid="7b522c20-eba4-4188-88e7-87af56497070" />
-    <data-source name="Rails VideoGameTrivia: production" uuid="0a4eee8b-e083-4fd0-be78-bda90d013eec" />
-    <data-source name="Rails VideoGameTrivia: development" uuid="0773464b-3f30-41b2-ba1b-fc8da6f950a0" />
-    <data-source name="Rails VideoGameTrivia: test" uuid="74a2b195-a0bf-4d00-a83f-8c35b4703962" />
-    <data-source name="Rails VideoGameTrivia: production" uuid="33836bdc-fd74-4a5b-bb45-f49504804a24" />
-    <data-source name="Rails VideoGameTrivia: test" uuid="4d47055a-8eed-4c12-8065-40af070b659f" />
-    <data-source name="Rails VideoGameTrivia: production" uuid="4a511992-afc2-43dc-b484-5c8e52428499" />
-  </component>
-</project>
+<project version="4" />
