@@ -2,7 +2,7 @@
     <%= f.error_notification %>
 
     <div class="form-inputs">
-      <%= f.input :email %>
+      <%= f.input :email, :url => autocomplete_user_email_games_path, :as => :autocomplete %>
     </div>
 
     <div class="form-group">
@@ -14,3 +14,8 @@
       <%= f.button :submit %>
     </div>
 <% end %>
+
+<script>
+    $(".autocomplete .required").toggleClass("string optional form-control");
+    $("label").removeClass("string optional form-control")
+</script>
