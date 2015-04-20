@@ -33,6 +33,7 @@ gem 'font-awesome-rails'
 gem 'bootstrap-social-rails'
 gem 'merit'
 gem 'activemerchant'
+gem 'rails4-autocomplete'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

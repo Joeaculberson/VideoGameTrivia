@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :games do
+    get :autocomplete_user_email, :on => :collection
+  end
   resources :questions
   resources :games
 

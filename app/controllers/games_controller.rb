@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_game, only: [:show, :edit, :update, :destroy]
-
   before_filter :require_login
+  autocomplete :user, :email
 
   def promote
 
