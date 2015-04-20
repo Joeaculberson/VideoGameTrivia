@@ -75,9 +75,9 @@
 <h3>Game Settings</h3>
 
 <% if(current_user.sound.nil? or current_user.sound) %>
-    <%= button_to 'Turn off sounds', sounds_off_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
+    <%= button_to 'Turn off sounds', sound_off_path, :class => 'btn btn-danger btn-lg btn-block', :method => :get%>
 <% else %>
-    <%= button_to 'Turn on sounds', sounds_on_path, :class => 'btn btn-success btn-lg btn-block', :method => :get%>
+    <%= button_to 'Turn on sounds', sound_on_path, :class => 'btn btn-success btn-lg btn-block', :method => :get%>
 <% end %>
 
 <h3>Privacy Settings</h3>
