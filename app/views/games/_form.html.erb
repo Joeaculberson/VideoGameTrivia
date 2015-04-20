@@ -1,4 +1,4 @@
-<%= simple_form_for(@game) do |f| %>
+<%= simple_form_for(@game)  do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -9,3 +9,8 @@
     <%= f.button :submit, :class => 'btn btn-info btn-lg btn-block' %>
   </div>
 <% end %>
+
+<script>
+    $(".autocomplete .required").toggleClass("string optional form-control");
+    $("label").removeClass("string optional form-control")
+</script>
