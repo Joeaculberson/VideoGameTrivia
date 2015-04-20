@@ -80,7 +80,7 @@
     <img src='<%= image_url('triforce_meter/' + @game.user_meter.to_s + '.png') %>' width="150">
   </div>
   <div class="col-xs-4 buttonBox">
-    <%= button_to 'Resign', resign_game_path, data: {confirm: 'Are you sure you want to resign? (Must confirm twice)'}, :class => 'btn btn-info btn-block', :method => :get %>
+    <%= button_to 'Resign', resign_game_path, data: {confirm: 'Are you sure you want to resign?'}, :class => 'btn btn-info btn-block', :method => :get %>
   </div>
 </div>
 
