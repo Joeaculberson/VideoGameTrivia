@@ -12,6 +12,7 @@ var pointerAngle = 0;  	 	 // The angle / location around the wheel where the po
 var doPrizeDetection = true; 	 // Set to true if you want the code to detect the prize the user has won when the spinning has stopped. Prizes need to be specified in the prizes array.
 var spinMode = "random"; // Values can be: random, determinedAngle, determinedPrize.
 var determinedGetUrl = "";  	 // Set to URL of the server-side process to load via ajax when spinMode is determinedAngle or determinedPrize.
+var playSound = false;
 
 var prizes = new Array();
 prizes[0] = {"name": "adventure", "startAngle": 0, "endAngle": 51.42857142857143};  // Note how prize end angle is 1 less than start angle of next prize so no overlap.
@@ -52,8 +53,10 @@ function initialDraw(e) {
 }
 
 function startSpin(determinedValue) {
-    var audio = new Audio('<%= image_url('sounds/wheel_ding.wav') %>');
-    audio.play();
+    if (playSound == true) {
+        var audio = new Audio('<%= image_url('sounds/wheel_ding.wav') %>');
+        audio.play();
+    }
     var stopAngle = undefined;
     if (spinMode == "random") {
         stopAngle = Math.floor(Math.random() * 360);

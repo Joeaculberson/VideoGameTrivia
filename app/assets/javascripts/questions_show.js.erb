@@ -2,6 +2,7 @@ var currentTime = 3000;
 var incrementTime = 10;
 var timerIntervalId = 0;
 var currentCoins = -1;
+var playSound = false;
 var secondChance = false;
 
 function updateTimer() {
@@ -75,8 +76,10 @@ function isThereEnoughCoins(coins) {
 }
 function timerPowerUp() {
     if (isThereEnoughCoins(1)) {
-        var audio = new Audio('<%= image_url('sounds/slowpoke.mp3') %>');
-        audio.play();
+        if (playSound == true) {
+            var audio = new Audio('<%= image_url('sounds/slowpoke.mp3') %>');
+            audio.play();
+        }
         currentTime += 1500;
         $.post('/pay',{amount:1});
         currentCoins -= 1;
@@ -86,8 +89,10 @@ function timerPowerUp() {
 }
 function revealOnePowerUp() {
     if (isThereEnoughCoins(2)) {
-        var audio = new Audio('<%= image_url('sounds/kerboom.wav') %>');
-        audio.play();
+        if (playSound == true) {
+            var audio = new Audio('<%= image_url('sounds/kerboom.wav') %>');
+            audio.play();
+        }
         $.post('/pay',{amount:2});
         currentCoins -= 2;
         updateCoins();
@@ -97,8 +102,10 @@ function revealOnePowerUp() {
 }
 function secondChancePowerUp() {
     if (isThereEnoughCoins(3)) {
-        var audio = new Audio('<%= image_url('sounds/fairy.wav') %>');
-        audio.play();
+        if (playSound == true) {
+            var audio = new Audio('<%= image_url('sounds/fairy.wav') %>');
+            audio.play();
+        }
         $.post('/pay',{amount:3});
         currentCoins -= 3;
         updateCoins();
@@ -113,8 +120,10 @@ $(document).ready(function() {
         disableAllButtons();
         revealCorrectAnswerButton();
         clearInterval(timerIntervalId);
-        var audio = new Audio('<%= image_url('sounds/success.wav') %>');
-        audio.play();
+        if (playSound == true) {
+            var audio = new Audio('<%= image_url('sounds/success.wav') %>');
+            audio.play();
+        }
     });
 
     $(document).on('click', '.incorrect', function() {
@@ -125,8 +134,10 @@ $(document).ready(function() {
         } else {
             answeredIncorrectly();
         }
-        var audio = new Audio('<%= image_url('sounds/failure.wav') %>');
-        audio.play();
+        if (playSound == true) {
+            var audio = new Audio('<%= image_url('sounds/failure.wav') %>');
+            audio.play();
+        }
     });
 
     $("#incorrectAnswerButton").hide();

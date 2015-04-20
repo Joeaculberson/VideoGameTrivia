@@ -1,5 +1,8 @@
 <script>
     var currentCoins = <%= current_user.coins %>;
+    <% if current_user.sound.nil? or current_user.sound %>
+        playSound = true;
+    <% end %>
     <% if !@game.nil? %>
         timerIntervalId = setInterval(updateTimer,10);
     <% end %>

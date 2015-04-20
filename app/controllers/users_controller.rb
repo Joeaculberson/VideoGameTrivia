@@ -37,6 +37,18 @@ class UsersController < ApplicationController
     redirect_to edit_user_registration_path
   end
 
+  def sound_on
+    current_user.sound = true
+    current.user.save
+    redirect_to edit_user_registration_path
+  end
+
+  def sound_off
+    current_user.sound = false
+    current.user.save
+    redirect_to edit_user_registration_path
+  end
+
   def hide_picture
     current_user.hide_picture = true
     current_user.save

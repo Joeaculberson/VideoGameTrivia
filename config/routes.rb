@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'random_game' => 'games#random_game'
   get 'resign_game' => 'games#resign'
 
+  get 'sound_on' => 'users#sound_on'
+  get 'sound_off' => 'users#sound_off'
   get 'hide_picture' => 'users#hide_picture'
   get 'show_picture' => 'users#show_picture'
   get 'hide_email' => 'users#hide_email'
