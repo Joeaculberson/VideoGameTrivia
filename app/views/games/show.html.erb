@@ -92,58 +92,5 @@
     <%= render 'games/challenge_modal' %>
 <% end %>
 
-
-<script>
-    $("#stealChoiceTab").hide();
-    var piece_to_bet = "";
-    <% @categories.each_with_index do |category, i| %>
-    <% if @game.user_pieces.split.include? (i + 1).to_s %>
-    document.getElementById('user' + '<%= category.capitalize %>' + 'Image').src = '<%= image_url('icons/'+ category +'.png')%>';
-    $('img.user' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
-    <% if !@game.opponent_pieces.split.include? (i + 1).to_s %>
-    $('img.userBet' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category +'.png')%>');
-    $(function () {
-        $('img.userBet' + '<%= category.capitalize %>' + 'Image').click(function () {
-            $(this).css('border', "solid 2px red");
-            $("#betChoiceTab").hide();
-            $("#stealChoiceTab").show();
-            piece_to_bet = '<%= category %>';
-        });
-    });
-    <% end %>
-    <% else %>
-    $('img.user' + '<%= category.capitalize %>' + 'Image').click(function () {
-        $.post('/chosen_category', {chosen_category: '<%= category %>', type: 'challenge'});
-    });
-    <% end %>
-    <% end %>
-
-    <% @categories.each_with_index do |category, i| %>
-    <% if @game.opponent_pieces.split.include? (i + 1).to_s %>
-    document.getElementById('opponent' + '<%= category.capitalize %>' + 'Image').src = '<%= image_url('icons/'+ category + '.png')%>';
-    $('img.opponent' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/'+ category + '.png')%>');
-    <% if !@game.user_pieces.split.include? (i + 1).to_s %>
-    $('img.opponentSteal' + '<%= category.capitalize %>' + 'Image').attr("src", '<%= image_url('icons/' + category + '.png')%>');
-    $(function () {
-        $('img.opponentSteal' + '<%= category.capitalize %>' + 'Image').click(function () {
-            $.post('/steal_piece_settings', {
-                chosen_category: '<%= category %>',
-                bet_piece: piece_to_bet,
-                type: 'steal'
-            });
-        });
-    });
-    <% end %>
-
-    $('img.opponent' + '<%= category.capitalize %>' + 'Image').click(function () {
-        $.post('/chosen_category', {chosen_category: '<%= category %>'});
-    });
-    <% end %>
-    <% end %>
-
-    wheelImageName = '<%= image_url('question_spinner.png') %>';
-    begin();
-    powerSelected(1);
-</script>
-
+<%= render 'games/piece_appearance_script' %>
 <%= render 'games/opponent_stats_modal' %>
