@@ -39,13 +39,13 @@ class UsersController < ApplicationController
 
   def sound_on
     current_user.sound = true
-    current.user.save
+    current_user.save
     redirect_to edit_user_registration_path
   end
 
   def sound_off
     current_user.sound = false
-    current.user.save
+    current_user.save
     redirect_to edit_user_registration_path
   end
 
